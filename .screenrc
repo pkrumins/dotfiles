@@ -1,1 +1,3 @@
+# disable start message
+#
 startup_message off
