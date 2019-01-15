@@ -8,6 +8,10 @@ set ttymouse=
 set incsearch
 set hlsearch
 
+# highlight current line where cursor is
+#
+set cul
+
 # expand tabs to spaces
 #
 set tabstop=4
