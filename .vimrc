@@ -3,10 +3,18 @@
 set mouse=
 set ttymouse=
 
+" make backspace delete everywhere
+"
+set backspace=indent,eol,start
+
 " enable incremental searching and search highlighting
 "
 set incsearch
 set hlsearch
+
+" make ",," hide syntax highlighting
+"
+nmap ,, :noh<CR>
 
 " highlight current line where cursor is
 "
@@ -26,10 +34,6 @@ set expandtab
 " create command ":sudow" that sudo writes the file
 "
 cnoremap sudow w !sudo tee % >/dev/null
-
-" make ",," hide syntax highlighting
-"
-nmap ,, :noh<CR>
 
 " make ctrl+s save the current file
 "
