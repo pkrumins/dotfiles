@@ -38,10 +38,10 @@ imap <C-S> <ESC>:w!<CR>a
 
 # make ctrl+hjkl move between windows
 #
-map <C+h> <C-w>h
-map <C+j> <C-w>j
-map <C+k> <C-w>k
-map <C+l> <C-w>l
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 # use very magic and case insensitive search patterns
 #
