@@ -1,3 +1,7 @@
+" enable nocompatible mode
+"
+set nocompatible
+
 " disable mouse
 "
 set mouse=
