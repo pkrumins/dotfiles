@@ -14,3 +14,7 @@ set expandtab
 #
 cnoremap sudow w !sudo tee % >/dev/null
 
+# make ",," hide syntax highlighting
+#
+nmap ,, :noh<CR>
+
