@@ -12,6 +12,10 @@ set hlsearch
 #
 set cul
 
+# increase undo levels to 10,000
+#
+set undolevels=10000
+
 # expand tabs to spaces
 #
 set tabstop=4
