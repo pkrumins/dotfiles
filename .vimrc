@@ -3,6 +3,11 @@
 set mouse=
 set ttymouse=
 
+# enable incremental searching and search highlighting
+#
+set incsearch
+set hlsearch
+
 # expand tabs to spaces
 #
 set tabstop=4
