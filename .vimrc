@@ -18,3 +18,8 @@ cnoremap sudow w !sudo tee % >/dev/null
 #
 nmap ,, :noh<CR>
 
+# make ctrl+s save the current file
+#
+nmap <C-S> :w<CR>
+imap <C-S> <ESC>:w!<CR>a
+
