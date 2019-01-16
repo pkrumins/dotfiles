@@ -1,3 +1,7 @@
+# prompt
+#
+export PS1="\d@\t\n[\$?]\u@\h:\w$ "
+
 # git aliases
 #
 alias ga='git add'
