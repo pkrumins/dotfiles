@@ -1,0 +1,17 @@
+set editing-mode vi
+set visible-stats on
+
+$if mode=vi
+    "\C-a": beginning-of-line
+    "\C-e": end-of-line
+    "\C-b": backward-word
+    "\C-f": forward-word
+    "\C-l": clear-screen
+    "\C-k": redraw-current-line
+
+    "\C-r": reverse-search-history
+    "\C-t": forward-search-history
+
+    "\C-x\C-r": re-read-init-file
+$endif
+
