@@ -1,3 +1,5 @@
+# git aliases
+#
 alias ga='git add'
 alias gm='git commit -m'
 alias gp='git push'
@@ -11,6 +13,8 @@ alias gsl='git status | less'
 alias gsm='git status | grep modified'
 alias gsml='git status | grep modified | less'
 
+# extract columns quickly
+#
 alias c1='awk '\''{print $1}'\'''
 alias c2='awk '\''{print $2}'\'''
 alias c3='awk '\''{print $3}'\'''
@@ -20,4 +24,14 @@ alias c6='awk '\''{print $6}'\'''
 alias c7='awk '\''{print $7}'\'''
 alias c8='awk '\''{print $8}'\'''
 alias c9='awk '\''{print $9}'\'''
+
+# join lines together
+#
+joinlines () {
+    local joinSymbol=" "
+    if (( $# >= 1 )); then
+        joinSymbol="$1"
+    fi
+    sed ":a; N; s/\n/$joinSymbol/; ba";
+}
 
