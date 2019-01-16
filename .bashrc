@@ -6,6 +6,15 @@ isInteger () [[ $1 =~ '^-?[0-9]+$' ]]
 #
 export PS1="\d@\t\n[\$?]\u@\h:\w$ "
 
+# history
+#
+shopt -s histverify
+shopt -u histreedit
+export HISTIGNORE="&:[ ]*"
+export HISTFILESIZE=10000000
+export HISTSIZE=10000000
+export PROMPT_COMMAND='history -a'
+
 # git aliases
 #
 alias ga='git add'
