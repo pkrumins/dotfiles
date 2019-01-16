@@ -2,6 +2,11 @@
 #
 isInteger () [[ $1 =~ '^-?[0-9]+$' ]]
 
+# get rid of default ctrl+s and ctrl+q bindings
+#
+stty stop undef
+stty start undef
+
 # prompt
 #
 export PS1="\d@\t\n[\$?]\u@\h:\w$ "
@@ -91,4 +96,5 @@ joinlines () {
 #
 alias grep='egrep --color'
 alias g='grep'
+alias gi='grep -i'
 
