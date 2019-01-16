@@ -39,3 +39,8 @@ joinlines () {
     sed ":a; N; s/\n/$joinSymbol/; ba";
 }
 
+# egrep for grep
+#
+alias grep='egrep --color';
+alias g='grep'
+
