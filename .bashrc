@@ -15,6 +15,10 @@ export HISTFILESIZE=10000000
 export HISTSIZE=10000000
 export PROMPT_COMMAND='history -a'
 
+# recheck window size after each command
+#
+shopt -s checkwinsize
+
 # git aliases
 #
 alias ga='git add'
