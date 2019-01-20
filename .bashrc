@@ -27,6 +27,8 @@ shopt -s checkwinsize
 # git aliases
 #
 alias ga='git add'
+alias ga2='awk '\''{print $2}'\'' | xargs git add'
+alias ga3='awk '\''{print $3}'\'' | xargs git add'
 alias gm='git commit -m'
 alias gp='git push'
 alias gl='git log'
