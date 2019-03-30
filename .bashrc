@@ -9,7 +9,7 @@ stty start undef
 
 # prompt
 #
-export PS1="\d@\t\n[\$?]\u@\h:\w$ "
+export PS1="\d@\t\n[\$?]\u@\h:\w\\$ "
 
 # history
 #
