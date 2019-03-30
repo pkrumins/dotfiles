@@ -6,6 +6,7 @@ isInteger () [[ $1 =~ '^-?[0-9]+$' ]]
 #
 stty stop undef
 stty start undef
+stty quit undef
 
 # prompt
 #
