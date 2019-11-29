@@ -1,3 +1,18 @@
+# computer type
+#
+if [[ ! -f $HOME/.computer-desktop && ! -f $HOME/.computer-laptop  && ! -f $HOME/.computer-server ]]; then
+  echo "Computer type is not set. Setting it to desktop."
+  export COMPUTER_TYPE=desktop
+fi
+
+if [[ -f $HOME/.computer-desktop ]]; then
+  export COMPUTER_TYPE=desktop
+elif [[ -f $HOME/.computer-laptop ]]; then
+  export COMPUTER_TYPE=laptop
+elif [[ -f $HOME/.computer-server ]]; then
+  export COMPUTER_TYPE=server
+fi
+
 # helper functions
 #
 isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
