@@ -15,3 +15,7 @@ $if mode=vi
     "\C-x\C-r": re-read-init-file
 $endif
 
+$if term=linux
+    "\e\C-M": "startx\n"
+$endif
+
