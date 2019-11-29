@@ -1,6 +1,6 @@
 # helper functions
 #
-isInteger () [[ $1 =~ '^-?[0-9]+$' ]]
+isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
 
 # get rid of default ctrl+s and ctrl+q bindings
 #
