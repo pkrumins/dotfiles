@@ -14,8 +14,11 @@ export PS1="\d@\t\n[\$?]\u@\h:\w\\$ "
 
 # history
 #
+shopt -s histappend
 shopt -s histverify
 shopt -u histreedit
+
+export HISTCONTROL=ignoreboth
 export HISTIGNORE="&:[ ]*"
 export HISTFILESIZE=10000000
 export HISTSIZE=10000000
