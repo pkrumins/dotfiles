@@ -1,0 +1,94 @@
+! Base16 Solarized Dark Scheme
+#define black  #000000
+#define base00 #002b36
+#define base01 #073642
+#define base02 #586e75
+#define base03 #657b83
+#define base04 #839496
+#define base05 #93a1a1
+#define base06 #eee8d5
+#define base07 #fdf6e3
+#define base08 #dc322f
+#define base09 #cb4b16
+#define base0A #b58900
+#define base0B #859900
+#define base0C #2aa198
+#define base0D #268bd2
+#define base0E #6c71c4
+#define base0F #d33682
+
+*foreground:   base05
+#ifdef background_opacity
+*background:   [background_opacity]black
+#else
+*background:   black
+#endif
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
+
+! Disable the dialog when you press ctrl+shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! Configure urxvt fonts
+URxvt.font: xft:DejaVuSansMono:size=10
+URxvt.antialias: true
+URxvt.letterSpace: -1
+
+! Configure scrolling
+URxvt.scrollBar: false
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollTtyKeypress: true
+URxvt.saveLines: 1000000
+
+! Load urxvt extensions
+URxvt.perl-ext-common: keyboard-select,resize-font,clipboard
+
+! Configure keyboard-select extension
+URxvt.keysym.C-grave: perl:keyboard-select:activate
+URxvt.keyboard-select.clipboard: true
+
+! Configure resize-font extension
+URxvt.keysym.C-equal: resize-font:bigger
+URxvt.keysym.C-minus: resize-font:smaller
+URxvt.keysym.C-0: resize-font:reset
+URxvt.resize-font.step: 1
+
+! Configure clipboard extension
+URxvt.clipboard.autocopy: true
+URxvt.keysym.Shift-Control-C: clipboard:copy
+URxvt.keysym.Control-v: clipboard:paste
+
+! Configure inactive window fading
+URxvt.fading: 20
+
+! Configure DPI
+!Xft.dpi: 144
+
