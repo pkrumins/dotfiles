@@ -261,6 +261,12 @@ for_window [class="Inkscape"] floating enable
 # MyPaint is floating
 for_window [class="MyPaint"] floating enable
 
+# Pinta is floating
+for_window [class="Pinta"] floating enable
+
+# Krita is floating
+for_window [class="krita"] floating enable
+
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
 
