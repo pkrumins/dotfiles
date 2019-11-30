@@ -255,6 +255,12 @@ for_window [class="vlc"] floating enable
 # Gimp is floating
 for_window [class="Gimp"] floating enable
 
+# Inkscape is floating
+for_window [class="Inkscape"] floating enable
+
+# MyPaint is floating
+for_window [class="MyPaint"] floating enable
+
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
 
