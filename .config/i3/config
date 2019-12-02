@@ -263,6 +263,9 @@ for_window [class="Pinta"] floating enable
 # Krita is floating
 for_window [class="krita"] floating enable
 
+# Rdesktop is floating
+for_window [class="rdesktop"] floating enable
+
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
 
