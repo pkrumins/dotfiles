@@ -10,6 +10,15 @@ dmenu_choice () {
 }
 
 main () {
+    local -Ar apps=(
+        ["krita"]="krita"
+        ["pinta"]="pinta"
+        ["mypaint"]="mypaint"
+        ["inkscape"]="inkscape"
+        ["gimp"]="gimp"
+        ["vlc"]="vlc"
+        ["keepass"]="keepass"
+    );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
         ["gmail"]="gmail"
@@ -65,8 +74,10 @@ main () {
         ["lunicode"]="chrome-browsing http://local.unicodetools.browserling.com"
     )
 
-    local -r choice="$(dmenu_choice "${!browsing[@]}")"
-    if [[ -v "browsing[$choice]" ]]; then
+    local -r choice="$(dmenu_choice "${!apps[@]}" "${!browsing[@]}")"
+    if [[ -v "apps[$choice]" ]]; then
+        eval "${apps[$choice]}"
+    elif [[ -v "browsing[$choice]" ]]; then
         eval "${browsing[$choice]}"
     fi
 }
