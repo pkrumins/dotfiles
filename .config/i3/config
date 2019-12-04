@@ -235,15 +235,12 @@ for_window [instance="ranger"] move scratchpad
 for_window [instance="ranger"] border pixel 3
 exec --no-startup-id urxvt -name ranger -fn "xft:DejaVu Sans Mono:size=9" -e bash -i -c "ranger"
 
-# Autostart keepass
-#bindsym $mod+p [class="KeePass2"] scratchpad show; [class="KeePass2"] move position center
-#for_window [class="KeePass2"] floating enable sticky enable
-#for_window [class="KeePass2"] move scratchpad
-#for_window [class="KeePass2"] border pixel 3
-#exec --no-startup-id exec bash -i -c "keepass"
-
-# Keepass is floating
-for_window [class="KeePass2"] floating enable, [class="KeePass2"] move position center
+# Autostart keepassxc
+bindsym $mod+p [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
+for_window [class="KeePassXC"] floating enable sticky enable
+for_window [class="KeePassXC"] move scratchpad
+for_window [class="KeePassXC"] border pixel 3
+exec --no-startup-id exec bash -i -c "keepass"
 
 # VLC is floating
 for_window [class="vlc"] floating enable
