@@ -1,0 +1,10 @@
+# Change keyboard speed
+#
+xset r rate 300 40
+
+# Setup monitor positions
+#
+if (( $MONITOR_COUNT >= 2 )); then
+    xrandr --output $MONITOR_PRIMARY --primary --right-of $MONITOR_SECONDARY
+fi
+
