@@ -1,3 +1,8 @@
 # disable start message
 #
 startup_message off
+
+# remember a lot of lines
+#
+defscrollback 1000000
+
