@@ -29,6 +29,7 @@ main () {
         ["lobsters"]="lobsters"
         ["statc"]="statc"
         ["catonmat"]="chrome-browsing https://catonmat.net"
+        ["lcatonmat"]="chrome-browsing http://local.catonmat.net"
         ["techurls"]="techurls"
         ["devurls"]="devurls"
         ["sciurls"]="sciurls"
