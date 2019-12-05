@@ -1,16 +1,35 @@
 # computer type
 #
 if [[ ! -f $HOME/.computer-desktop && ! -f $HOME/.computer-laptop  && ! -f $HOME/.computer-server ]]; then
-  echo "Computer type is not set. Setting it to desktop."
-  export COMPUTER_TYPE=desktop
+    echo "Computer type is not set. Setting it to desktop."
+    export COMPUTER_TYPE=desktop
 fi
 
 if [[ -f $HOME/.computer-desktop ]]; then
-  export COMPUTER_TYPE=desktop
+    export COMPUTER_TYPE=desktop
 elif [[ -f $HOME/.computer-laptop ]]; then
-  export COMPUTER_TYPE=laptop
+    export COMPUTER_TYPE=laptop
 elif [[ -f $HOME/.computer-server ]]; then
-  export COMPUTER_TYPE=server
+    export COMPUTER_TYPE=server
+fi
+
+# monitors
+#
+export MONITOR_COUNT=1
+if [[ -v "DISPLAY" ]]; then
+    export MONITOR_COUNT="$(xrandr | grep "\<connected\>" | wc -l)"
+fi
+
+if [[ $COMPUTER_TYPE == "desktop" ]]; then
+    export MONITOR_PRIMARY="VGA1"
+    if (( $MONITOR_COUNT >= 2 )); then
+        export MONITOR_SECONDARY="DP1"
+    fi
+elif [[ $COMPUTER_TYPE == "laptop" ]]; then
+    export MONITOR_PRIMARY="eDP1"
+    if (( $MONITOR_COUNT >= 2 )); then
+        export MONITOR_SECONDARY="DP1"
+    fi
 fi
 
 # helper functions
