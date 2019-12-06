@@ -140,3 +140,8 @@ alias g='grep'
 alias gi='grep -i'
 alias gv='grep -v'
 alias gvi='grep -vi'
+
+# setup path
+#
+PATH=$PATH:~/.local/bin
+
