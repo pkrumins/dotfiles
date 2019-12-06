@@ -92,11 +92,6 @@ alias c7='awk '\''{print $7}'\'''
 alias c8='awk '\''{print $8}'\'''
 alias c9='awk '\''{print $9}'\'''
 
-# cd and ls aliases
-#
-alias c='cd'
-alias l='ls'
-
 # head and tail aliases
 #
 alias h='head'
