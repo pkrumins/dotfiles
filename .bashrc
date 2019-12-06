@@ -171,6 +171,12 @@ alias fgrep='fgrep --color'
 #
 alias ls='ls --color=auto -F'
 
+# Enable bash completion
+#
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
 # Setup path
 #
 PATH=$PATH:~/.local/bin
