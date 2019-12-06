@@ -161,9 +161,15 @@ alias t8='tail -8'
 alias t9='tail -9'
 alias t10='tail -10'
 
-# Use egrep for grep
+# Use colors in grep
 #
 alias grep='egrep --color'
+alias egrep='egrep --color'
+alias fgrep='fgrep --color'
+
+# Use more advanced ls
+#
+alias ls='ls --color=auto -F'
 
 # Setup path
 #
