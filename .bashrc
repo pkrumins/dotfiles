@@ -1,4 +1,4 @@
-# computer type
+# Computer type
 #
 if [[ ! -f $HOME/.computer-desktop && ! -f $HOME/.computer-laptop  && ! -f $HOME/.computer-server ]]; then
     echo "Computer type is not set. Setting it to desktop."
@@ -13,7 +13,7 @@ elif [[ -f $HOME/.computer-server ]]; then
     export COMPUTER_TYPE=server
 fi
 
-# monitors
+# Monitors
 #
 export MONITOR_COUNT=1
 if [[ -v "DISPLAY" ]]; then
@@ -32,7 +32,7 @@ elif [[ $COMPUTER_TYPE == "laptop" ]]; then
     fi
 fi
 
-# helper functions
+# Useful functions
 #
 isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
 
@@ -48,17 +48,48 @@ randHex () {
   openssl rand -hex "$1"
 }
 
-# get rid of default ctrl+s and ctrl+q bindings
+lr () { # Extract a line range
+    if (( $# < 2 )); then
+        echo "Usage: ${FUNCNAME[0]} <starting line> <ending line>." >&2
+        return 1
+    fi
+    if ! isInteger $1; then
+        echo "Error: starting line is not an integer." >&2
+        return 1
+    fi
+    if ! isInteger $2; then
+        echo "Error: ending line is not an integer." >&2
+        return 1
+    fi
+    if (( $1 > $2 )); then
+        echo "Error: ending line is larger than starting line." >&2
+        return 1
+    fi
+    local start="$1"
+    local end="$2"
+    local endPlusOne="$((end+1))"
+    sed -n "${start},${end}p;${endPlusOne}q"
+}
+
+joinlines () { 
+    local joinSymbol=" "
+    if (( $# >= 1 )); then
+        joinSymbol="$1"
+    fi
+    sed ":a; N; s/\n/$joinSymbol/; ba";
+}
+
+# Get rid of default ctrl+s and ctrl+q bindings
 #
 stty stop undef
 stty start undef
 stty quit undef
 
-# prompt
+# Prompt
 #
 export PS1="\d@\t\n[\$?]\u@\h:\w\\$ "
 
-# history
+# History
 #
 shopt -s histappend
 shopt -s histverify
@@ -70,11 +101,11 @@ export HISTFILESIZE=10000000
 export HISTSIZE=10000000
 export PROMPT_COMMAND='history -a'
 
-# recheck window size after each command
+# Recheck window size after each command
 #
 shopt -s checkwinsize
 
-# git aliases
+# Git aliases
 #
 alias ga='git add'
 alias ga2='awk '\''{print $2}'\'' | xargs git add'
@@ -92,7 +123,7 @@ alias gsl='git status | less'
 alias gsm='git status | grep modified'
 alias gsml='git status | grep modified | less'
 
-# extract columns
+# Extract columns
 #
 alias c1='awk '\''{print $1}'\'''
 alias c2='awk '\''{print $2}'\'''
@@ -105,7 +136,7 @@ alias c8='awk '\''{print $8}'\'''
 alias c9='awk '\''{print $9}'\'''
 alias c10='awk '\''{print $10}'\'''
 
-# head and tail aliases
+# Head and tail aliases
 #
 alias h='head'
 alias t='tail'
@@ -130,49 +161,11 @@ alias t8='tail -8'
 alias t9='tail -9'
 alias t10='tail -10'
 
-# extract a line range
-lr () { 
-    if (( $# < 2 )); then
-        echo "usage: lr <starting line> <ending line>" >&2
-        return 1
-    fi
-    if ! isInteger $1; then
-        echo "error: starting line is not an integer" >&2
-        return 1
-    fi
-    if ! isInteger $2; then
-        echo "error: ending line is not an integer" >&2
-        return 1
-    fi
-    if (( $1 > $2 )); then
-        echo "error: ending line is larger than starting line" >&2
-        return 1
-    fi
-    local start="$1"
-    local end="$2"
-    local endPlusOne="$((end+1))"
-    sed -n "${start},${end}p;${endPlusOne}q"
-}
-
-# join lines together
-#
-joinlines () {
-    local joinSymbol=" "
-    if (( $# >= 1 )); then
-        joinSymbol="$1"
-    fi
-    sed ":a; N; s/\n/$joinSymbol/; ba";
-}
-
-# egrep for grep
+# Use egrep for grep
 #
 alias grep='egrep --color'
-alias g='grep'
-alias gi='grep -i'
-alias gv='grep -v'
-alias gvi='grep -vi'
 
-# setup path
+# Setup path
 #
 PATH=$PATH:~/.local/bin
 
