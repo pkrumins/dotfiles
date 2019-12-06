@@ -36,6 +36,18 @@ fi
 #
 isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
 
+randHex () {
+  if (( $# < 1 )); then
+    echo "Usage: randHex <number of bytes>"
+    return 1
+  fi
+  if ! isInteger $1; then
+    echo "Error: the first argument must be an integer"
+    return 1
+  fi
+  openssl rand -hex "$1"
+}
+
 # get rid of default ctrl+s and ctrl+q bindings
 #
 stty stop undef
