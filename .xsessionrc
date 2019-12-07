@@ -10,5 +10,5 @@ fi
 
 # Mute audio
 #
-audiooff
-micoff
+amixer -D pulse set Master mute
+amixer set Capture nocap
