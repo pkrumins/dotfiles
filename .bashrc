@@ -15,22 +15,7 @@ fi
 
 # Monitors
 #
-export MONITOR_COUNT=1
-if [[ -v "DISPLAY" ]]; then
-    export MONITOR_COUNT="$(xrandr | grep "\<connected\>" | wc -l)"
-fi
-
-if [[ $COMPUTER_TYPE == "desktop" ]]; then
-    export MONITOR_PRIMARY="VGA1"
-    if (( $MONITOR_COUNT >= 2 )); then
-        export MONITOR_SECONDARY="DP1"
-    fi
-elif [[ $COMPUTER_TYPE == "laptop" ]]; then
-    export MONITOR_PRIMARY="eDP1"
-    if (( $MONITOR_COUNT >= 2 )); then
-        export MONITOR_SECONDARY="DP1"
-    fi
-fi
+. ~/projects/dotfiles/.bashrc-monitors
 
 # Useful functions and aliases
 #
