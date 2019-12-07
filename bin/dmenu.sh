@@ -1,6 +1,7 @@
 #!/bin/bash -i
 #
 
+set +o history
 set -ueo pipefail
 
 dmenu_choice () {
