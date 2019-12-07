@@ -111,6 +111,10 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
     }
 
     alias i3c='vim ~/.config/i3/config'
+
+    # Load docker aliases
+    #
+    . ~/projects/dotfiles/.bashrc-docker
 fi
 
 # Get rid of default ctrl+s and ctrl+q bindings
