@@ -80,6 +80,39 @@ joinlines () {
     sed ":a; N; s/\n/$joinSymbol/; ba";
 }
 
+# Desktop and laptop aliases
+#
+if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
+    alias audiostatus='amixer get Master'
+    alias audiomute='amixer -D pulse set Master mute'
+    alias audiooff=audiomute
+    alias muteaudio=audiomute
+    alias audiounmute='amixer -D pulse set Master unmute'
+    alias audioon=audiounmute
+    alias unmuteaudio=audiounmute
+
+    alias micstatus='amixer get Capture'
+    alias micmute='amixer set Capture nocap'
+    alias micoff=micmute
+    alias mutemic=micmute
+    alias micunmute='amixer set Capture cap'
+    alias micon=micunmute
+    alias unmutemic=micunmute
+
+    br () {
+        if (( $# < 1 )); then
+            echo "Usage: br <brightness level>"
+            return 1
+        fi
+        xrandr --output $MONITOR_PRIMARY --brightness $1
+        if (( $MONITOR_COUNT >= 2 )); then
+            xrandr --output $MONITOR_SECONDARY --brightness $1
+        fi
+    }
+
+    alias i3c='vim ~/.config/i3/config'
+fi
+
 # Get rid of default ctrl+s and ctrl+q bindings
 #
 stty stop undef
