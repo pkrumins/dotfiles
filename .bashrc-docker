@@ -142,7 +142,7 @@ chrome-docker () {
     fi 
 
     docker run -d -it --rm \
-        --security-opt seccomp=~/chrome.seccomp.json \
+        --security-opt seccomp=~/projects/dotfiles/chrome.seccomp.json \
         --device /dev/snd \
         --device /dev/dri \
         -e DISPLAY=$DISPLAY \
