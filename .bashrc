@@ -32,7 +32,7 @@ elif [[ $COMPUTER_TYPE == "laptop" ]]; then
     fi
 fi
 
-# Useful functions
+# Useful functions and aliases
 #
 isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
 
@@ -123,6 +123,7 @@ alias gs='git status'
 alias gsl='git status | less'
 alias gsm='git status | grep modified'
 alias gsml='git status | grep modified | less'
+alias gsma2='git status | grep modified | c2 | xargs git add'
 
 # Extract columns
 #
