@@ -65,9 +65,9 @@ lr () { # Extract a line range
         echo "Error: ending line is larger than starting line." >&2
         return 1
     fi
-    local start="$1"
-    local end="$2"
-    local endPlusOne="$((end+1))"
+    local -r start="$1"
+    local -r end="$2"
+    local -r endPlusOne="$((end+1))"
     sed -n "${start},${end}p;${endPlusOne}q"
 }
 
@@ -76,6 +76,7 @@ joinlines () {
     if (( $# >= 1 )); then
         joinSymbol="$1"
     fi
+    local -r joinSymbol="$(sed 's|\([/\&]\)|\\\1|g' <<< "$joinSymbol")"
     sed ":a; N; s/\n/$joinSymbol/; ba";
 }
 
