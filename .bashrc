@@ -75,6 +75,8 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
     alias audiounmute='amixer -D pulse set Master unmute'
     alias audioon=audiounmute
     alias unmuteaudio=audiounmute
+    alias incvol="amixer set Master 5%+"
+    alias decvol="amixer set Master 5%-"
 
     alias micstatus='amixer get Capture'
     alias micmute='amixer set Capture nocap'
