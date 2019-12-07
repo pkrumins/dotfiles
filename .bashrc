@@ -200,6 +200,12 @@ alias t8='tail -8'
 alias t9='tail -9'
 alias t10='tail -10'
 
+# Setup colors for grep and ls
+#
+if [[ -x /usr/bin/dircolors ]]; then
+    eval "$(dircolors -b)"
+fi
+
 # Use colors in grep
 #
 alias grep='egrep --color'
