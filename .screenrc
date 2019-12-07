@@ -6,3 +6,23 @@ startup_message off
 #
 defscrollback 1000000
 
+# make ^] the escape key
+#
+escape ^]]
+
+# Colors:
+#
+# 0 Black             .    leave color unchanged
+# 1 Red               b    blue
+# 2 Green             c    cyan
+# 3 Brown / yellow    d    default color
+# 4 Blue              g    green           b    bold
+# 5 Purple            k    blacK           B    blinking
+# 6 Cyan              m    magenta         d    dim
+# 7 White             r    red             r    reverse
+# 8 unused/illegal    w    white           s    standout
+# 9 transparent       y    yellow          u    underline
+
+caption always "%{=}%{+b kR}%H %{+b kY}%M %d %{+b kG}%0c %{+b kB}%?%-Lw%?%{+b kM}%n*%f %kt%?(%u)%?%{+b kB}%?%+Lw%? %{+b kc}%=[         %l ]"
+hardstatus alwayslastline "%-Lw%{= YB}%50>%n%f* %t%{-}%+Lw%<  %{+b kc}%=[ %0c, %D, %Y.%m.%d ]"
+
