@@ -8,3 +8,7 @@ if (( $MONITOR_COUNT >= 2 )); then
     xrandr --output $MONITOR_PRIMARY --primary --right-of $MONITOR_SECONDARY
 fi
 
+# Mute audio
+#
+audiooff
+micoff
