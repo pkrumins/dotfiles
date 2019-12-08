@@ -212,7 +212,7 @@ exec --no-startup-id i3-msg 'workspace 2; workspace 5; workspace 1'
 exec --no-startup-id i3-msg 'workspace 1; exec urxvt'
 
 # Autostart urxvt on workspace 2
-exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120'
+exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120 -e tmux -f ~/.tmux-ws2.conf a'
 for_window [instance="ws2"] floating enable
 
 # Autostart R scratchpad
