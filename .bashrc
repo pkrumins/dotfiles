@@ -23,14 +23,20 @@ isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
 
 randHex () {
     if (( $# < 1 )); then
-        echo "Usage: randHex <number of bytes>"
+        echo "Usage: randHex <number of digits>"
         return 1
     fi
-    if ! isInteger $1; then
+    local -r length="$1"
+    if ! isInteger "$length"; then
         echo "Error: the first argument must be an integer"
         return 1
     fi
-    openssl rand -hex "$1"
+    if (( $length % 2 == 0 )); then
+        local -r bytes="$((length / 2))"
+    else
+        local -r bytes="$((length / 2 + 1))"
+    fi
+    openssl rand -hex "$bytes"
 }
 
 lr () { # Extract a line range
