@@ -205,11 +205,15 @@ bindsym $mod+grave exec bash -i -c "copyq-menu"
 exec --no-startup-id xss-lock ~/.config/i3/xss-lock.sh
 bindsym $mod+Control+l exec --no-startup-id exec ~/.config/i3/xss-lock.sh
 
-# Autostart urxvt
-exec --no-startup-id i3-msg 'workspace 1; exec urxvt'
-
 # Move workspace 2 to 5 and switch back to workspace 1
 exec --no-startup-id i3-msg 'workspace 2; workspace 5; workspace 1'
+
+# Autostart urxvt on workspace 1
+exec --no-startup-id i3-msg 'workspace 1; exec urxvt'
+
+# Autostart urxvt on workspace 2
+exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120'
+for_window [instance="ws2"] floating enable
 
 # Autostart R scratchpad
 bindsym $mod+m [instance="math"] scratchpad show; [instance="math"] move position center
