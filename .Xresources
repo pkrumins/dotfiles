@@ -69,7 +69,7 @@ URxvt.scrollTtyKeypress: true
 URxvt.saveLines: 1000000
 
 ! Load urxvt extensions
-URxvt.perl-ext-common: keyboard-select,resize-font,clipboard
+URxvt.perl-ext-common: keyboard-select,resize-font,clipboard,clipboard-paste-on-right-click
 
 ! Configure keyboard-select extension
 URxvt.keysym.C-grave: perl:keyboard-select:activate
