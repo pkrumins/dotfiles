@@ -10,7 +10,25 @@ dmenu_choice () {
     echo -e "${choices[*]}" | dmenu -i
 }
 
+twitter_search () {
+    true;
+}
+
+google_search () {
+    true;
+}
+
 main () {
+    local -Ar commands=(
+        ["audioon"]="audioon"
+        ["audioff"]="audiooff"
+        ["incvol"]="incvol"
+        ["decvol"]="decvol"
+    )
+    local -Ar search=(
+        ["ts"]="twitter_search"
+        ["gs"]="google_search"
+    )
     local -Ar apps=(
         ["krita"]="krita"
         ["pinta"]="pinta"
@@ -76,8 +94,10 @@ main () {
         ["lunicode"]="chrome-browsing http://local.unicodetools.browserling.com"
     )
 
-    local -r choice="$(dmenu_choice "${!apps[@]}" "${!browsing[@]}")"
-    if [[ -v "apps[$choice]" ]]; then
+    local -r choice="$(dmenu_choice "${!commands[@]}" "${!apps[@]}" "${!browsing[@]}")"
+    if [[ -v "commands[$choice]" ]]; then
+        eval "${commands[$choice]}"
+    elif [[ -v "apps[$choice]" ]]; then
         eval "${apps[$choice]}"
     elif [[ -v "browsing[$choice]" ]]; then
         eval "${browsing[$choice]}"
