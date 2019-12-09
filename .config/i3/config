@@ -107,6 +107,9 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# Enable auto back and forth mode
+workspace_auto_back_and_forth yes
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -114,26 +117,29 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
+# Resize and move windows
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+        # Resize
+        bindsym h     resize shrink width  10 px or 10 ppt
+        bindsym Left  resize shrink width  10 px or 10 ppt
+        bindsym j     resize grow   height 10 px or 10 ppt
+        bindsym Down  resize grow   height 10 px or 10 ppt
+        bindsym k     resize shrink height 10 px or 10 ppt
+        bindsym Up    resize shrink height 10 px or 10 ppt
+        bindsym l     resize grow   width 10 px or 10 ppt
+        bindsym Right resize grow   width 10 px or 10 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        # Move
+        bindsym Shift+h     move left
+        bindsym Shift+Left  move left
+        bindsym Shift+j     move down
+        bindsym Shift+Down  move down
+        bindsym Shift+k     move up
+        bindsym Shift+Up    move up
+        bindsym Shift+l     move right
+        bindsym Shift+Right move right
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
+        # Exit this mode
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -194,8 +200,25 @@ bindsym XF86Display exec "xset dpms force standby"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command i3status
+    #status_command ~/bin/i3status.sh
+    tray_output primary
 }
+
+# Configure workspaces
+workspace 1 output VGA1
+workspace 2 output VGA1
+workspace 3 output VGA1
+workspace 4 output VGA1
+workspace 5 output VGA1
+workspace 6 output VGA1
+workspace 7 output DP1
+workspace 8 output DP1
+workspace 9 output DP1
+workspace 10 output DP1
+
+# Chrome shortcut
+bindsym $mod+backslash exec bash -i -c chrome
 
 # Autostart copyq
 exec --no-startup-id bash -i -c "copyq-daemon"
@@ -205,15 +228,17 @@ bindsym $mod+grave exec bash -i -c "copyq-menu"
 exec --no-startup-id xss-lock ~/.config/i3/xss-lock.sh
 bindsym $mod+Control+l exec --no-startup-id exec ~/.config/i3/xss-lock.sh
 
-# Move workspace 2 to 5 and switch back to workspace 1
-exec --no-startup-id i3-msg 'workspace 2; workspace 5; workspace 1'
-
 # Autostart urxvt on workspace 1
 exec --no-startup-id i3-msg 'workspace 1; exec urxvt'
 
 # Autostart urxvt on workspace 2
 exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120 -e tmux -f ~/.tmux-ws2.conf a'
+assign [instance="ws2"] workspace 2
 for_window [instance="ws2"] floating enable
+
+# Autostart gmail on workspace 3
+assign [class="gmail"] workspace 3
+exec --no-startup-id i3-msg 'workspace 3; exec bash -i -c gmail'
 
 # Autostart R scratchpad
 bindsym $mod+m [instance="math"] scratchpad show; [instance="math"] move position center
@@ -255,9 +280,6 @@ for_window [class="Pinta"] floating enable
 for_window [class="krita"] floating enable
 for_window [class="rdesktop"] floating enable
 for_window [class="xfreerdp"] floating enable
-
-# Chrome shortcut
-bindsym $mod+backslash exec bash -i -c chrome
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
