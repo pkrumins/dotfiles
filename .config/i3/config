@@ -303,13 +303,15 @@ exec --no-startup-id exec bash -i -c "keepass"
 
 # Floating windows
 for_window [class="vlc"] floating enable
-for_window [class="Gimp"] floating enable
 for_window [class="Inkscape"] floating enable
 for_window [class="MyPaint"] floating enable
 for_window [class="Pinta"] floating enable
 for_window [class="krita"] floating enable
 for_window [class="rdesktop"] floating enable
 for_window [class="xfreerdp"] floating enable
+
+# Gimp on workspace 10
+assign [class="Gimp"] workspace 10
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
