@@ -211,6 +211,7 @@ chrome-gmail () {
     local container_name="chrome-gmail"
 
     chrome-docker "$chrome_data_dir" "$container_name" \
+        --class=gmail \
         "https://mail.google.com/mail/u/0/#inbox" \
         "https://mail.google.com/mail/u/1/#inbox" \
         "https://mail.google.com/mail/u/2/#inbox" \
@@ -232,6 +233,11 @@ chrome-browsing () {
     chrome-docker "$chrome_data_dir" "$container_name" \
         -incognito \
         "$urls"
+}
+
+prepare-chrome-data-dir () {
+    local -r chrome_data_dir="_template"
+    #chrome-docker --user-data-dir "$chrome_data_dir" "https://google.com"
 }
 
 r-docker () {
