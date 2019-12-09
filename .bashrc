@@ -227,6 +227,10 @@ alias fgrep='fgrep --color'
 #
 alias ls='ls --color=auto -F'
 
+# Make ncdu readonly
+#
+alias ncdu='ncdu -r'
+
 # Enable bash completion
 #
 if [ -f /usr/share/bash-completion/bash_completion ]; then
