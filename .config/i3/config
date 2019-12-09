@@ -39,6 +39,9 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec bash -i ~/bin/dmenu.sh
 
+# disable mouse focus follow
+focus_follows_mouse no
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
