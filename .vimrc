@@ -2,6 +2,18 @@
 "
 set nocompatible
 
+" enable plugins
+"
+filetype plugin on
+
+" make vim search all subdirectories
+"
+set path+=**
+
+" enhance completion menu
+"
+set wildmenu
+
 " disable mouse
 "
 set mouse=
@@ -10,6 +22,10 @@ set ttymouse=
 " make backspace delete everywhere
 "
 set backspace=indent,eol,start
+
+" show cursor position
+"
+set ruler
 
 " enable incremental searching and search highlighting
 "
@@ -23,6 +39,18 @@ nmap ,, :noh<CR>
 " highlight current line where cursor is
 "
 set cul
+
+" enable syntax highlighting
+"
+syntax enable
+
+" set colorscheme to desert
+"
+colorscheme desert
+
+" set dark background
+"
+set background=dark
 
 " increase undo levels to 10,000
 "
@@ -81,4 +109,8 @@ nmap t0 :tabn 10<CR>
 "
 nnoremap / /\v\c
 vnoremap / /\v\c
+
+" ignore these suffixes in file completion
+"
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
