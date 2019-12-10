@@ -1,0 +1,15 @@
+color status white gray
+
+unsetkey "^K"
+unsetkey "g"
+unsetkey "G"
+unsetkey ":"
+
+setkey toggle_case "c"
+setkey toggle_options "o"
+
+setkey bob "g"
+setkey eob "G"
+setkey down "j"
+setkey up "k"
+
