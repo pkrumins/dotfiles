@@ -139,17 +139,15 @@ shopt -s checkwinsize
 # Git aliases
 #
 alias ga='git add'
-alias ga2='c2 | xargs git add'
-alias ga3='c3 | xargs git add'
-alias gam1='git status | grep modified | lr 1 1 | c2 | xargs git add'
-alias gam2='git status | grep modified | lr 2 2 | c2 | xargs git add'
-alias gam3='git status | grep modified | lr 3 3 | c2 | xargs git add'
-alias gam4='git status | grep modified | lr 4 4 | c2 | xargs git add'
-alias gam5='git status | grep modified | lr 5 5 | c2 | xargs git add'
-alias gam6='git status | grep modified | lr 6 6 | c2 | xargs git add'
-alias gam7='git status | grep modified | lr 7 7 | c2 | xargs git add'
-alias gam8='git status | grep modified | lr 8 8 | c2 | xargs git add'
-alias gam9='git status | grep modified | lr 9 9 | c2 | xargs git add'
+alias ga1='git status | grep modified | lr 1 1 | c2 | xargs git add'
+alias ga2='git status | grep modified | lr 2 2 | c2 | xargs git add'
+alias ga3='git status | grep modified | lr 3 3 | c2 | xargs git add'
+alias ga4='git status | grep modified | lr 4 4 | c2 | xargs git add'
+alias ga5='git status | grep modified | lr 5 5 | c2 | xargs git add'
+alias ga6='git status | grep modified | lr 6 6 | c2 | xargs git add'
+alias ga7='git status | grep modified | lr 7 7 | c2 | xargs git add'
+alias ga8='git status | grep modified | lr 8 8 | c2 | xargs git add'
+alias ga9='git status | grep modified | lr 9 9 | c2 | xargs git add'
 alias gm='git commit -m'
 alias gp='git push'
 alias gpu='git pull'
@@ -239,6 +237,14 @@ alias fgrep='fgrep --color'
 # Use more advanced ls
 #
 alias ls='ls --color=auto -F'
+
+# Read man through most
+#
+alias man='PAGER=most man'
+
+# Make less quit if there's less than one screen of text and enable colors
+#
+export LESS="-F -X -R"
 
 # Make ncdu readonly
 #
