@@ -6,6 +6,9 @@ $if mode=vi
     "\C-e": end-of-line
     "\C-b": backward-word
     "\C-f": forward-word
+
+    "\C-w": unix-word-rubout
+
     "\C-l": clear-screen
     "\C-k": redraw-current-line
 
