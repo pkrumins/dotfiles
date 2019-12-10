@@ -1,5 +1,10 @@
 set editing-mode vi
 set visible-stats on
+set colored-stats on
+set show-mode-in-prompt on
+set show-all-if-ambiguous on
+set colored-completion-prefix on
+set menu-complete-display-prefix on
 
 $if mode=vi
     "\C-a": beginning-of-line
@@ -14,6 +19,8 @@ $if mode=vi
 
     "\C-r": reverse-search-history
     "\C-t": forward-search-history
+
+    "\C-q": quoted-insert
 
     "\C-x\C-r": re-read-init-file
 $endif
