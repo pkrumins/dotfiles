@@ -136,5 +136,6 @@ set hidden
 
 " configure netrw
 "
-let g:netrw_liststyle = 3     " display tree
+let g:netrw_liststyle  = 3     " display a file tree
+let g:netrw_dirhistmax = 0     " disable netrw history
 
