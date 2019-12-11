@@ -130,3 +130,6 @@ nnoremap ? ?\v\c
 "
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
+" hide buffers
+"
+set hidden
