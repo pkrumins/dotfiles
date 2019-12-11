@@ -27,6 +27,14 @@ set backspace=indent,eol,start
 "
 set ruler
 
+" show partial commands
+"
+set showcmd
+
+" show line numbers
+"
+set number
+
 " enable incremental searching and search highlighting
 "
 set incsearch
@@ -56,12 +64,20 @@ set background=dark
 "
 set undolevels=10000
 
+" increase history to 10,000
+"
+set history=10000
+
 " expand tabs to spaces
 "
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+
+" enable autoindenting
+"
+set autoindent
 
 " create command ":sudow" that sudo writes the file
 "
@@ -108,7 +124,7 @@ nmap t0 :tabn 10<CR>
 " use very magic and case insensitive search patterns
 "
 nnoremap / /\v\c
-vnoremap / /\v\c
+nnoremap ? ?\v\c
 
 " ignore these suffixes in file completion
 "
