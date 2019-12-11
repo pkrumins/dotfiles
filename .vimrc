@@ -133,3 +133,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.i
 " hide buffers
 "
 set hidden
+
+" configure netrw
+"
+let g:netrw_liststyle = 3     " display tree
+
