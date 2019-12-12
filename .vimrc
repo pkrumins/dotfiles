@@ -173,6 +173,13 @@ set listchars=tab:↦→,trail:␣,extends:»,precedes:«,nbsp:␣
 "
 set formatoptions+=j
 
+" when opening a file, jump to the last cursor position
+"
+autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+
 " configure netrw
 "
 let g:netrw_liststyle  = 3     " display a file tree
