@@ -17,6 +17,8 @@ $if mode=vi
     "\C-l": clear-screen
     "\C-k": redraw-current-line
 
+    "\C-p": previous-history
+    "\C-n": next-history
     "\C-r": reverse-search-history
     "\C-t": forward-search-history
 
