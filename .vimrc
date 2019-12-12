@@ -44,6 +44,11 @@ set hlsearch
 "
 nmap ,, :noh<CR>
 
+" enable timeout for key mappings
+"
+set ttimeout
+set ttimeoutlen=120
+
 " highlight current line where cursor is
 "
 set cul
@@ -56,13 +61,13 @@ syntax enable
 "
 colorscheme desert
 
-" always show status line
-"
-set laststatus=2
-
 " set dark background
 "
 set background=dark
+
+" always show status line
+"
+set laststatus=2
 
 " increase undo levels to 10,000
 "
@@ -134,9 +139,13 @@ nnoremap ? ?\v\c
 "
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-" hide buffers
+" hide modified buffers
 "
 set hidden
+
+" dont increment/decrement octal numbers (via ctrl+a/ctrl+x)
+"
+set nrformats-=octal
 
 " configure netrw
 "
