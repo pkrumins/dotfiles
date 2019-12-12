@@ -56,6 +56,10 @@ syntax enable
 "
 colorscheme desert
 
+" always show status line
+"
+set laststatus=2
+
 " set dark background
 "
 set background=dark
