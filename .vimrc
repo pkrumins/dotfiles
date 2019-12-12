@@ -147,6 +147,19 @@ set hidden
 "
 set nrformats-=octal
 
+" display entire last line
+"
+set display=lastline
+
+" make horizontal scrolling more pleasant
+"
+set sidescrolloff=5
+
+" customize various invisible symbols
+"
+set list
+set listchars=tab:↦→,trail:␣,extends:»,precedes:«,nbsp:␣
+
 " configure netrw
 "
 let g:netrw_liststyle  = 3     " display a file tree
