@@ -2,6 +2,10 @@
 "
 set nocompatible
 
+" always utf-8
+"
+set encoding=utf-8
+
 " enable plugins
 "
 filetype plugin on
@@ -130,6 +134,11 @@ nmap t8 :tabn 8<CR>
 nmap t9 :tabn 9<CR>
 nmap t0 :tabn 10<CR>
 
+" improve undo/redo for Ctrl-u and Ctrl-w
+"
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
+
 " use very magic and case insensitive search patterns
 "
 nnoremap / /\v\c
@@ -159,6 +168,10 @@ set sidescrolloff=5
 "
 set list
 set listchars=tab:↦→,trail:␣,extends:»,precedes:«,nbsp:␣
+
+" drop comment symbols when joining lines
+"
+set formatoptions+=j
 
 " configure netrw
 "
