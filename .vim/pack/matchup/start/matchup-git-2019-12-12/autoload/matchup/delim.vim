@@ -34,6 +34,7 @@ function! matchup#delim#get_current(type, side, ...) " {{{1
 endfunction
 
 " }}}1
+
 function! matchup#delim#get_matching(delim, ...) " {{{1
   if empty(a:delim) || !has_key(a:delim, 'lnum') | return {} | endif
 
@@ -112,7 +113,7 @@ function! matchup#delim#get_matching(delim, ...) " {{{1
     return l:matching_list
   else
     " old syntax: open->close, close->open
-    if !len(l:matching_list) | return {} | endif
+    if len(l:matching_list) < 2 | return {} | endif
     return a:delim.side ==# 'open' ? l:matching_list[-1]
        \ : l:matching_list[0]
   endif
@@ -120,6 +121,7 @@ function! matchup#delim#get_matching(delim, ...) " {{{1
 endfunction
 
 " }}}1
+
 function! matchup#delim#get_surrounding(type, ...) " {{{1
   call matchup#perf#tic('delim#get_surrounding')
 
@@ -141,6 +143,10 @@ function! matchup#delim#get_surrounding(type, ...) " {{{1
   if matchup#delim#skip() " TODO: check for insert mode (?)
     let l:delimopts.check_skip = 0
   endif
+  " TODO: pin skip
+  if get(l:opts, 'check_skip', 0)
+    let l:delimopts.check_skip = 1
+  endif
 
   " keep track of the outermost pair found so far
   " returned when g:matchup_delim_count_fail = 1
@@ -151,6 +157,7 @@ function! matchup#delim#get_surrounding(type, ...) " {{{1
           \ l:local ? 'open_mid' : 'open', l:delimopts)
     if empty(l:open) | break | endif
 
+    " if configured, we may still accept this match
     if matchup#perf#timeout_check() && !g:matchup_delim_count_fail
       break
     endif
@@ -179,14 +186,17 @@ function! matchup#delim#get_surrounding(type, ...) " {{{1
         call matchup#perf#toc('delim#get_surrounding', 'accept')
         return [l:open, l:close]
       endif
-      call matchup#pos#set_cursor(matchup#pos#prev(l:open))
       let l:counter -= 1
       let l:best = [l:open, l:close]
     else
-      call matchup#pos#set_cursor(matchup#pos#prev(l:open))
       let l:pos_val_last = l:pos_val_open
       let l:pos_val_open = matchup#pos#val(l:open)
     endif
+
+    if l:open.lnum == 1 && l:open.cnum == 1
+      break
+    endif
+    call matchup#pos#set_cursor(matchup#pos#prev(l:open))
   endwhile
 
   if !empty(l:best) && g:matchup_delim_count_fail
@@ -258,6 +268,11 @@ endfunction
 " }}}1
 function! matchup#delim#end_offset(delim) " {{{1
   return max([0, match(a:delim.match, '.$')])
+endfunction
+
+" }}}1
+function! matchup#delim#end_pos(delim) abort " {{{1
+  return [a:delim.lnum, a:delim.cnum + matchup#delim#end_offset(a:delim)]
 endfunction
 
 " }}}1
@@ -473,7 +488,7 @@ function! s:parser_delim_new(lnum, cnum, opts) " {{{1
   let l:cursorpos = a:opts.cursorpos
   let l:found = 0
 
-  let l:sides = s:sidedict[a:opts.side]
+  let l:sides = matchup#loader#sidedict()[a:opts.side]
   let l:rebrs = b:matchup_delim_lists[a:opts.type].regex_backref
 
   " use b:match_ignorecase
@@ -602,6 +617,7 @@ function! s:parser_delim_new(lnum, cnum, opts) " {{{1
         \ 'get_matching' : s:basetypes['delim_tex'].get_matching,
         \ 'regexone'     : l:thisre,
         \ 'regextwo'     : l:thisrebr,
+        \ 'midmap'       : get(l:list, 'midmap', {}),
         \ 'rematch'      : l:re,
         \ 'highlighting' : get(a:opts, 'highlighting', 0),
         \}
@@ -654,11 +670,34 @@ function! s:get_matching_delims(down, stopline) dict " {{{1
     let l:skip = 'matchup#delim#skip0()'
   endif
 
+  " disambiguate matches for languages like julia, matlab, ruby, etc
+  if !empty(self.midmap)
+    let l:midmap = self.midmap.elements
+    if self.side ==# 'mid'
+      let l:idx = filter(range(len(l:midmap)),
+            \ 'self.match =~# l:midmap[v:val][1]')
+    else
+      let l:syn = synIDattr(synID(self.lnum, self.cnum, 0), 'name')
+      let l:idx = filter(range(len(l:midmap)),
+            \ 'l:syn =~# l:midmap[v:val][0]')
+    endif
+    if len(l:idx)
+      let l:valid = l:midmap[l:idx[0]]
+      let l:skip = printf("matchup#delim#skip1(%s, %s)",
+            \ string(l:midmap[l:idx[0]]), string(l:skip))
+    else
+      let l:skip = printf("matchup#delim#skip2(%s, %s)",
+            \ string(self.midmap.strike), string(l:skip))
+    endif
+  endif
+
   if matchup#perf#timeout_check() | return [['', 0, 0]] | endif
 
   " improves perceptual performance in insert mode
   if mode() ==# 'i' || mode() ==# 'R'
-    sleep 1m
+    if !g:matchup_matchparen_deferred
+      sleep 1m
+    endif
   endif
 
   " use b:match_ignorecase
@@ -733,7 +772,7 @@ function! s:get_matching_delims(down, stopline) dict " {{{1
     if matchup#perf#timeout_check() | break | endif
 
     let [l:lnum, l:cnum] = searchpairpos(l:open, l:mids, l:close,
-      \ l:flags, l:skip, l:lnum_corr, matchup#perf#timeout())
+          \ l:flags, l:skip, l:lnum_corr, matchup#perf#timeout())
     if l:lnum <= 0 | break | endif
 
     if a:down
@@ -746,6 +785,10 @@ function! s:get_matching_delims(down, stopline) dict " {{{1
 
     let l:re_anchored = s:anchor_regex(l:re, l:cnum, l:has_zs)
     let l:matches = matchlist(getline(l:lnum), l:re_anchored)
+    if empty(l:matches)
+      " this should never happen
+      continue
+    endif
     let l:match = l:matches[0]
 
     call add(l:list, [l:match, l:lnum, l:cnum])
@@ -787,6 +830,26 @@ endfunction
 function! matchup#delim#skip0()
   let s:eff_curpos = [line('.'), col('.')]
   execute 'return' (s:invert_skip ? '!(' : '(') b:matchup_delim_skip ')'
+endfunction
+
+""
+" advanced mid/syntax skip when found in midmap
+" {val} is a 2 element array of allowed [syntax, words]
+" {def} is the fallback skip expression
+function! matchup#delim#skip1(val, def)
+  if getline('.')[col('.')-1:] =~# '^'.a:val[1]
+    return eval(a:def)
+  endif
+  let l:s = synIDattr(synID(line('.'),col('.'), 0), 'name')
+  return l:s !~# a:val[0] || eval(a:def)
+endfunction
+
+""
+" advanced mid/syntax skip when word is not in midmap
+" {strike} pattern of disallowed mid words
+" {def} is the fallback skip expression
+function! matchup#delim#skip2(strike, def)
+  return getline('.')[col('.')-1:] =~# '^' . a:strike || eval(a:def)
 endfunction
 
 let s:invert_skip = 0
@@ -853,15 +916,6 @@ endfunction
 " initialize script variables
 let s:stopline = get(g:, 'matchup_delim_stopline', 1500)
 
-let s:sidedict = {
-      \ 'open'     : ['open'],
-      \ 'mid'      : ['mid'],
-      \ 'close'    : ['close'],
-      \ 'both'     : ['close', 'open'],
-      \ 'both_all' : ['close', 'mid', 'open'],
-      \ 'open_mid' : ['mid', 'open'],
-      \}
-
 let s:basetypes = {
       \ 'delim_tex': {
       \   'parser'       : function('s:parser_delim_new'),
@@ -874,7 +928,6 @@ let s:types = {
       \ 'delim_all' : [ s:basetypes.delim_tex ],
       \ 'delim_tex' : [ s:basetypes.delim_tex ],
       \}
-
 
 let &cpo = s:save_cpo
 

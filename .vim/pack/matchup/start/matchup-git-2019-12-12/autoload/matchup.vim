@@ -20,9 +20,17 @@ endfunction
 function! s:init_options()
   call s:init_option('matchup_matchparen_enabled',
     \ !(&t_Co < 8 && !has('gui_running')))
-  call s:init_option('matchup_matchparen_status_offscreen', 1)
-  call s:init_option('matchup_matchparen_status_offscreen_manual', 0)
-  call s:init_option('matchup_matchparen_scrolloff', 0)
+  let l:offs = {'method': 'status'}
+  if !get(g:, 'matchup_matchparen_status_offscreen', 1)
+    let l:offs = {}
+  endif
+  if get(g:, 'matchup_matchparen_status_offscreen_manual', 0)
+    let l:offs.method = 'status_manual'
+  endif
+  if exists('g:matchup_matchparen_scrolloff')
+    let l:offs.scrolloff = g:matchup_matchparen_scrolloff
+  endif
+  call s:init_option('matchup_matchparen_offscreen', l:offs)
   call s:init_option('matchup_matchparen_singleton', 0)
   call s:init_option('matchup_matchparen_deferred', 0)
   call s:init_option('matchup_matchparen_deferred_show_delay', 50)
@@ -58,6 +66,9 @@ function! s:init_options()
 
   call s:init_option('matchup_surround_enabled', 0)
 
+  call s:init_option('matchup_where_enabled', 1)
+  call s:init_option('matchup_where_separator', '')
+
   call s:init_option('matchup_matchpref', {})
 endfunction
 
@@ -82,6 +93,7 @@ function! s:init_modules()
   call s:text_obj_init_module()
   call s:misc_init_module()
   call s:surround_init_module()
+  call s:where_init_module()
 endfunction
 
 function! s:init_oldstyle_ops() " {{{1
@@ -116,6 +128,17 @@ function! s:init_oldstyle_ops() " {{{1
             \ '<plug>(matchup-o_'.l:opforce.')<plug>(matchup-a%)')
     endfor
   endif
+endfunction
+
+function! s:make_oldstyle_omaps(lhs, rhs)
+  if !s:old_style_ops
+    return 0
+  endif
+  for l:opforce in ['', 'v', 'V', '<c-v>']
+    silent! execute 'omap' l:opforce.a:lhs
+          \ '<plug>(matchup-o_'.l:opforce.')<plug>(matchup-'.a:rhs.')'
+  endfor
+  return 1
 endfunction
 
 let s:old_style_ops = !has('patch-8.1.0648')
@@ -321,6 +344,14 @@ function! s:surround_init_module() " {{{1
   endfor
 
   call matchup#perf#toc('loading_module', 'surround')
+endfunction
+
+" }}}1
+function! s:where_init_module() " {{{1
+  if !g:matchup_where_enabled | return | endif
+
+  command! -nargs=? -bang MatchupWhereAmI
+        \ call matchup#where#print('<bang>' . <q-args>)
 endfunction
 
 " }}}1

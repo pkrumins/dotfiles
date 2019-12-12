@@ -4,7 +4,6 @@
 Author: Andy Massimino <a@normed.space>
 Web: https://github.com/andymass/vim-matchup
 Script ID: 5624
-Version: 0.4.0
 License: MIT license {{{
 
   Copyright (c) 2019 Andy Massimino
@@ -40,6 +39,7 @@ CONTENTS                                                     *matchup-contents*
     Default mappings                            |matchup-default-mappings|
     Customizing mappings                        |matchup-custom-mappings|
     Features                                    |matchup-features|
+    Commands                                    |matchup-commands|
     Options                                     |matchup-options|
     File type options                           |matchup-file-types|
   FAQ                                           |matchup-faq|
@@ -292,10 +292,11 @@ make sure not to leave stale matches around.
 
 Display matches off screen~
 
-If a open or close which would have been highlighted is on a line positioned
-outside the current window, the match is shown in the status line.  If both
-the open and close match are off-screen, the close match is preferred.
-See |g:matchup_matchparen_status_offscreen|.
+If an open or close match which would have been highlighted is on a line
+positioned outside of the current window, the match is shown in the status
+line (the default).  If both the open and close match are off-screen, the
+close match is preferred.
+See |g:matchup_matchparen_offscreen| for configuration.
 
                                                   *<plug>(matchup-hi-surround)*
 Highlight surrounding~
@@ -405,7 +406,8 @@ following rules apply:
    particular, `di%` involving a `(`...`)` block will not be subject to
    these special rules.
 
-To prevent this behavior for a particular sequence `dvi%` or `vdi%`.
+To prevent this behavior for a particular operation, use `vi%d`.  Note that
+special cases involving indentation still apply (like with |i)| etc).
 
 To disable this entirely, remove the operator from the following variable, >
 
@@ -423,6 +425,40 @@ A second special case involves `da%`.  In this example, >
 <
 pressing `da%` will delete all four lines and leave no white-space.  This is
 compatible with vim's `da(`, `dab`, etc.
+
+------------------------------------------------------------------------------
+Commands~
+                                                             *matchup-commands*
+
+                                          *:NoMatchParen* *matchup-:NoMatchParen*
+:NoMatchParen       Disable matching after the plugin was loaded.
+                                          *:DoMatchParen* *matchup-:DoMatchParen*
+:DoMatchParen       Enable matching again.
+
+                                          *:MatchupShowTimes*
+:MatchupShowTimes   Display performance data, useful for debugging slow
+                    matching.  Shows last, average, and maximum times.
+                                          *:MatchupClearTimes*
+:MatchupClearTimes  Reset performance counters to zero.
+
+                                          *:MatchupWhereAmI*
+:MatchupWhereAmI?   Echos your position in code by finding successive matching
+                    words, like doing `[%` repeatedly.  Example:
+>
+  1310 do_pending_operator( … { ⯈ if ((finish_op || VIsual_active) && oap- … {
+<
+                    Running this command twice in the same position will give
+                    more verbose output.
+
+:MatchupWhereAmI??  Be more verbose about your position in code by displaying
+                    several lines.  Example:
+>
+  1310 do_pending_operator(cmdarg_T *cap, int old_col, int gui_yank) … {
+  1349     if ((finish_op || VIsual_active) && oap->op_type != OP_NOP) … {
+<
+                                          *:MatchupReload*
+:MatchupReload      Reload the plugin, mostly for debugging.  Note that
+                    this does not reload 'matchpairs' or `b:match_word`.
 
 ------------------------------------------------------------------------------
 Options~
@@ -567,25 +603,37 @@ Module matchparen~
 
   Default: 0
 
-*g:matchup_matchparen_status_offscreen*
+*g:matchup_matchparen_offscreen*
 
-  Whether to replace the |statusline| for off-screen matches.
+  Dictionary controlling the behavior with off-screen matches.  If empty, this
+  feature is disabled.  Else, it should contain the following optional keys:
 
-  If a match is off of the screen, the line belonging to that match will be
-  displayed syntax-highlighted in the status line along with the line number
-  (if line numbers are enabled).  If the match is above the screen border, an
-  additional Δ symbol will be shown to indicate that the matching line is
-  really above the cursor line.
+  method~
+    Sets the method to use to show off-screen matches.
+    Possible values are:
 
-  Default: 1
+    `'status'` (default): Replace the |status-line| for off-screen matches.
 
-*g:matchup_matchparen_scrolloff*
+    If a match is off of the screen, the line belonging to that match will be
+    displayed syntax-highlighted in the status line along with the line number
+    (if line numbers are enabled).  If the match is above the screen border,
+    an additional Δ symbol will be shown to indicate that the matching line is
+    really above the cursor line.
 
-  When enabled, off-screen matches will not be shown in the statusline
-  while the cursor is at the screen edge (respects the value of 'scrolloff').
-  This is intended to prevent flickering while scrolling with j and k.
+    `'status_manual'`: Compute the status-line but do not display it (future
+    extension).
 
-  Default: 0
+    `'popup'`: Use a popup window (requires at least vim 8.1.1406) or
+    a floating window (in neovim) to show the off-screen match.
+
+  scrolloff~
+    When enabled, off-screen matches will not be shown in the statusline while
+    the cursor is at the screen edge (respects the value of 'scrolloff').
+    This is intended to prevent flickering while scrolling with j and k.
+
+    Default: 0
+
+  Default: `{'method': 'status'}`
 
 *g:matchup_matchparen_stopline*
 
@@ -621,13 +669,24 @@ the function |timer_pause|, version 7.4.2180 and after.  For neovim, this
 will only work in nvim-0.2.1 and after.
 
 *g:matchup_matchparen_deferred_show_delay*
-*g:matchup_matchparen_deferred_hide_delay*
 
-  Adjust delays in milliseconds for deferred highlighting.
+  Delay, in milliseconds, between when the cursor moves and when we start
+  checking if the cursor is on a match.  Applies to both making highlights and
+  clearing them for deferred highlighting.
+
   Note: these delays cannot be changed dynamically and should be configured
   before the plugin loads (e.g., in your vimrc).
 
-  Defaults: 50, 700
+  Default: 50
+
+*g:matchup_matchparen_deferred_hide_delay*
+
+  If the cursor has not stopped moving, assume highlight is stale after this
+  many milliseconds.  Stale highlights are hidden.
+
+  Note: this option cannot be changed dynamically.
+
+  Default: 700
 
 *g:matchup_matchparen_deferred_fade_time*         *matchup-fading*
 
@@ -800,6 +859,17 @@ HTML
 
   Default: 0
 
+*g:matchup_matchpref.html.tagnameonly*
+
+  When set to 1, only the tag name will be highlighted, not the rest of the
+  tag, e.g., the "a" in >
+
+  <a href="http://example.com">Link</a>
+<
+  This works for xml, html, and some other html-based types.
+
+  Default: 0
+
 Customization~
 
 *g:matchup_hotfix[&filetype]*                                    *matchup-hotfix*
@@ -826,6 +896,12 @@ Customization~
   with the literal string `after`.  When placed in an autocommand or in the file
   `after/ftplugin/{&filetype}.vim`, it can be used to customize the matching
   regular expressions for a particular file type.
+
+*matchup#util#append_match_words*                                 *matchup-append*
+>
+  call matchup#util#append_match_words(str)
+<
+  Adds a set of patterns to |b:match_words|, adding a comma if necessary.
 
 ==============================================================================
 FAQ                                                               *matchup-faq*
@@ -876,7 +952,7 @@ Q Why is there a weird entry on the status line?
 A This is a feature which helps you see matches that are outside of the
   vim screen, similar to some IDEs.  If you wish to disable it, use >
 
-  let g:matchup_matchparen_status_offscreen = 0
+  let g:matchup_matchparen_offscreen = {}
 <
 Q Matching does not work when lines are too far apart.
 

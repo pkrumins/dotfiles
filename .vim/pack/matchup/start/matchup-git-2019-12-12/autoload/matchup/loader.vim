@@ -84,7 +84,8 @@ let s:match_word_cache = {}
 " }}}1
 
 function! s:init_delim_lists(...) abort " {{{1
-  let l:lists = { 'delim_tex': { 'regex': [], 'regex_backref': [] } }
+  let l:lists = { 'delim_tex': { 'regex': [], 'regex_backref': [],
+        \ 'midmap': {} } }
 
   " very tricky examples:
   " good: let b:match_words = '\(\(foo\)\(bar\)\):\3\2:end\1'
@@ -158,15 +159,19 @@ function! s:init_delim_lists(...) abort " {{{1
     let l:extra_list = map(range(len(l:words)), '{}')
 
     " pre-process various \g{special} instructions
-    let l:replacement = { 'hlend': '\%(hlend\)\{0}' }
+    let l:replacement = {
+          \ 'hlend': '\%(hlend\)\{0}',
+          \ 'syn': ''
+          \}
     for l:i in range(len(l:words))
       let l:special_flags = []
       let l:words[l:i] = substitute(l:words[l:i],
             \ g:matchup#re#gspec,
             \ '\=[get(l:replacement,submatch(1),""),'
-            \ . 'add(l:special_flags,submatch(1))][0]', 'g')
-      for l:f in l:special_flags
-        let l:extra_list[l:i][l:f] = 1
+            \ . 'add(l:special_flags,'
+            \ . '[submatch(1),submatch(2)])][0]', 'g')
+      for [l:f, l:a] in l:special_flags
+        let l:extra_list[l:i][l:f] = len(l:a) ? l:a : 1
       endfor
     endfor
 
@@ -433,10 +438,19 @@ function! s:init_delim_lists(...) abort " {{{1
       \})
   endfor
 
+  if exists('b:match_midmap') && type(b:match_midmap) == type([])
+    let l:elems = deepcopy(b:match_midmap)
+    let l:lists.delim_tex.midmap = {
+          \ 'elements': l:elems,
+          \ 'strike': '\%(' . join(map(range(len(l:elems)),
+          \   '"\\(".l:elems[v:val][1]."\\)"'), '\|') . '\)'
+          \}
+  endif
+
   " generate combined lists
   let l:lists.delim_all = {}
   let l:lists.all = {}
-  for l:k in ['regex', 'regex_backref']
+  for l:k in ['regex', 'regex_backref', 'midmap']
     let l:lists.delim_all[l:k] = l:lists.delim_tex[l:k]
     let l:lists.all[l:k] = l:lists.delim_all[l:k]
   endfor
@@ -687,6 +701,10 @@ let s:sidedict = {
       \ 'both_all' : ['close', 'mid', 'open'],
       \ 'open_mid' : ['mid', 'open'],
       \}
+
+function! matchup#loader#sidedict() abort
+  return s:sidedict
+endfunction
 
 " in case the 'N' sort flag is not available (compatibility for 7.4.898)
 let s:Nsort = has('patch-7.4.951') ? 'N' : 's:Nsort_func'

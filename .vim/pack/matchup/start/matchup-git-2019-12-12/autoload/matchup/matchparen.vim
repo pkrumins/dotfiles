@@ -45,9 +45,11 @@ function! matchup#matchparen#enable() " {{{1
     endif
     autocmd BufReadPost * call s:matchparen.transmute_reset()
     autocmd WinLeave,BufLeave * call s:matchparen.clear()
-    autocmd InsertEnter,Insertchange * call s:matchparen.highlight(1, 1)
+    autocmd InsertEnter,InsertChange * call s:matchparen.highlight(1, 1)
     autocmd InsertLeave * call s:matchparen.highlight(1)
   augroup END
+
+  call s:ensure_match_popup()
 
   if has('vim_starting')
     " prevent this from autoloading during timer callback at startup
@@ -120,6 +122,11 @@ function! matchup#matchparen#reload() " {{{1
 endfunction
 
 " }}}1
+function! matchup#matchparen#update() " {{{1
+  call s:matchparen.highlight(1)
+endfunction
+
+" }}}1
 
 let s:matchparen = {}
 
@@ -129,6 +136,12 @@ function! s:matchparen.clear() abort dict " {{{1
       silent! call matchdelete(l:id)
     endfor
     unlet! w:matchup_match_id_list
+  endif
+
+  if exists('t:match_popup')
+    call popup_hide(t:match_popup)
+  elseif has('nvim')
+    call s:close_floating_win()
   endif
 
   if exists('w:matchup_oldstatus')
@@ -180,17 +193,18 @@ endfunction
 
 " }}}1
 
-""
-" fade feature: remove highlights after a certain time
-" {level}
-"   =  0: prepare for possible loss of cursor support
-"   =  1: new highlights are coming (cancel prior fade)
-"   =  2: end of new highlights
-" {pos}     [lnum, column] of current match
-" {token}   in/out saves state between calls
-"
-" returns 1 if highlighting should be canceled
 function! s:matchparen.fade(level, pos, token) abort dict " {{{1
+  ""
+  " fade feature: remove highlights after a certain time
+  " {level}
+  "   =  0: prepare for possible loss of cursor support
+  "   =  1: new highlights are coming (cancel prior fade)
+  "   =  2: end of new highlights
+  " {pos}     [lnum, column] of current match
+  " {token}   in/out saves state between calls
+  "
+  " returns 1 if highlighting should be canceled
+
   if !g:matchup_matchparen_deferred || !exists('w:matchup_fade_timer')
     if a:level <= 0
       call s:matchparen.clear()
@@ -448,16 +462,18 @@ function! s:matchparen.highlight(...) abort dict " {{{1
   let w:matchup_need_clear = 1
 
   " disable off-screen when scrolling with j/k
-  let l:scrolling = g:matchup_matchparen_scrolloff
+  let l:scrolling = get(g:matchup_matchparen_offscreen, 'scrolloff', 0)
         \ && winheight(0) > 2*&scrolloff
         \ && (line('.') == line('w$')-&scrolloff
         \     && line('$') != line('w$')
         \     || line('.') == line('w0')+&scrolloff)
 
   " show off-screen matches
-  if g:matchup_matchparen_status_offscreen
+  let l:method = get(g:matchup_matchparen_offscreen, 'method', '')
+  if !empty(l:method) && l:method !=# 'none'
         \ && !l:current.skip && !l:scrolling
-    call s:do_offscreen(l:current)
+        \ && winheight(0) > 0
+    call s:do_offscreen(l:current, l:method)
   endif
 
   " add highlighting matches
@@ -481,7 +497,8 @@ function s:matchparen.transmute_reset() abort dict
 endfunction
 
 " }}}1
-function! s:do_offscreen(current) " {{{1
+
+function! s:do_offscreen(current, method) " {{{1
   let l:offscreen = {}
 
   if !has_key(a:current, 'links') | return | endif
@@ -496,11 +513,36 @@ function! s:do_offscreen(current) " {{{1
 
   if empty(l:offscreen) | return | endif
 
-  let w:matchup_statusline = s:format_statusline(l:offscreen)
+  if a:method ==# 'status'
+    call s:do_offscreen_statusline(l:offscreen, 0)
+  elseif a:method ==# 'status_manual'
+    call s:do_offscreen_statusline(l:offscreen, 1)
+  elseif a:method ==# 'popup' && winheight(0) > 1
+    if has('nvim')
+      call s:do_offscreen_popup_nvim(l:offscreen)
+    elseif exists('*popup_create')
+      call s:ensure_match_popup()
+      call s:do_offscreen_popup(l:offscreen)
+    endif
+  endif
+endfunction
+
+" }}}1
+function! s:do_offscreen_statusline(offscreen, manual) " {{{1
+  let l:opts = {}
+  if a:manual
+    let l:opts.compact = 1
+  endif
+  let [l:sl, l:lnum] = matchup#matchparen#status_str(a:offscreen, l:opts)
+  if s:ensure_scroll_timer() && !a:manual
+    let l:sl .= '%{matchup#matchparen#scroll_update('.l:lnum.')}'
+  endif
+
+  let w:matchup_statusline = l:sl
   if !exists('w:matchup_oldstatus')
     let w:matchup_oldstatus = &l:statusline
   endif
-  if !g:matchup_matchparen_status_offscreen_manual
+  if !a:manual
     let &l:statusline =  w:matchup_statusline
   endif
 
@@ -510,20 +552,126 @@ function! s:do_offscreen(current) " {{{1
 endfunction
 
 " }}}1
-function! matchup#matchparen#highlight_surrounding() " {{{1
-  call matchup#perf#timeout_start(500)
-  call s:highlight_surrounding()
+function! s:ensure_match_popup() abort " {{{1
+  if !exists('*popup_create') || exists('t:match_popup')
+    return
+  endif
+
+  " create a popup and store its winid
+  let t:match_popup = popup_create('', {
+        \ 'hidden': v:true,
+        \})
+
+  if !has('patch-8.1.1406')
+    " in case 'hidden' in popup_create-usage is unimplemented
+    call popup_hide(t:match_popup)
+  endif
+endfunction
+
+" }}}1
+function! s:do_offscreen_popup(offscreen) " {{{1
+  " screen position of top-left corner of current window
+  let [l:row, l:col] = win_screenpos(winnr())
+  let l:height = winheight(0) " height of current window
+  let l:adjust = matchup#quirks#status_adjust(a:offscreen)
+  let l:lnum = a:offscreen.lnum + l:adjust
+  let l:line = l:lnum < line('.') ? l:row : l:row + l:height - 1
+
+  " if popup would overlap with cursor
+  if l:line == winline() | return | endif
+
+  call popup_move(t:match_popup, {
+        \ 'line': l:line,
+        \ 'col': l:col,
+        \ 'maxheight': 1,
+        \})
+
+  " set popup text
+  let l:text = ''
+  if &number || &relativenumber
+    let l:text = printf('%*S ', wincol()-virtcol('.')-1, l:lnum)
+  endif
+  let l:text .= getline(l:lnum) . ' '
+  if l:adjust
+    let l:text .= '… ' . a:offscreen.match . ' '
+  endif
+  call setbufline(winbufnr(t:match_popup), 1, l:text)
+  call popup_show(t:match_popup)
+endfunction
+
+" }}}1
+function! s:do_offscreen_popup_nvim(offscreen) " {{{1
+  if exists('*nvim_open_win')
+    " neovim floating window
+    call s:close_floating_win()
+
+    let l:lnum = a:offscreen.lnum
+    let [l:row, l:anchor] = l:lnum < line('.')
+          \ ? [0, 'NW'] : [winheight(0), 'SW']
+    if l:row == winline() | return | endif
+
+    " Set default width and height for now.
+    let s:float_id = nvim_open_win(bufnr('%'), v:false, {
+          \ 'relative': 'win',
+          \ 'anchor': l:anchor,
+          \ 'row': l:row,
+          \ 'col': 0,
+          \ 'width': 42,
+          \ 'height': &previewheight,
+          \ 'focusable': v:false,
+          \})
+
+    if &relativenumber
+      call nvim_win_set_option(s:float_id, 'number', v:true)
+      call nvim_win_set_option(s:float_id, 'relativenumber', v:false)
+    endif
+
+    call s:populate_floating_win(a:offscreen)
+  endif
+endfunction
+
+" }}}1
+function! s:populate_floating_win(offscreen) " {{{1
+  let l:adjust = matchup#quirks#status_adjust(a:offscreen)
+  let l:lnum = a:offscreen.lnum + l:adjust
+  let l:body = getline(l:lnum, a:offscreen.lnum)
+  let l:body_length = len(l:body)
+  let l:height = min([l:body_length, &previewheight])
+
+  if exists('*nvim_open_win')
+    " neovim floating win
+    let width = max(map(copy(l:body), 'strdisplaywidth(v:val)'))
+    let l:width += wincol()-virtcol('.')
+    call nvim_win_set_width(s:float_id, l:width + 1)
+    call nvim_win_set_height(s:float_id, l:height)
+    call nvim_win_set_cursor(s:float_id, [l:lnum, 0])
+    call nvim_win_set_option(s:float_id, 'wrap', v:false)
+  endif
+endfunction
+
+" }}}1
+function! s:close_floating_win() " {{{1
+  if !exists('s:float_id')
+    return
+  endif
+  if win_id2win(s:float_id) > 0
+    call nvim_win_close(s:float_id, 0)
+  endif
+  let s:float_id = 0
 endfunction
 
 " }}}1
 
 function! MatchupStatusOffscreen() " {{{1
-  return get(w:, 'matchup_statusline', '')
+  return substitute(get(w:, 'matchup_statusline', ''),
+        \ '%<\|%#\w*#', '', 'g')
 endfunction
 
 " }}}1
-function! MatchupStatusOffscreenNohl() " {{{1
-  return substitute(MatchupStatusOffscreen(), '%<\|%#\w*#', '', 'g')
+
+function! matchup#matchparen#highlight_surrounding() abort " {{{1
+  call matchup#perf#timeout_start(500)
+  call s:highlight_surrounding()
 endfunction
 
 " }}}1
@@ -570,35 +718,34 @@ function! s:highlight_background(corrlist) " {{{1
 endfunction
 
 "}}}1
-function! s:format_statusline(offscreen) " {{{1
-  let l:adjust = matchup#quirks#status_adjust(a:offscreen)
-  let l:lnum = a:offscreen.lnum + l:adjust
-  let l:linenr = l:lnum     " distinct for relativenumber
-  let l:line = getline(l:linenr)
 
-  let l:sl = ''
+function! s:format_gutter(lnum, ...) " {{{1
+  let l:opts = a:0 ? a:1 : {}
   let l:padding = wincol()-virtcol('.')
+  let l:sl = ''
+
+  let l:direction = a:lnum < line('.')
   if &number || &relativenumber
     let l:nw = max([strlen(line('$')), &numberwidth-1])
-    let l:direction = l:linenr < line('.')
+    let l:linenr = a:lnum     " distinct for relativenumber
 
     if &relativenumber
       let l:linenr = abs(l:linenr-line('.'))
     endif
 
     let l:sl = printf('%'.(l:nw).'s', l:linenr)
-    if l:direction
+    if l:direction && !get(l:opts, 'noshowdir', 0)
       let l:sl = '%#Search#' . l:sl . '∆%#Normal#'
     else
-      let l:sl = '%#LineNr#' . l:sl . ' %#Normal#'
+      let l:sl = '%#CursorLineNr#' . l:sl . ' %#Normal#'
     endif
     let l:padding -= l:nw + 1
   endif
 
-  if empty(l:sl) && l:lnum < line('.')
+  if empty(l:sl) && l:direction && !get(l:opts, 'noshowdir', 0)
     let l:sl = '%#Search#∆%#Normal#'
     let l:padding -= 1    " OK if this is negative
-    if l:padding == -1 && indent(l:lnum) == 0
+    if l:padding == -1 && indent(a:lnum) == 0
       let l:padding = 0
     endif
   endif
@@ -607,7 +754,7 @@ function! s:format_statusline(offscreen) " {{{1
   let l:fdcstr = ''
   if &foldcolumn
     let l:fdc = max([1, &foldcolumn-1])
-    let l:fdl = foldlevel(l:lnum)
+    let l:fdl = foldlevel(a:lnum)
     let l:fdcstr = l:fdl <= l:fdc ? repeat('|', l:fdl)
           \ : join(range(l:fdl-l:fdc+1, l:fdl), '')
     let l:padding -= len(l:fdcstr)
@@ -618,37 +765,75 @@ function! s:format_statusline(offscreen) " {{{1
 
   " add remaining padding (this handles rest of fdc and scl)
   let l:sl = l:fdcstr . repeat(' ', l:padding) . l:sl
+  return l:sl
+endfunction
 
-  " let l:room = winwidth() - (wincol()-virtcol('.')+4)
+" }}}1
+function! matchup#matchparen#status_str(offscreen, ...) abort " {{{1
+  let l:opts = a:0 ? a:1 : {}
+  let l:adjust = matchup#quirks#status_adjust(a:offscreen)
+  let l:lnum = a:offscreen.lnum + l:adjust
+  let l:line = getline(l:lnum)
+
+  let l:sl = ''
+  let l:trimming = 0
+  if get(l:opts, 'compact', 0)
+    let l:trimming = 1
+  else
+    let l:sl = s:format_gutter(l:lnum, l:opts)
+  endif
+
+  if has_key(l:opts, 'width')
+    " TODO subtract the gutter from above
+    let l:room = l:opts.width
+  else
+    let l:room = min([300, winwidth(0)]) - (wincol()-virtcol('.'))
+  endif
+  let l:room -= l:adjust ? 3+strdisplaywidth(a:offscreen.match) : 0
   let l:lasthi = ''
-  for l:c in range(min([winwidth(0), strlen(l:line)]))
+  for l:c in range(min([l:room, strlen(l:line)]))
     if !l:adjust && a:offscreen.cnum <= l:c+1 && l:c+1 <= a:offscreen.cnum
           \ - 1 + strlen(a:offscreen.match)
       let l:wordish = a:offscreen.match !~? '^[[:punct:]]\{1,3\}$'
       " TODO: we can't overlap groups, this might not be totally correct
       let l:curhi = l:wordish ? 'MatchWord' : 'MatchParen'
+    elseif char2nr(l:line[l:c]) < 32
+      let l:curhi = 'SpecialKey'
     else
-      let l:curhi = synIDattr(
-            \ synID(l:lnum, l:c+1, 1), 'name')
+      let l:curhi = synIDattr(synID(l:lnum, l:c+1, 1), 'name')
       if empty(l:curhi)
         let l:curhi = 'Normal'
       endif
     endif
     let l:sl .= (l:curhi !=# l:lasthi ? '%#'.l:curhi.'#' : '')
-    if l:line[l:c] ==# "\t"
+    if l:trimming && l:line[l:c] !~ '\s'
+      let l:trimming = 0
+    endif
+    if l:trimming
+    elseif l:line[l:c] ==# "\t"
       let l:sl .= repeat(' ', strdisplaywidth(strpart(l:line, 0, 1+l:c))
             \ - strdisplaywidth(strpart(l:line, 0, l:c)))
+    elseif char2nr(l:line[l:c]) < 32
+      let l:sl .= strtrans(l:line[l:c])
+    elseif l:line[l:c] == '%'
+      let l:sl .= '%%'
     else
       let l:sl .= l:line[l:c]
     endif
     let l:lasthi = l:curhi
   endfor
-  let l:sl .= '%<%#Normal#'
+  let l:sl = substitute(l:sl, '\s\+$', '', '') . '%<%#Normal#'
   if l:adjust
     let l:sl .= '%#LineNr# … %#Normal#'
           \ . '%#MatchParen#' . a:offscreen.match . '%#Normal#'
   endif
 
+  return [l:sl, l:lnum]
+endfunction
+
+" }}}1
+
+function! s:ensure_scroll_timer() " {{{1
   if has('timers') && exists('*timer_pause')
     if !exists('s:scroll_timer')
       let s:scroll_timer = timer_start(50,
@@ -656,21 +841,19 @@ function! s:format_statusline(offscreen) " {{{1
             \ { 'repeat': -1 })
       call timer_pause(s:scroll_timer, 1)
     endif
-    if !g:matchup_matchparen_status_offscreen_manual
-      let l:sl .= '%{matchup#matchparen#scroll_update('
-            \ .l:lnum.')}'
-    endif
   endif
 
-  return l:sl
+  return exists('s:scroll_timer')
 endfunction
 
-function! matchup#matchparen#scroll_callback(tid)
+" }}}1
+function! matchup#matchparen#scroll_callback(tid) " {{{1
   call timer_pause(a:tid, 1)
   call s:matchparen.highlight(1)
 endfunction
 
-function! matchup#matchparen#scroll_update(lnum)
+" }}}1
+function! matchup#matchparen#scroll_update(lnum) " {{{1
   if line('w0') <= a:lnum && a:lnum <= line('w$')
         \ && exists('s:scroll_timer')
     call timer_pause(s:scroll_timer, 0)
@@ -679,6 +862,7 @@ function! matchup#matchparen#scroll_update(lnum)
 endfunction
 
 " }}}1
+
 function! s:add_matches(corrlist, ...) " {{{1
   if !exists('w:matchup_match_id_list')
     let w:matchup_match_id_list = []
