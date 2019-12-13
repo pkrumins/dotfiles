@@ -13,6 +13,7 @@ djview4-docker () {
 
 keepassxc-docker () {
     docker run -d -it --rm \
+        --network none \
         --device /dev/dri \
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
