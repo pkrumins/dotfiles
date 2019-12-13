@@ -62,7 +62,20 @@ lr () { # Extract a line range
     sed -n "${start},${end}p;${endPlusOne}q"
 }
 
-joinlines () { 
+join_strings () {
+    if (( $# < 2 )); then
+        echo "Usage: ${FUNCNAME[0]} <separator> <string1> [string2 ...]"
+        exit 1
+    fi
+
+    local -r separator="$1" && shift
+    local -r strings=("$@")
+    local -r IFS="$separator"
+
+    echo "${strings[*]}"
+}
+
+join_lines () {
     local joinSymbol=" "
     if (( $# >= 1 )); then
         joinSymbol="$1"
@@ -104,6 +117,19 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
     }
 
     alias i3c='vim ~/.config/i3/config'
+
+    ytdownload-480 () {
+        local -r formats=(
+            "best[ext=mp4][height=480]"
+            "bestvideo[ext=mp4][height=480]+bestaudio[ext=m4a][abr<=128]"
+            "bestvideo[ext=mp4][height=480]+bestaudio[ext=webm][abr<=128]"
+            "bestvideo[ext=mp4][height=480]+bestaudio[ext=mp3][abr<=128]"
+            "bestvideo[ext=mp4][height=480]+bestaudio[ext=aac][abr<=128]"
+        )
+        local -r formatStr="$(join_strings "+" "${formats[@]}")"
+        local -r argsUrls=("$@")
+        youtube-dl --no-mtime -f "$formatStr" "${argsUrls[@]}"
+    }
 
     # Load docker aliases
     #
