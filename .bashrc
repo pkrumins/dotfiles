@@ -118,18 +118,30 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
 
     alias i3c='vim ~/.config/i3/config'
 
-    ytdownload-480 () {
+    ytdownload () {
+        if (( $# < 2 )); then
+            echo "Usage: ytdownload <video quality> [args] <urls>"
+            return 1;
+        fi
+        local quality="$1" && shift
+        if ! isInteger "$quality"; then
+            echo "Error: Video quality is not an integer."
+            return 1;
+        fi
         local -r formats=(
-            "best[ext=mp4][height=480]"
-            "bestvideo[ext=mp4][height=480]+bestaudio[ext=m4a][abr<=128]"
-            "bestvideo[ext=mp4][height=480]+bestaudio[ext=webm][abr<=128]"
-            "bestvideo[ext=mp4][height=480]+bestaudio[ext=mp3][abr<=128]"
-            "bestvideo[ext=mp4][height=480]+bestaudio[ext=aac][abr<=128]"
+            "best[ext=mp4][height=$quality]"
+            "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=m2a][abr<=128]"
+            "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=webm][abr<=128]"
+            "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=mp3][abr<=128]"
+            "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=aac][abr<=128]"
         )
         local -r formatStr="$(join_strings "+" "${formats[@]}")"
         local -r argsUrls=("$@")
         youtube-dl --no-mtime -f "$formatStr" "${argsUrls[@]}"
     }
+
+    alias ytdownload-480='ytdownload 480'
+    alias ytdownload-720='ytdownload 720'
 
     # Load docker aliases
     #
