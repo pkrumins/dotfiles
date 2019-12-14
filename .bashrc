@@ -135,7 +135,7 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
             "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=mp3][abr<=128]"
             "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=aac][abr<=128]"
         )
-        local -r formatStr="$(join_strings "+" "${formats[@]}")"
+        local -r formatStr="$(join_strings "/" "${formats[@]}")"
         local -r argsUrls=("$@")
         youtube-dl --no-mtime -f "$formatStr" "${argsUrls[@]}"
     }
