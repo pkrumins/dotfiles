@@ -17,6 +17,28 @@ fi
 #
 . ~/projects/dotfiles/.bashrc-monitors
 
+# Colors
+#
+COLOR_RESET="\033[0m"
+
+COLOR_BLACK="\033[30m"
+COLOR_RED="\033[31m"
+COLOR_GREEN="\033[32m"
+COLOR_YELLOW="\033[33m"
+COLOR_BLUE="\033[34m"
+COLOR_MAGENTA="\033[35m"
+COLOR_CYAN="\033[36m"
+COLOR_GRAY="\033[37m"
+
+BG_BLACK="\033[40m"
+BG_RED="\033[41m"
+BG_GREEN="\033[42m"
+BG_YELLOW="\033[43m"
+BG_BLUE="\033[44m"
+BG_MAGENTA="\033[45m"
+BG_CYAN="\033[46m"
+BG_GRAY="\033[47m"
+
 # Useful functions and aliases
 #
 isInteger () [[ $1 =~ ^-?[0-9]+$ ]]
