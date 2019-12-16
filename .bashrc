@@ -167,7 +167,7 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
 
     function hr () {
         local -r cols="${COLUMNS:-$(tput cols)}"
-        printf "%${cols}s" | sed 's/ /─/g'
+        printf "%${cols}s\n" | sed 's/ /─/g'
     }
 
     # Load docker aliases
