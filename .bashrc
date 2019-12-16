@@ -165,6 +165,11 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
     alias ytdownload-480='ytdownload 480'
     alias ytdownload-720='ytdownload 720'
 
+    function hr () {
+        local -r cols="${COLUMNS:-$(tput cols)}"
+        printf "%${cols}s" | sed 's/ /─/g'
+    }
+
     # Load docker aliases
     #
     . ~/projects/dotfiles/.bashrc-docker
