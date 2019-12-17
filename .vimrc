@@ -92,6 +92,10 @@ set expandtab
 "
 set autoindent
 
+" use a dictionary
+"
+set dictionary=/usr/share/dict/words
+
 " create command ":sudow" that sudo writes the file
 "
 cnoremap sudow w !sudo tee % >/dev/null
