@@ -275,6 +275,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec bash -i -c gmail'
 
 # Autostart doublecmd on workspace 7
 assign [class="Double Commander"] workspace 7
+for_window [class="Double Commander" title="Find files"] floating enable
 exec --no-startup-id i3-msg 'workspace 7; exec bash -i -c doublecmd'
 
 # Enable workspace 8 and switch to workspace 3
