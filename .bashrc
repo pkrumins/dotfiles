@@ -30,6 +30,15 @@ COLOR_MAGENTA="\033[35m"
 COLOR_CYAN="\033[36m"
 COLOR_GRAY="\033[37m"
 
+COLOR_BOLD_BLACK="\033[1;30m"
+COLOR_BOLD_DRED="\033[1;31m"
+COLOR_BOLD_GREEN="\033[1;32m"
+COLOR_BOLD_YELLOW="\033[1;33m"
+COLOR_BOLD_BLUE="\033[1;34m"
+COLOR_BOLD_MAGENTA="\033[1;35m"
+COLOR_BOLD_CYAN="\033[1;36m"
+COLOR_BOLD_GRAY="\033[1;37m"
+
 BG_BLACK="\033[40m"
 BG_RED="\033[41m"
 BG_GREEN="\033[42m"
@@ -191,7 +200,7 @@ prompt_command () {
     else
         local -r status_str="\[${COLOR_RED}\][$last_exit_code]\[${COLOR_RESET}\]"
     fi
-    export PS1="\d@\t\n${status_str}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\\$ "
+    export PS1="\d@\t\n${status_str}\[${COLOR_BOLD_GREEN}\]\u@\h\[${COLOR_RESET}\]:\[${COLOR_BOLD_BLUE}\]\w\[${COLOR_RESET}\]\\$ "
 }
 export PROMPT_COMMAND=prompt_command
 
