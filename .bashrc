@@ -183,7 +183,17 @@ stty quit undef
 
 # Prompt
 #
-export PS1="\d@\t\n[\$?]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\\$ "
+prompt_command () {
+    local -r last_exit_code="$?"
+    history -a
+    if (( last_exit_code == 0 )); then
+        local -r status_str="\[${COLOR_GREEN}\][0]\[${COLOR_RESET}\]"
+    else
+        local -r status_str="\[${COLOR_RED}\][$last_exit_code]\[${COLOR_RESET}\]"
+    fi
+    export PS1="\d@\t\n${status_str}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\\$ "
+}
+export PROMPT_COMMAND=prompt_command
 
 # History
 #
@@ -195,7 +205,6 @@ export HISTCONTROL=ignoreboth
 export HISTIGNORE="&:[ ]*"
 export HISTFILESIZE=10000000
 export HISTSIZE=10000000
-export PROMPT_COMMAND='history -a'
 
 # Recheck window size after each command
 #
