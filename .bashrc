@@ -136,6 +136,8 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
     alias micon=micunmute
     alias unmutemic=micunmute
 
+    alias ws='i3-msg workspace'
+
     br () {
         if (( $# < 1 )); then
             echo "Usage: br <brightness level>"
