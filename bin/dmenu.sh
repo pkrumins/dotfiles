@@ -18,6 +18,14 @@ google_search () {
     true;
 }
 
+workspace () {
+    local -r ws="$1";
+    if [[ -z "$ws" ]]; then
+        return
+    fi
+    i3-msg workspace "$ws"
+}
+
 main () {
     local -Ar commands=(
         ["audioon"]="audioon"
@@ -94,8 +102,19 @@ main () {
         ["lunicode"]="chrome-browsing http://local.unicodetools.browserling.com"
     )
 
-    local -r choice="$(dmenu_choice "${!commands[@]}" "${!apps[@]}" "${!browsing[@]}")"
-    if [[ -v "commands[$choice]" ]]; then
+    local -r choice="$( \
+        dmenu_choice \
+            "ws" \
+            "${!workspace[@]}" \
+            "${!commands[@]}" \
+            "${!apps[@]}" \
+            "${!browsing[@]}" \
+    )"
+
+    if [[ $choice == "ws "* ]]; then
+        local -r ws="$(c2 <<< "$choice")"
+        workspace "$ws"
+    elif [[ -v "commands[$choice]" ]]; then
         eval "${commands[$choice]}"
     elif [[ -v "apps[$choice]" ]]; then
         eval "${apps[$choice]}"
