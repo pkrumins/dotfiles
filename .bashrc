@@ -138,6 +138,8 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
 
     alias ws='i3-msg workspace'
 
+    alias pkgfiles='dpkg-query -L'
+
     br () {
         if (( $# < 1 )); then
             echo "Usage: br <brightness level>"
