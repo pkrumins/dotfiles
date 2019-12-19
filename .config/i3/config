@@ -285,6 +285,13 @@ exec --no-startup-id i3-msg 'workspace 7; exec bash -i -c doublecmd'
 # Enable workspace 8 and switch to workspace 3
 exec --no-startup-id i3-msg 'workspace 8; workspace 3'
 
+# Show calendar on alt+c
+for_window [instance="calendar"] floating enable sticky enable
+for_window [instance="calendar"] resize set 600 600
+for_window [instance="calendar"] move position center
+for_window [instance="calendar"] border pixel 3
+bindsym $mod+c exec --no-startup-id bash -i ~/bin/i3-show-or-hide-calendar.sh
+
 # Autostart R scratchpad
 bindsym $mod+m [instance="math"] scratchpad show; [instance="math"] move position center
 for_window [instance="math"] floating enable sticky enable
