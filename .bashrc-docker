@@ -11,11 +11,11 @@ doublecmd-qt-docker () {
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v /run/user/1000:/run/user/1000 \
-        -v $HOME:/home/app/home \
-        -v $HOME/Downloads:/home/app/Downloads \
-        -v $HOME/projects:/home/app/projects \
-        -v /storage/workstation:/home/app/workstation \
-        -v /storage/archive:/home/app/archive \
+        -v $HOME:/home/foobar \
+        -v $HOME/Downloads:/Downloads \
+        -v $HOME/projects:/projects \
+        -v /storage/workstation:/workstation \
+        -v /storage/archive:/archive \
         -v $doublecmd_data_dir:/home/app/.config/doublecmd \
         doublecmd-qt
 }
