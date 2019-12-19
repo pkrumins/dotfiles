@@ -11,7 +11,11 @@ dmenu_choice () {
 }
 
 twitter_search () {
-    true;
+    local -r query="$1";
+    if [[ -z "$query" ]]; then
+        return
+    fi
+    ts "$query"
 }
 
 google_search () {
@@ -19,11 +23,11 @@ google_search () {
 }
 
 workspace () {
-    local -r ws="$1";
-    if [[ -z "$ws" ]]; then
+    local -r workspace="$1";
+    if [[ -z "$workspace" ]]; then
         return
     fi
-    i3-msg workspace "$ws"
+    i3-msg workspace "$workspace"
 }
 
 main () {
@@ -34,7 +38,6 @@ main () {
         ["decvol"]="decvol"
     )
     local -Ar search=(
-        ["ts"]="twitter_search"
         ["gs"]="google_search"
     )
     local -Ar apps=(
@@ -105,6 +108,7 @@ main () {
     local -r choice="$( \
         dmenu_choice \
             "ws" \
+            "ts" \
             "${!workspace[@]}" \
             "${!commands[@]}" \
             "${!apps[@]}" \
@@ -112,8 +116,11 @@ main () {
     )"
 
     if [[ $choice == "ws "* ]]; then
-        local -r ws="$(c2 <<< "$choice")"
-        workspace "$ws"
+        local -r workspace="$(c2 <<< "$choice")"
+        workspace "$workspace"
+    elif [[ $choice == "ts "* ]]; then
+        local -r query="$(cut -d ' ' -f 2- <<< "$choice")"
+        twitter_search "$query"
     elif [[ -v "commands[$choice]" ]]; then
         eval "${commands[$choice]}"
     elif [[ -v "apps[$choice]" ]]; then
