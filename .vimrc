@@ -104,6 +104,8 @@ cnoremap sudow w !sudo tee % >/dev/null
 "
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 " make ctrl+s save the current file
 "
