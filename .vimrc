@@ -100,6 +100,11 @@ set dictionary=/usr/share/dict/words
 "
 cnoremap sudow w !sudo tee % >/dev/null
 
+" gj and gk are better j k
+"
+nnoremap j gj
+nnoremap k gk
+
 " make ctrl+s save the current file
 "
 nmap <C-S> :w<CR>
