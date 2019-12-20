@@ -95,6 +95,10 @@ set autoindent
 "
 set dictionary=/usr/share/dict/words
 
+" nerdtree mappings
+"
+nnoremap <silent> <Leader>t :NERDTreeToggle<CR>
+
 " bufexplorer mappings
 "
 nnoremap <silent> <Leader>ee :ToggleBufExplorer<CR>
@@ -104,8 +108,8 @@ nnoremap <silent> <Leader>ev :BufExplorerVerticalSplit<CR>
 " Leader-f opens fzf files
 " Leader-b opens fzf buffers
 "
-nnoremap <Leader>f :Files<CR>
-nnoremap <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
 
 " create command ":sudow" that sudo writes the file
 "
