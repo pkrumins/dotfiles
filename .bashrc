@@ -1,3 +1,7 @@
+# Vi mode
+#
+set -o vi
+
 # Computer type
 #
 if [[ ! -f $HOME/.computer-desktop && ! -f $HOME/.computer-laptop  && ! -f $HOME/.computer-server ]]; then
@@ -342,6 +346,15 @@ alias ncdu='ncdu -r'
 if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
 fi
+
+# Enable fzf shortcuts
+#
+. ~/projects/dotfiles/.bashrc-fzf
+
+# Auto-complete with qq
+#
+FZF_COMPLETION_TRIGGER="qq"
+. ~/projects/dotfiles/.bashrc-fzf-completion
 
 # Setup path
 #
