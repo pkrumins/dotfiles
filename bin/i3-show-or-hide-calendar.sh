@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 
+set +o history
+
 if xdotool search -classname "calendar" &>/dev/null; then
     i3-msg '[instance="calendar"] kill'
 else
