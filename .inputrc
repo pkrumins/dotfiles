@@ -13,6 +13,8 @@ $if mode=vi
     "\C-f": forward-word
 
     "\C-w": unix-word-rubout
+    "\C-y": undo
+    "\ey":  yank
 
     "\C-l": clear-screen
     "\C-k": redraw-current-line
