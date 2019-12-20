@@ -20,7 +20,7 @@ $if mode=vi
     "\C-k": previous-history
     "\C-j": next-history
     "\C-r": reverse-search-history
-    "\C-t": forward-search-history
+    "\C-s": forward-search-history
 
     "\C-q": quoted-insert
 
