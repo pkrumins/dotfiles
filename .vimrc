@@ -111,6 +111,11 @@ nnoremap <silent> <Leader>ev :BufExplorerVerticalSplit<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 
+" Leader-s toggles spell check
+"
+nnoremap <silent> <Leader>s :set spell!<CR>
+inoremap <silent> <Leader>s <ESC>:set spell!<CR>a
+
 " create command ":sudow" that sudo writes the file
 "
 cnoremap sudow w !sudo tee % >/dev/null
