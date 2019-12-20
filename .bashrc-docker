@@ -120,7 +120,7 @@ vlc-docker () {
         -e DISPLAY=$DISPLAY \
         -e PULSE_SERVER=unix:/run/user/$UID/pulse/native \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $HOME/Downloads:/home/app/Downloads \
+        -v $HOME/VLC:/home/app/VLC \
         -v /run/user/$UID/pulse:/run/user/$UID/pulse \
         --name vlc \
         vlc --no-qt-privacy-ask "$files"
