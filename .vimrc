@@ -2,6 +2,9 @@
 "
 set nocompatible
 
+" leader is \
+let mapleader="\\"
+
 " always utf-8
 "
 set encoding=utf-8
@@ -43,10 +46,6 @@ set number
 "
 set incsearch
 set hlsearch
-
-" make ",," hide syntax highlighting
-"
-nmap ,, :noh<CR>
 
 " enable timeout for key mappings
 "
@@ -96,9 +95,25 @@ set autoindent
 "
 set dictionary=/usr/share/dict/words
 
+" bufexplorer mappings
+"
+nnoremap <silent> <Leader>ee :ToggleBufExplorer<CR>
+nnoremap <silent> <Leader>eh :BufExplorerHorizontalSplit<CR>
+nnoremap <silent> <Leader>ev :BufExplorerVerticalSplit<CR>
+
+" Leader-f opens fzf files
+" Leader-b opens fzf buffers
+"
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+
 " create command ":sudow" that sudo writes the file
 "
 cnoremap sudow w !sudo tee % >/dev/null
+
+" make ,, hide syntax highlighting
+"
+nmap ,, :noh<CR>
 
 " gj and gk are better j k
 "
