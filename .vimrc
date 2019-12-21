@@ -127,9 +127,12 @@ nmap ,, :noh<CR>
 " gj and gk are better j k
 "
 nnoremap j gj
+nnoremap gj j
 nnoremap k gk
+nnoremap gk k
 vnoremap j gj
-vnoremap k gk
+vnoremap gj j
+vnoremap gk j
 
 " make ctrl+s save the current file
 "
