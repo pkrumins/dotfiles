@@ -5,6 +5,8 @@ lamp-docker () {
     fi
 
     docker run -d -it --rm \
+        --network lamp \
+        --ip 10.10.10.10 \
         -p 3306:3306 \
         -p 80:80 \
         -v $HOME/projects:/home/app/projects \
@@ -197,6 +199,7 @@ chrome-docker () {
         --security-opt seccomp=~/projects/dotfiles/chrome.seccomp.json \
         --device /dev/snd \
         --device /dev/dri \
+        --network lamp \
         -e DISPLAY=$DISPLAY \
         -e PULSE_SERVER=unix:/run/user/$UID/pulse/native \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
