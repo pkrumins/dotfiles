@@ -9,6 +9,7 @@ lamp-docker () {
         --ip 10.10.10.10 \
         -p 3306:3306 \
         -p 80:80 \
+        -v /etc/hosts:/etc/hosts \
         -v $HOME/projects:/home/app/projects \
         --name lamp \
         lamp
