@@ -1,3 +1,17 @@
+lamp-docker () {
+    local -r mysql_data_dir="$HOME/.dockerdata/mysql"
+    if [[ ! -d "$mysql_data_dir" ]]; then
+        mkdir -p "$mysql_data_dir"
+    fi
+
+    docker run -d -it --rm \
+        -p 3306:3306 \
+        -p 80:80 \
+        -v $HOME/projects:/home/app/projects \
+        --name lamp \
+        lamp
+}
+
 doublecmd-qt-docker () {
     local -r doublecmd_data_dir="$HOME/.dockerdata/doublecmd"
     if [[ ! -d "$doublecmd_data_dir" ]]; then
@@ -17,6 +31,7 @@ doublecmd-qt-docker () {
         -v /storage/workstation:/workstation \
         -v /storage/archive:/archive \
         -v $doublecmd_data_dir:/home/app/.config/doublecmd \
+        --name doublecmd-qt \
         doublecmd-qt
 }
 
@@ -285,6 +300,7 @@ r-docker () {
     r -q --vanilla
 }
 
+alias mysql='docker exec -it lamp mysql'
 alias doublecmd='doublecmd-qt'
 alias doublecmd-qt='doublecmd-qt-docker'
 alias djview4='djview4-docker'
