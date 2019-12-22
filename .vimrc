@@ -136,15 +136,19 @@ vnoremap gk j
 
 " make ctrl+s save the current file
 "
-nmap <C-S> :w<CR>
-imap <C-S> <ESC>:w!<CR>a
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <ESC>:w!<CR>a
 
 " make ctrl+hjkl move between windows
 "
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+inoremap <C-h> <ESC><C-w>h
+nnoremap <C-j> <C-w>j
+inoremap <C-j> <ESC><C-w>j
+nnoremap <C-k> <C-w>k
+inoremap <C-k> <ESC><C-w>k
+nnoremap <C-l> <C-w>l
+inoremap <C-l> <ESC><C-w>l
 
 " tab stuff
 "
