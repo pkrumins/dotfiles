@@ -176,11 +176,12 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
         )
         local -r formatStr="$(join_strings "/" "${formats[@]}")"
         local -r argsUrls=("$@")
-        youtube-dl --no-mtime -f "$formatStr" "${argsUrls[@]}"
+        youtube-dl-docker --no-mtime -f "$formatStr" "${argsUrls[@]}"
     }
 
     alias ytdownload-480='ytdownload 480'
     alias ytdownload-720='ytdownload 720'
+    alias youtube-dl='youtube-dl-docker'
 
     function hr () {
         local -r cols="${COLUMNS:-$(tput cols)}"
