@@ -72,7 +72,7 @@ URxvt.saveLines: 1000000
 URxvt.perl-ext-common: keyboard-select,resize-font,clipboard,clipboard-paste-on-right-click
 
 ! Configure keyboard-select extension
-URxvt.keysym.C-grave: perl:keyboard-select:activate
+URxvt.keysym.C-grave: perl:keyboard-select:search
 URxvt.keyboard-select.clipboard: true
 
 ! Configure resize-font extension
