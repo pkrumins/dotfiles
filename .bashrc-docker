@@ -1,4 +1,9 @@
 youtube-dl-docker () {
+    local -r download_dir="$HOME/YTD"
+    if [[ ! -d "$download_dir" ]]; then
+        mkdir -p "$download_dir"
+    fi
+
     docker run -it --rm \
         -v $HOME/YTD:/home/app/YTD \
         youtube-dl "$@"
@@ -137,6 +142,11 @@ ffmpeg-docker () {
 }
 
 vlc-docker () {
+    local -r vlc_dir="$HOME/VLC"
+    if [[ ! -d "$vlc_dir" ]]; then
+        mkdir -p "$vlc_dir"
+    fi
+
     local files="$@"
 
     docker run -d -it --rm \
