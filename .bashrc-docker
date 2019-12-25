@@ -41,6 +41,8 @@ doublecmd-qt-docker () {
         -v /run/user/1000:/run/user/1000 \
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
+        -v $HOME/VLC:/VLC \
+        -v $HOME/YTD:/YTD \
         -v $HOME/projects:/projects \
         -v /storage/workstation:/workstation \
         -v /storage/archive:/archive \
