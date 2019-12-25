@@ -357,6 +357,10 @@ fi
 FZF_COMPLETION_TRIGGER="qq"
 . ~/projects/dotfiles/.bashrc-fzf-completion
 
+# Enable z
+#
+. ~/projects/dotfiles/z
+
 # Setup path
 #
 PATH=$PATH:~/.local/bin
