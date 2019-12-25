@@ -361,6 +361,17 @@ FZF_COMPLETION_TRIGGER="qq"
 #
 . ~/projects/dotfiles/z
 
+# Use fzf with z
+#
+unalias z
+z() {
+  if [[ -z "$@" ]]; then
+    cd "$(_z -l 2>&1 | fzf +s --tac --height 10 --reverse | sed 's/^[0-9,.]* *//')"
+  else
+    _z "$@"
+  fi
+}
+
 # Setup path
 #
 PATH=$PATH:~/.local/bin
