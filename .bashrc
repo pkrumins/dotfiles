@@ -366,7 +366,7 @@ FZF_COMPLETION_TRIGGER="qq"
 unalias z
 z() {
   if [[ -z "$@" ]]; then
-    cd "$(_z -l 2>&1 | fzf +s --tac --height 10 --reverse | sed 's/^[0-9,.]* *//')"
+    cd "$(_z -l 2>&1 | fzf +s --tac --height 10 --reverse -n 2.. | sed -r 's/^[0-9,. ]*//')"
   else
     _z "$@"
   fi
