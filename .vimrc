@@ -215,6 +215,10 @@ set listchars=tab:↦→,trail:␣,extends:»,precedes:«,nbsp:␣
 "
 set formatoptions+=j
 
+" always report the number of changed lines
+"
+set report=0
+
 " when opening a file, jump to the last cursor position
 "
 autocmd BufReadPost *
