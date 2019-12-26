@@ -139,7 +139,6 @@ ffmpeg-docker () {
         --device /dev/dri \
         -v $HOME/Downloads:/home/app/Downloads \
         -v $HOME/VLC:/home/app/VLC \
-        --name ffmpeg \
         ffmpeg "$@"
 }
 
