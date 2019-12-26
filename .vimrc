@@ -235,3 +235,8 @@ let g:netrw_dirhistmax = 0     " disable netrw history
 "
 let g:vim_json_syntax_conceal = 0
 
+" configure easy-align
+"
+xmap <leader>ea <Plug>(EasyAlign)
+nmap <leader>ea <Plug>(EasyAlign)
+
