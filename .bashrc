@@ -361,6 +361,10 @@ FZF_COMPLETION_TRIGGER="qq"
 #
 . ~/projects/dotfiles/z
 
+# Uze fz with z
+#
+. ~/projects/dotfiles/fz
+
 # Use fzf with z
 #
 unalias z
