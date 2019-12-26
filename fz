@@ -1,3 +1,6 @@
+#
+# git 2019-12-26
+#
 # Copyright 2017-2018 Henry Chang
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -194,6 +197,7 @@ __fz_bash_completion() {
     COMPREPLY=( "$selected" )
   fi
 
+echo a
   printf '\e[5n'
 }
 
