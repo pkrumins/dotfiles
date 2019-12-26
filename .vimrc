@@ -227,3 +227,7 @@ autocmd BufReadPost *
 let g:netrw_liststyle  = 3     " display a file tree
 let g:netrw_dirhistmax = 0     " disable netrw history
 
+" configure json plugin
+"
+let g:vim_json_syntax_conceal = 0
+
