@@ -120,6 +120,10 @@ inoremap <silent> <Leader>s <ESC>:set spell!<CR>a
 "
 cnoremap sudow w !sudo tee % >/dev/null
 
+" quick exit with Q
+"
+nnoremap Q :q<CR>
+
 " make ,, hide syntax highlighting
 "
 nmap ,, :noh<CR>
