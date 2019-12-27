@@ -243,7 +243,7 @@ alias ga9='git status | grep modified | lr 9 9 | c2 | xargs git add'
 alias gm='git commit -m'
 alias gp='git push'
 alias gpu='git pull'
-alias gl='git log'
+alias gl='git log | less -RFX --pattern "^commit "'
 alias gd='git diff'
 alias gdf='git diff | diff-so-fancy | less --tabs=4 -RFX --pattern "^(commit|added:|deleted:|modified:) "'
 alias gd1='git status | grep modified | lr 1 1 | c2 | xargs git diff'
@@ -274,6 +274,7 @@ alias gsf='git show | diff-so-fancy | less --tabs=4 -RFX --pattern "^(commit|add
 alias gsm='git status | grep modified'
 alias gsml='git status | grep modified | less'
 alias gsma2='git status | grep modified | c2 | xargs git add'
+alias grh='git reset HEAD'
 
 # Extract columns
 #
