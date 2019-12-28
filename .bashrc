@@ -365,19 +365,33 @@ FZF_COMPLETION_TRIGGER="qq"
 #
 . ~/projects/dotfiles/z
 
-# Uze fz with z
+# Use z with fz
 #
 . ~/projects/dotfiles/fz
 
-# Use fzf with z
+# Use z with fzf
 #
 unalias z
 z() {
-  if [[ -z "$@" ]]; then
-    cd "$(_z -l 2>&1 | fzf +s --tac --height 10 --reverse -n 2.. | sed -r 's/^[0-9,. ]*//')"
-  else
-    _z "$@"
-  fi
+    if [[ -z "$@" ]]; then
+        cd "$(_z -l 2>&1 | fzf +s --tac --height 15 --reverse -n 2.. | sed -r 's/^[0-9,. ]*//')"
+    else
+        _z "$@"
+    fi
+}
+
+# Use v with fzf
+#
+v() {
+    if [[ -z "$@" ]]; then
+        local -r choice="$(command v -l 2>&1 | fzf +s --tac --height 15 --reverse | sed -r 's/^[0-9,. \t]*//')"
+        if [[ ! -z "$choice" ]]; then
+            local -r file="${choice/#~/$HOME}"
+            vim "$file"
+        fi
+    else
+        command v "$@"
+    fi
 }
 
 # Setup path
