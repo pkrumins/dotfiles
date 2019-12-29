@@ -361,6 +361,10 @@ fi
 FZF_COMPLETION_TRIGGER="qq"
 . ~/projects/dotfiles/.bashrc-fzf-completion
 
+# Show directory tree with ctrl+g
+#
+export FZF_ALT_C_OPTS="--preview 'tree -a -I .git -rtC {}'"
+
 # Enable z
 #
 . ~/projects/dotfiles/z
