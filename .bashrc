@@ -361,13 +361,29 @@ fi
 FZF_COMPLETION_TRIGGER="qq"
 . ~/projects/dotfiles/.bashrc-fzf-completion
 
+# Use ripgrep in fzf
+#
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden -g '!.git' -g '!.dockerdata/chrome' -g '!node_modules'"
+
+# Use ripgrep for ctrl+f
+#
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Show file preview with bat with ctrl+f
+#
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :100 {}'"
+
 # Use fd for ctrl+g
 #
-export FZF_ALT_C_COMMAND="fd --type d --no-ignore -H -E .git -E .dockerdata/chrome"
+export FZF_ALT_C_COMMAND="fd --type d --no-ignore -H -E '.git' -E '.dockerdata/chrome' -E 'node_modules'"
 
 # Show directory tree with ctrl+g
 #
 export FZF_ALT_C_OPTS="--preview 'tree -a -I .git -rtC {}'"
+
+# Show multi line history with ctrl+r
+#
+export FZF_CTRL_R_OPTS="--ansi --preview-window wrap:down:2 --preview 'bat -l bash --color=always --style=plain <(echo {} | sed s/^[0-9\ ]//)'"
 
 # Enable z
 #
