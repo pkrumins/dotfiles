@@ -118,9 +118,9 @@ else
   fi
   bind -m vi-command '"\C-f": "i\C-f"'
 
-  # Esc-r - Paste the selected command from history into the command line
-  bind '"\er": "\C-x\C-addi`__fzf_history__`\C-x\C-e\C-x\C-r\C-x^\C-x\C-a$a"'
-  bind -m vi-command '"\er": "i\er"'
+  # Ctrl-r - Paste the selected command from history into the command line
+  bind '"\C-r": "\C-x\C-addi`__fzf_history__`\C-x\C-e\C-x\C-r\C-x^\C-x\C-a$a"'
+  bind -m vi-command '"\C-r": "i\C-r"'
 
   # Ctrl-g - cd into the selected directory
   bind '"\C-g": "\C-x\C-addi`__fzf_cd__`\C-x\C-e\C-x\C-r\C-m"'
