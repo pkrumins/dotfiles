@@ -361,6 +361,10 @@ fi
 FZF_COMPLETION_TRIGGER="qq"
 . ~/projects/dotfiles/.bashrc-fzf-completion
 
+# Use fd for ctrl+g
+#
+export FZF_ALT_C_COMMAND="fd --type d --no-ignore -H -E .git -E .dockerdata/chrome"
+
 # Show directory tree with ctrl+g
 #
 export FZF_ALT_C_OPTS="--preview 'tree -a -I .git -rtC {}'"
