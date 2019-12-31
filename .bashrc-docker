@@ -1,3 +1,12 @@
+libreoffice-docker () {
+    docker run -d -it --rm \
+        --network none \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Docs:/home/app/Docs \
+        libreoffice --nologo
+}
+
 youtube-dl-docker () {
     local -r download_dir="$HOME/YTD"
     if [[ ! -d "$download_dir" ]]; then
@@ -322,6 +331,7 @@ r-docker () {
     r -q --vanilla
 }
 
+alias libreoffice='libreoffice-docker'
 alias mysql='docker exec -it lamp mysql'
 alias doublecmd='doublecmd-qt'
 alias doublecmd-qt='doublecmd-qt-docker'
