@@ -1,0 +1,125 @@
+1.9.5
+	Print clear errors on unknown character encodings #144
+	Don't print errors on pipe closure in python3 #156
+	Support icdiff.pager configuration setting with git-icdiff #157 #160
+	Filenames with spaces work properly in git-icdiff #158
+	Show the correct filename in git-icdiff #159
+	Add windows suport for detecting terminal width #155 #163
+1.9.4
+	Allow {path} and {basename} in --label #139
+	Properly implement git difftool protocol #140
+
+1.9.3
+	Properly set the version number
+
+1.9.2
+	Add --exclude-lines (-E) which can exclude comments
+	Add --color-map so you can choose which colors to use for what #121 #117
+	Allow highlighted characters to be bold #122
+	Support configuring git-icdiff with gitconfig
+	Don't choke on bad terminal sizes #113
+	Print proper error messages instead of raising exceptions
+	Allow the line numbers to be colorized
+	Add a LICENSE file
+
+1.9.1
+	Handle files with CR characters better and add --strip-trailing-cr
+
+1.9.0
+	Fix setup.py by symlinking icdiff to icdiff.py
+
+1.8.2
+	Add short flags for --highlight (-H), --line-numbers (-N), and --whole-file (-W).
+	Fix use with bash process substitution and other special files
+
+1.8.1
+	Updated remaining copy of unicode test file (b/1)
+
+1.8.0
+	Updated unicode test file (input-3)
+	Allow testing installed version
+	Allow importing as a module
+	Minor deduplication tweak to git-icdiff
+	Add pip instructions to readme
+	Allow using --tabsize
+	Allow non-recursive directory diffing
+
+1.7.6
+	Fixed copyright.
+
+1.7.3
+	Fix git-icdiff to handle filenames with spaces as arguments.
+
+1.7.2
+	Don't stop diffing recursively when encountering a binary file.
+
+1.7.1
+	Don't treat files with identical (mode, size, mtime) as equal.
+
+1.7.0
+	Add tests
+
+1.6.4
+	Unbreak --recursive again
+
+1.6.3
+	Stop setting LESS_IS_MORE with git-icdiff, fixing #33.
+
+1.6.2
+	Add support for setting the output encoding and default to utf8
+
+1.6.1
+	Unbreak --recursive
+
+1.6.0
+	Add support for setting the encoding, and handle fullwidth chars
+	in python2
+
+1.5.3
+	Support use as an svn difftool.
+	Support -U and -L, and allow but ignore -u.
+
+1.5.2
+	Various pager improvements in git-icdiff.
+
+1.5.1
+	Make --highlight and --no-bold play nice.
+
+1.5.0
+	Pass arguments through to icdiff when using git-icdiff.
+
+1.4.0
+	Use less with "git icdiff" by default.
+
+1.3.2
+	Fix linewrapping with unicode.
+
+1.3.1
+	1.3.0 was completely borked.
+
+1.3.0
+	Use setup.py to support standard python installation.
+
+1.2.2
+	Start printing output as soon as its ready instead of waiting for
+	the whole file to complete.
+
+1.2.1
+	Space fullwidth characters properly when treating input as unicode.
+
+1.2.0
+	Add --recursive to support diffing directory trees.
+
+1.1.2
+	Flush stdout when done.
+
+1.1.1
+	Don't print stack traces on Ctrl+C or when piping into something
+	that quits.
+
+1.1.0
+	Add --no-bold option useful with the solarized colorscheme and for
+	people who just don't like bold.
+
+1.0.0
+	First Release
