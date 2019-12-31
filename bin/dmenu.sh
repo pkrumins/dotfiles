@@ -48,6 +48,7 @@ main () {
         ["gimp"]="gimp"
         ["vlc"]="vlc"
         ["keepass"]="keepass"
+        ["libreoffice"]="libreoffice"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
