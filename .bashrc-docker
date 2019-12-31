@@ -4,7 +4,7 @@ libreoffice-docker () {
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v $HOME/Docs:/home/app/Docs \
-        libreoffice --nologo
+        libreoffice --nologo "$@"
 }
 
 youtube-dl-docker () {
@@ -331,6 +331,8 @@ r-docker () {
     r -q --vanilla
 }
 
+alias excel='libreoffice-docker --calc'
+alias word='libreoffice-docker --writer'
 alias libreoffice='libreoffice-docker'
 alias mysql='docker exec -it lamp mysql'
 alias doublecmd='doublecmd-qt'
