@@ -49,6 +49,8 @@ main () {
         ["vlc"]="vlc"
         ["keepass"]="keepass"
         ["libreoffice"]="libreoffice"
+        ["word"]="word"
+        ["excel"]="excel"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
