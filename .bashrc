@@ -144,7 +144,7 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
 
     alias pkgfiles='dpkg-query -L'
 
-    alias y='xsel -ib'
+    alias y='xsel -ib && xsel -ob | xsel -ip'
     alias p='xsel -ob'
 
     br () {
