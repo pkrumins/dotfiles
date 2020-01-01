@@ -144,6 +144,9 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
 
     alias pkgfiles='dpkg-query -L'
 
+    alias y='xsel -ib'
+    alias p='xsel -ob'
+
     br () {
         if (( $# < 1 )); then
             echo "Usage: br <brightness level>"
