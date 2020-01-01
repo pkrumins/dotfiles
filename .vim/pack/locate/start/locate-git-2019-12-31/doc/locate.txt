@@ -1,0 +1,283 @@
+*locate.txt*   Vim's missing search.                                    v1.3.3
+*Locate*
+
+
+==============================================================================
+CONTENTS                                                      *LocateContents*
+
+    1. Intro .............................. |LocateIntro|
+    2. Commands ........................ |LocateCommands|
+      2.1 |:Locate|
+      2.2 |:Lpurge|
+      2.3 |:Lrefresh|
+    3. Mappings ........................ |LocateMappings|
+    4. Configuration ..................... |LocateConfig|
+      4.1  |g:locate_highlight|
+      4.2  |g:locate_initial_mark|
+      4.3  |g:locate_max_height|
+      4.4  |g:locate_focus|
+      4.5  |g:locate_global|
+      4.6  |g:locate_jump_to|
+      4.7  |g:locate_very_magic|
+      4.8  |g:locate_smartcase|
+      4.9  |g:locate_refresh|
+      4.10 |g:locate_sort|
+      4.11 |g:locate_mappings|
+    5. Changes .......................... |LocateChanges|
+
+
+==============================================================================
+1. Intro                                                         *LocateIntro*
+
+Locate provides a command |:Locate| which wraps the built-in |:lvimgrep|
+command, with searches automatically being done in the current window.
+
+Here are a few sample features provided:
+
+* Customizable window specific highlighting
+* Automatic sorting and updating of search results
+* Responsive location list sizing
+* Optional 'smartcase' and 'very magic' modes
+* Simple multiple searches by chaining patterns
+
+
+==============================================================================
+2. Commands                                                   *LocateCommands*
+
+Locate provides the following three commands:
+
+------------------------------------------------------------------------------
+2.1 :L[ocate][!] <pattern>                                      *:L* *:Locate*
+    :L[ocate][!] /<pattern>/[<flags>]
+    :L[ocate][!] /<pattern1>/<pattern2>/.../[<flags>]
+
+Locate <pattern> in current window and load matches in location list. With 
+[!], append search results to current location list.
+
+<pattern> can be any Vim regular expression. If no pattern is specified, the 
+latest searched pattern (cf. |quote/|) will be used instead. Optionally, 
+<pattern> can be wrapped by any non-ID character (cf. |'isident'|) to add 
+search specific <flags>. See the following options for more information:
+
+* |g:locate_global|
+* |g:locate_jump_to|
+* |g:locate_very_magic|
+* |g:locate_smartcase|
+
+Finally, you can quickly search for multiple patterns at once by chaining 
+them. For example:
+>
+  :Locate /TODO/FIXME/lf
+<
+
+------------------------------------------------------------------------------
+2.2 :Lpurge[!]                                                       *:Lpurge*
+
+Close location list and clear locate highlighting for current window. With 
+[!], do the same for all windows in current tab.
+
+------------------------------------------------------------------------------
+2.3 :Lrefresh[!] [<flags>]                                         *:Lrefresh*
+
+Refresh locate search for all active patterns in the current window. With [!] 
+only do so if the corresponding location list window is currently open and 
+always keep cursor in place.
+
+Cf. |:Locate| for <flags>.
+
+
+==============================================================================
+3. Mappings                                                   *LocateMappings*
+
+Locate provides mappings to quickly search for the word under the cursor and 
+the current selection. Note that they will only work in 'normal' buffers (i.e. 
+where |'buftype'| is empty). This is to avoid ambiguity and keep location 
+windows organized.
+
+These mappings can be disabled by setting the |g:locate_mappings| option to 0.
+
+
+------------------------------------------------------------------------------
+                                                                          *gl*
+Locate word under cursor (cf. |<cword>|).
+
+------------------------------------------------------------------------------
+                                                                        *v_gl*
+Locate current selection.
+
+Note that the selection cannot extend over more than one line for this to 
+work.
+
+------------------------------------------------------------------------------
+                                                                          *gL*
+Similar to |gl| but append results to current location list.
+
+------------------------------------------------------------------------------
+                                                                        *v_gL*
+Similar to |v_gl| but append results to current location list.
+
+
+==============================================================================
+4. Configuration                                                *LocateConfig*
+
+You can tame Locate by changing the following options.
+
+------------------------------------------------------------------------------
+4.1 g:locate_highlight = 'Search'                         *g:locate_highlight*
+
+Highlight style of Locate matches (you can view the list of available 
+highlights by running |:highlight|).
+
+Highlighting is specific to the buffer search and refreshed automatically 
+when a new Locate search is done. When the location list is closed, the 
+highlighting is turned off.
+
+Note that in particular this highlighting is separate from the global search 
+highlighting (triggered by |'hlsearch'|). This enables you to have several 
+highlights at any given time and potentially of different colors.
+
+Set this option to an empty string to disable any Locate specific highlighting.
+
+------------------------------------------------------------------------------
+4.2 g:locate_initial_mark = ''                         *g:locate_initial_mark*
+
+Locate can set a mark at the position of the cursor before running a search. 
+This is useful to jump back to work after doing any search related edits. To 
+activate this option, simply set this option to the mark that will be used.
+
+------------------------------------------------------------------------------
+4.3 g:locate_max_height = 20                             *g:locate_max_height*
+
+Set the maximum height of the location list window opened by Locate. The 
+location list window will be adequately sized depending on the number of 
+search results.
+
+------------------------------------------------------------------------------
+4.4 g:locate_focus = 1                                        *g:locate_focus*
+
+Focus the location list window automatically after each search.
+
+------------------------------------------------------------------------------
+4.5 g:locate_global = 0                                      *g:locate_global*
+
+Make locate searches global, i.e. multiple matches on a single line create 
+separate location list entries.
+
+You can override this option in any search by appending one of the following 
+flags to your query (if multiple are entered, the last one will be chosen):
+
+* g: act as if |g:locate_global| = 1
+* l: act as if |g:locate_global| = 0
+
+E.g.
+>
+  :Locate /hello/g
+<
+Global search for 'hello', irrespective of |g:locate_global|.
+>
+  :Locate /hello/l
+<
+Local search for 'hello', irrespective of |g:locate_global|.
+
+------------------------------------------------------------------------------
+4.6 g:locate_jump_to = 'next'                               *g:locate_jump_to*
+
+This option controls the position of the cursor after each search. The 
+following values are available:
+
+* 'first': go to first match in location list (default |:lvimgrep| behavior)
+* 'next': go to next match after cursor (can wrap around)
+* 'closest': go to closest match (can be before or after cursor)
+* 'stay': keep cursor in place
+
+You can override this option for a specific search by appending one of the 
+following flags to your query (if multiple are entered, the last one will be 
+chosen):
+
+* f: act as if |g:locate_jump_to| = 'first'
+* n: act as if |g:locate_jump_to| = 'next'
+* c: act as if |g:locate_jump_to| = 'closest'
+* s: act as if |g:locate_jump_to| = 'stay'
+
+E.g.
+>
+  :Locate /hello/n
+<
+Search for 'hello' and jump to next match, irrespective of |g:locate_jump_to|.
+>
+  :Locate /hello/gc
+<
+Global search for 'hello' and jump to closest match, irrespective of 
+|g:locate_global| and |g:locate_jump_to|.
+
+------------------------------------------------------------------------------
+4.7 g:locate_very_magic = 0                              *g:locate_very_magic*
+
+Add a very magic flag prefix '\v' to all search patterns (cf. |'magic'|), 
+unless one is already specified (i.e. the search patterns starts with one of 
+'\v', '\V', '\m', '\M').
+
+------------------------------------------------------------------------------
+4.8 g:locate_smartcase = 0                                *g:locate_smartcase*
+
+Activate |'smartcase'| when searching. This behaves exactly like the same 
+option for normal searches:
+
+* This has no effect if |'ignorecase'| is not set or if the search pattern 
+  already contains a case sensitivity flag (i.e. '\c' or '\C')
+* Otherwise:
+
+  * If the pattern contains an uppercase letter, search will be case-sensitive
+  * If the pattern contains only lowercase letters, search will be 
+    case-insensitive
+
+------------------------------------------------------------------------------
+4.9 g:locate_refresh = 1                                    *g:locate_refresh*
+
+Refresh location search results when the buffer in the current window is 
+saved. Note that this will only trigger if the location list window is open at 
+that time.
+
+------------------------------------------------------------------------------
+4.10 g:locate_sort = 1                                         *g:locate_sort*
+
+Keep the location list sorted by line and column number. This is especially 
+relevant when using |:Locate| with [!] or when chaining patterns.
+
+------------------------------------------------------------------------------
+4.11 g:locate_mappings = 1                                 *g:locate_mappings*
+
+Create locate mappings.
+
+
+==============================================================================
+5. Changes                                                     *LocateChanges*
+
+v1.3.3 (09/04/2014)
+  * Changed defaults for |g:locate_focus|, |g:locate_highlight| and 
+    |g:locate_jump_to|.
+  * Allowed searching from a locate window.
+
+v1.3.2 (08/31/2014)
+  * Better highlighting configuration. Also allow disabling of highlighting.
+
+v1.3.1 (08/22/2013)
+  * Trigger auto-refresh on BufWritePost instead of BufWrite to avoid 
+    conflicts with other plugins (e.g. Syntastic)
+
+v1.3.0 (08/12/2013)
+  * Search specific flags
+  * Multiple patterns chaining
+  * |g:locate_mappings| option
+
+v1.2.0 (08/09/2013)
+  * |g:locate_sort|, |g:locate_refresh|, |g:locate_jump_to| options
+
+v1.1.0 (07/28/2013)
+  * Automatic location list closing
+  * |:Lpurge|, |:Lrefresh| commands
+  * Multiple windows per buffer supported
+  * Multiple tabs supported
+
+v1.0.0 (07/26/2013)
+  * Initial stable release.
