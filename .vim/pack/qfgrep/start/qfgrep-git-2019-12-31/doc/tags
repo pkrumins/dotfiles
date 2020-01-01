@@ -1,0 +1,14 @@
+:QFGrep	QFGrep.txt	/*:QFGrep*
+:QFGrepV	QFGrep.txt	/*:QFGrepV*
+:QFRestore	QFGrep.txt	/*:QFRestore*
+QFGrep-changelog	QFGrep.txt	/*QFGrep-changelog*
+QFGrep-commands	QFGrep.txt	/*QFGrep-commands*
+QFGrep-configuration	QFGrep.txt	/*QFGrep-configuration*
+QFGrep-highlight	QFGrep.txt	/*QFGrep-highlight*
+QFGrep-intro	QFGrep.txt	/*QFGrep-intro*
+QFGrep-mapping	QFGrep.txt	/*QFGrep-mapping*
+QFGrep-usage	QFGrep.txt	/*QFGrep-usage*
+QFGrep.txt	QFGrep.txt	/*QFGrep.txt*
+g:QFG_hi_error	QFGrep.txt	/*g:QFG_hi_error*
+g:QFG_hi_info	QFGrep.txt	/*g:QFG_hi_info*
+g:QFG_hi_prompt	QFGrep.txt	/*g:QFG_hi_prompt*

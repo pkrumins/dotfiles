@@ -1,0 +1,152 @@
+*QFGrep.txt*  A plugin for filtering Quickfix entries
+
+       ____    ____________              
+      / __ \  / ____/ ____/_______  ____ 
+     / / / / / /_  / / __/ ___/ _ \/ __ \
+    / /_/ / / __/ / /_/ / /  /  __/ /_/ /
+    \___\_\/_/    \____/_/   \___/ .___/ 
+                                /_/      
+
+Author:  Kai Yuan
+
+This plugin requires Vim 7.3 or later.
+
+==============================================================================
+Help on using QFGrep
+
+  1. Introduction .......................... |QFGrep-intro|
+  2. Usage ................................. |QFGrep-usage|
+  3. Configuration ......................... |QFGrep-configuration|
+  4. ChangeLog ............................. |QFGrep-changelog|
+
+==============================================================================
+INTRODUCTION                                                     *QFGrep-intro*
+
+The |QFGrep| plugin would be helpful when you got a lot of entries in
+|quickfix|/|location-list| For example, you did an Ack/Grep with a not strict
+criteria. |QFGrep| can do further filtering for you, so that you could narrow
+your focus and jump to the right file right line quickly. At any time you
+could restore the original |quickfix|/|location-list| entries. 
+
+|QFGrep| will look for the given pattern in buffer name (filename) and description
+text.
+
+==============================================================================
+USAGE                                                            *QFGrep-usage*
+
+
+|QFGrep| commands and mappings work only in |quickfix|/|location-list| buffer.
+
+<Leader>g to filter entries (user will be asked for pattern)
+<Leader>v to inverted filter entries (like grep -v)
+<Leader>r to restore original quickfix entires.
+
+The above mapping could be customized. see |QFGrep-mapping|
+
+The QuickFixCmdPost autocommand fires with pattern qfgrep (or lqfgrep) after a
+successful operation and can be used for advanced customization.
+
+                                  *:QFGrepV* *:QFRestore* *:QFGrep* *QFGrep-commands*
+|QFGrep| has following commands:
+
+:QFGrep
+		do filtering on current Quickfix, user input pattern interactively
+
+:QFGrepPat {pattern}
+		do filtering on current Quickfix, pattern is required as argument
+
+:QFGrepV
+		do inverted filtering on current Quickfix, user input pattern interactively
+
+:QFRestore
+		retore original Quickfix entries
+
+:QFGrepPatV {pattern}
+		do inverted filtering on current Quickfix, pattern is required as argument
+
+:QFGrepVersion
+    display the version of the QFGrep plugin
+
+==============================================================================
+CONFIGURATION                                            *QFGrep-configuration*
+
+                                                                *QFGrep-mapping*
+There are three `<Plug>` mappings in QFGrep, to let user easily create
+customized mapping
+
+<Plug>QFGrepG
+    mapping for |:QFGrep| command. E.g >
+
+    nmap <buffer> {Mykeys} <Plug>QFGrepG
+<
+    Default mapping: <Leader>g
+
+<Plug>QFGrepV
+    mapping for |:QFGrepV| command. E.g >
+
+    nmap <buffer> {Mykeys} <Plug>QFGrepV
+<
+    Default mapping: <Leader>v
+
+<Plug>QFRestore   
+    mapping for |:QFRestore| command. E.g >
+
+    nmap <buffer> {Mykeys} <Plug>QFRestore
+<
+    Default mapping: <Leader>r
+
+                                                            *QFGrep-highlight*
+QFGrep highlighting could be customized by three variables. The syntax must
+follow vim |:highlight| command.
+
+                                                             *g:QFG_hi_prompt*
+		Defines the color highlighting of pattern input prompt. Default is:
+>
+		let g:QFG_hi_prompt='ctermbg=68 ctermfg=16 guibg=#5f87d7 guifg=black'
+<    
+
+                                                               *g:QFG_hi_info*
+		Defines the color highlighting of info messsage. Default is:
+>
+		let g:QFG_hi_info = 'ctermbg=113 ctermfg=16 guibg=#87d75f guifg=black'
+<
+
+                                                              *g:QFG_hi_error*
+		Defines the color highlighting of error message. Default is:
+>
+		let g:QFG_hi_error = 'ctermbg=167 ctermfg=16 guibg=#d75f5f guifg=black'
+<
+
+==============================================================================
+CHANGELOG                                                    *QFGrep-changelog*
+
+version 2.0.0                2015-11-09~
+    - QFGrep supports location-list (thanks Marcelo D Montu)
+
+version 1.1.1                2014-11-11~
+    - fix the errMsg display problem when quickfix window is empty
+     (issue#7@github)
+    - grep on display line in quick fix buffer
+    - make :QFGrep commands buffer-local
+
+version 1.1.0                2014-06-14~
+    - add QFGrepPat and QFGrepPatV command, by pass interactive `input()`
+    - create `<Plug>` mappings, remove global mapping variable
+
+version 1.0.3                2013-11-05~
+    - move the logic codes to autoload
+    - rename function names
+    - enhance formatting of documentation
+
+version 1.0.2                2013-08-30~
+    - add :QFGrepVersion command to print version info
+    - loaded_QFGrep had a typo! fixed
+
+version 1.0.1                2013-07-16~
+    - add the invert-match, like grep -v (pull request from jsnelling)
+    - typo fixes in doc/readme
+
+version 1.0.0                2013-03-28~
+    - first release
+
+" vim: ft=help:ts=2:tw=78:shiftwidth=2:fdm=marker:expandtab:
