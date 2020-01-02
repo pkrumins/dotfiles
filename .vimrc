@@ -275,3 +275,7 @@ let g:vim_json_syntax_conceal = 0
 xmap <leader>ea <Plug>(EasyAlign)
 nmap <leader>ea <Plug>(EasyAlign)
 
+" automatically run xrdb when .Xresources is edited
+"
+autocmd BufWritePost ~/.Xresources silent !xrdb %
+
