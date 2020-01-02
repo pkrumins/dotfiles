@@ -13,3 +13,7 @@ fi
 #
 amixer -D pulse set Master mute
 amixer set Capture nocap
+
+# Swap caps lock with esc
+setxkbmap -option caps:swapescape
+
