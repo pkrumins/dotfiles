@@ -1,3 +1,17 @@
+qutebrowser-docker () {
+    docker run -d -it --rm \
+        --device /dev/snd \
+        --device /dev/dri \
+        --network lamp \
+        -e DISPLAY=$DISPLAY \
+        -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+        -e PULSE_SERVER=unix:/run/user/$UID/pulse/native \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v /run/user/$UID:/run/user/$UID \
+        -v $HOME/Downloads:/Downloads \
+        qutebrowser
+}
+
 libreoffice-docker () {
     docker run -d -it --rm \
         --network none \
@@ -47,7 +61,7 @@ doublecmd-qt-docker () {
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /run/user/1000:/run/user/1000 \
+        -v /run/user/$UID:/run/user/$UID \
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
         -v $HOME/Docs:/Docs \
@@ -68,7 +82,7 @@ djview4-docker () {
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /run/user/1000:/run/user/1000 \
+        -v /run/user/$UID:/run/user/$UID \
         -v $HOME/Downloads:/home/app/Downloads \
         --name djview4 \
         djview4
@@ -81,7 +95,7 @@ keepassxc-docker () {
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /run/user/1000:/run/user/1000 \
+        -v /run/user/$UID:/run/user/$UID \
         -v $HOME/Downloads:/home/app/Downloads \
         -v $HOME/keepassxc:/home/app/keepassxc \
         --name keepassxc \
@@ -166,8 +180,8 @@ vlc-docker () {
         -e DISPLAY=$DISPLAY \
         -e PULSE_SERVER=unix:/run/user/$UID/pulse/native \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $HOME/VLC:/home/app/VLC \
         -v /run/user/$UID/pulse:/run/user/$UID/pulse \
+        -v $HOME/VLC:/home/app/VLC \
         --name vlc \
         vlc --no-qt-privacy-ask "$files"
   }
@@ -195,19 +209,19 @@ gimp-docker () {
         --name gimp \
         gimp
 }
-  
+
 flameshot-docker () {
     docker run -d -it --rm \
         --device /dev/dri \
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /run/user/1000:/run/user/1000 \
+        -v /run/user/$UID:/run/user/$UID \
         -v $HOME/Downloads:/home/app/Downloads \
         --name flameshot \
         flameshot
 }
-  
+
 chrome-docker () {
     if (( $# < 2 )); then
         echo "Usage: chrome-docker <user data dir> <container name> [arg1 ...] [url1 ...]"
@@ -331,6 +345,7 @@ r-docker () {
     r -q --vanilla
 }
 
+alias qutebrowser='qutebrowser-docker'
 alias excel='libreoffice-docker --calc'
 alias word='libreoffice-docker --writer'
 alias libreoffice='libreoffice-docker'
