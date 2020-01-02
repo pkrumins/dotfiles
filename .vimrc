@@ -122,6 +122,10 @@ set autoindent
 "
 set dictionary=/usr/share/dict/words
 
+" goyo mappings
+"
+nnoremap <silent> <Leader>g :Goyo<CR>
+
 " nerdtree mappings
 "
 nnoremap <silent> <Leader>t :NERDTreeToggle<CR>
