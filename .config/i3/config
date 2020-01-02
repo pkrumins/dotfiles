@@ -174,12 +174,16 @@ mode "split" {
 }
 bindsym $mod+x mode "split"
 
-# Open
-mode "open" {
+# Workspace
+mode "workspace" {
+        bindsym d exec --no-startup-id i3-msg 'workspace dc'; mode "default"
+        bindsym f exec --no-startup-id i3-msg 'workspace fb'; mode "default"
+        bindsym g exec --no-startup-id i3-msg 'workspace gimp'; mode "default"
+        bindsym i exec --no-startup-id i3-msg 'workspace inkscape';mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+o mode "open"
+bindsym $mod+w mode "workspace"
 
 # Computer control
 set $cc_mode "cc [s=shutdown, r=reboot, u=suspend, h=hibernate]"
@@ -254,6 +258,10 @@ workspace 7 output DP1
 workspace 8 output DP1
 workspace 9 output DP1
 workspace 10 output DP1
+workspace fb output VGA1
+workspace dc output DP1
+workspace gimp output DP1
+workspace inkscape output DP1
 
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
@@ -279,10 +287,10 @@ assign [class="gmail"] workspace 3
 exec --no-startup-id i3-msg 'workspace 3; exec bash -i -c gmail'
 
 # Autostart doublecmd on workspace 7
-assign [class="Double Commander"] workspace 7
+assign [class="Double Commander"] workspace dc
 for_window [class="Double Commander" title="Find files"] floating enable
 for_window [class="Double Commander" title="Copying"] floating enable
-exec --no-startup-id i3-msg 'workspace 7; exec bash -i -c doublecmd'
+exec --no-startup-id i3-msg 'workspace dc; exec bash -i -c doublecmd'
 
 # Enable workspace 8 and switch to workspace 3
 exec --no-startup-id i3-msg 'workspace 8; workspace 3'
@@ -334,8 +342,17 @@ for_window [class="krita"] floating enable
 for_window [class="rdesktop"] floating enable
 for_window [class="xfreerdp"] floating enable
 
-# Gimp on workspace 10
-assign [class="Gimp"] workspace 10
+# Gimp on workspace gimp
+assign [class="Gimp"] workspace gimp
+
+# Inkscape on workspace inkscape
+assign [class="Inkscape"] workspace inkscape
+
+# Github on workspace github
+assign [class="github"] workspace github
+
+# Fb on workspace fb
+assign [class="fb"] workspace fb
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
