@@ -279,28 +279,36 @@ chrome-twitter-pkrumins () {
     local chrome_data_dir="twitter-pkrumins"
     local container_name="chrome-twitter-pkrumins"
 
-    chrome-docker "$chrome_data_dir" "$container_name" "https://twitter.com"
+    chrome-docker "$chrome_data_dir" "$container_name" \
+        --class=twitter-pkrumins \
+        "https://twitter.com"
 }
 
 chrome-twitter-browserling () {
     local chrome_data_dir="twitter-browserling"
     local container_name="chrome-twitter-browserling"
 
-    chrome-docker "$chrome_data_dir" "$container_name" "https://twitter.com"
+    chrome-docker "$chrome_data_dir" "$container_name" \
+        --class=twitter-browserling \
+        "https://twitter.com"
 }
 
 chrome-fb () {
     local chrome_data_dir="fb"
     local container_name="chrome-fb"
 
-    chrome-docker "$chrome_data_dir" "$container_name" "https://fb.com/messages"
+    chrome-docker "$chrome_data_dir" "$container_name" \
+        --class=fb \
+        "https://fb.com/messages"
 }
 
 chrome-github () {
     local chrome_data_dir="fb"
     local container_name="chrome-fb"
 
-    chrome-docker "$chrome_data_dir" "$container_name" "https://fb.com/messages"
+    chrome-docker "$chrome_data_dir" "$container_name" \
+        --class=fb \
+        "https://github.com"
 }
 
 chrome-gmail () {
