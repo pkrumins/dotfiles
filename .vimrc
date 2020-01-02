@@ -270,10 +270,14 @@ let g:netrw_dirhistmax = 0     " disable netrw history
 "
 let g:vim_json_syntax_conceal = 0
 
-" configure easy-align
+" configure easy-align plugin
 "
 xmap <leader>ea <Plug>(EasyAlign)
 nmap <leader>ea <Plug>(EasyAlign)
+
+" configure bufkill plugin
+"
+let g:BufKillCreateMappings = 0
 
 " automatically run xrdb when .Xresources is edited
 "
