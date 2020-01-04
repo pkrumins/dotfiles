@@ -242,6 +242,10 @@ set nrformats-=octal
 "
 set display=lastline
 
+" make vertical scrolling more pleasant
+"
+set scrolloff=4
+
 " make horizontal scrolling more pleasant
 "
 set sidescrolloff=5
