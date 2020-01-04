@@ -60,9 +60,13 @@ set cul
 "
 syntax enable
 
-" set colorscheme to desert
+let g:jellybeans_overrides = {
+\    'background': { 'guibg': '000000' },
+\}
+
+" set colorscheme to jellybeans
 "
-colorscheme desert
+colorscheme jellybeans
 
 " set dark background
 "
