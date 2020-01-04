@@ -61,7 +61,8 @@ set cul
 syntax enable
 
 let g:jellybeans_overrides = {
-\    'background': { 'guibg': '000000' },
+\    'Normal' : { 'guifg': 'c0c0c0' },
+\    'background' : { 'guibg': '000000' },
 \}
 
 " set colorscheme to jellybeans
