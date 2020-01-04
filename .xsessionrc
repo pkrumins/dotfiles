@@ -17,3 +17,5 @@ amixer set Capture nocap
 # Swap caps lock with esc
 setxkbmap -option caps:swapescape
 
+# Add terminus font
+xset +fp ~/projects/dotfiles/fonts/terminus-4.48-2019-07-28
