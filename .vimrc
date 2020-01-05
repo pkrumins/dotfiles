@@ -123,6 +123,10 @@ set expandtab
 "
 set autoindent
 
+" use one space when joining sentences
+"
+set nojoinspaces
+
 " use a dictionary
 "
 set dictionary=/usr/share/dict/words
