@@ -32,7 +32,7 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec --no-startup-id urxvt -fn "7x13" -letsp 0
+bindsym $mod+Return exec --no-startup-id urxvt -fn "7x14" -letsp 0
 bindsym $mod+Shift+Return exec --no-startup-id urxvt
 
 # kill focused window
