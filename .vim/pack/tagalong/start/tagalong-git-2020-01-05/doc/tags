@@ -1,0 +1,15 @@
+:TagalongDeinit	tagalong.txt	/*:TagalongDeinit*
+:TagalongInit	tagalong.txt	/*:TagalongInit*
+g:tagalong_additional_filetypes	tagalong.txt	/*g:tagalong_additional_filetypes*
+g:tagalong_filetypes	tagalong.txt	/*g:tagalong_filetypes*
+g:tagalong_mappings	tagalong.txt	/*g:tagalong_mappings*
+g:tagalong_timeout	tagalong.txt	/*g:tagalong_timeout*
+g:tagalong_verbose	tagalong.txt	/*g:tagalong_verbose*
+tagalong	tagalong.txt	/*tagalong*
+tagalong-contents	tagalong.txt	/*tagalong-contents*
+tagalong-installation	tagalong.txt	/*tagalong-installation*
+tagalong-internals	tagalong.txt	/*tagalong-internals*
+tagalong-issues	tagalong.txt	/*tagalong-issues*
+tagalong-settings	tagalong.txt	/*tagalong-settings*
+tagalong-usage	tagalong.txt	/*tagalong-usage*
+tagalong.txt	tagalong.txt	/*tagalong.txt*
