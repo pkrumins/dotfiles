@@ -303,6 +303,19 @@ let g:BufKillCreateMappings = 0
 "
 :set updatetime=100
 
+" zoom function that opens the current buffer in a new tab
+" github.com/junegunn/dotfiles/blob/master/vimrc
+"
+function! s:zoom()
+  if winnr('$') > 1
+    tab split
+  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+    tabclose
+  endif
+endfunction
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
