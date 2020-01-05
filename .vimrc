@@ -288,6 +288,10 @@ nmap <leader>ea <Plug>(EasyAlign)
 "
 let g:BufKillCreateMappings = 0
 
+" configure gitgutter plugin
+"
+:set updatetime=100
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
