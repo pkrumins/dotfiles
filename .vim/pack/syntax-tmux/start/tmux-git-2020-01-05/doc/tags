@@ -1,0 +1,14 @@
+tmux-K	tmux.txt	/*tmux-K*
+tmux-changelog	tmux.txt	/*tmux-changelog*
+tmux-comments	tmux.txt	/*tmux-comments*
+tmux-commentstring	tmux.txt	/*tmux-commentstring*
+tmux-contributing	tmux.txt	/*tmux-contributing*
+tmux-credits	tmux.txt	/*tmux-credits*
+tmux-features	tmux.txt	/*tmux-features*
+tmux-g!	tmux.txt	/*tmux-g!*
+tmux-license	tmux.txt	/*tmux-license*
+tmux-make	tmux.txt	/*tmux-make*
+tmux-syntax-highlighting	tmux.txt	/*tmux-syntax-highlighting*
+tmux.conf	tmux.txt	/*tmux.conf*
+tmux.txt	tmux.txt	/*tmux.txt*
+vim-tmux	tmux.txt	/*vim-tmux*
