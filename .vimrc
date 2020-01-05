@@ -133,7 +133,14 @@ nnoremap <silent> <Leader>g :Goyo<CR>
 
 " nerdtree mappings
 "
-nnoremap <silent> <Leader>t :NERDTreeToggle<CR>
+function! NERDTreeToggleCurrentFile()
+  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ":NERDTreeClose"
+  else
+    exe ":NERDTreeFind"
+  endif
+endfunction
+nnoremap <silent> <Leader>t :call NERDTreeToggleCurrentFile()<CR>
 
 " bufexplorer mappings
 "
