@@ -42,6 +42,10 @@ set showcmd
 "
 set number
 
+" keep the cursor in the same column when moving
+"
+set nostartofline
+
 " enable incremental searching and search highlighting
 "
 set incsearch
