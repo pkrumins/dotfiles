@@ -362,6 +362,7 @@ chrome-browsing () {
     chrome-docker \
         --user-data-dir="$chrome_data_dir" \
         --container-name="$container_name" \
+        -incognito \
         "${urls[@]}"
 }
 
