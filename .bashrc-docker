@@ -321,7 +321,7 @@ chrome-fb () {
     local chrome_data_dir="$HOME/.dockerdata/chrome/fb"
     chrome-docker \
         --user-data-dir="$chrome_data_dir" \
-        --container-name="chrome-fb"
+        --container-name="chrome-fb" \
         --class="fb" \
         "https://fb.com/messages"
 }
