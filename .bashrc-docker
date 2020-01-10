@@ -285,7 +285,7 @@ chrome-docker () {
 
 chrome-twitter-search () {
     local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
-    chrome-browsing "https://twitter.com/search?q=$search_term"
+    chrome-browsing "https://twitter.com/search?vertical=default&q=$search_term"
 }
 
 chrome-google-search () {
@@ -335,6 +335,14 @@ chrome-statcounter () {
     chrome-docker \
         --user-data-dir="$chrome_data_dir" \
         "https://statcounter.com"
+}
+
+chrome-research () {
+    local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
+    chrome-browsing \
+        "https://hn.algolia.com/?q=$search_term" \
+        "https://lobste.rs/search?utf8=%E2%9C%93&what=stories&order=relevance&q=$search_term" \
+        "https://twitter.com/search?vertical=default&q=$search_term"
 }
 
 chrome-browsing () {
@@ -421,6 +429,7 @@ alias reddit='chrome-browsing https://old.reddit.com'
 alias lobsters='chrome-browsing https://lobste.rs'
 alias ts='chrome-twitter-search'
 alias g='chrome-google-search'
+alias research='chome-research'
 
 alias techurls='chrome-browsing https://techurls.com'
 alias devurls='chrome-browsing https://devurls.com'
