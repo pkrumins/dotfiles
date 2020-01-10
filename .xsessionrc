@@ -14,8 +14,10 @@ fi
 amixer -D pulse set Master mute
 amixer set Capture nocap
 
-# Swap caps lock with esc
+# Swap caps lock with esc and disable esc key
 setxkbmap -option caps:swapescape
+xmodmap -e "keysym Caps_Lock ="
 
 # Add terminus font
 xset +fp ~/projects/dotfiles/fonts/terminus-4.48-2019-07-28
+
