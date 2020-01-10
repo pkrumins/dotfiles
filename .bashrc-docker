@@ -226,18 +226,40 @@ flameshot-docker () {
 
 chrome-docker () {
     if (( $# < 2 )); then
-        echo "Usage: chrome-docker <user data dir> <container name> [arg1 ...] [url1 ...]"
+        echo "Usage: chrome-docker [--user-data-dir=/user/data/dir] [--container-name=name] [arg1 ...] [url1 ...]"
         return 1
     fi
 
-    local base_data_dir="$HOME/.dockerdata/chrome";
-    local user_data_dir="$base_data_dir/$1" && shift
-    local container_name="$1" && shift
+    local user_data_dir=""
+    local container_name=""
+
+    for argval in "$@"; do
+        case $argval in
+            --user-data-dir=*)
+                local user_data_dir="$(sed -re 's/[^=]+=//' <<< "$argval")" && shift
+                ;;
+            --container-name=*)
+                local container_name="$(sed -re 's/[^=]+=//' <<< "$argval")" && shift
+                ;;
+        esac
+    done
+
+    if [[ -z "$container_name" ]]; then
+        local rand_id="$(randHex 8)"
+        local container_name="chrome-$rand_num-$rand_id"
+    fi
+
     local args_urls="$@"
 
-    if [[ ! -d $user_data_dir ]]; then
-        mkdir -p $user_data_dir
-    fi 
+    if [[ ! -d "$user_data_dir" ]]; then
+        mkdir -p "$user_data_dir"
+    fi
+
+    local docker_container_name_arg="--name $container_name"
+    local docker_user_data_dir_arg=""
+    if [[ ! -z "$user_data_dir" ]]; then
+        local docker_user_data_dir_arg="-v $user_data_dir:/home/app/.chrome"
+    fi
 
     docker run -d -it --rm \
         --security-opt seccomp=~/projects/dotfiles/chrome.seccomp.json \
@@ -251,10 +273,10 @@ chrome-docker () {
         -v /etc/hosts:/etc/hosts \
         -v /run/user/$UID/pulse:/run/user/$UID/pulse \
         -v $HOME/Downloads:/home/app/Downloads \
-        -v $user_data_dir:/home/app/data \
-        --name $container_name \
+        $docker_user_data_dir_arg \
+        $docker_container_name_arg \
         chrome \
-        --user-data-dir=/home/app/data \
+        --user-data-dir=/home/app/.chrome \
         --disable-fre \
         --no-default-browser-check \
         --no-first-run \
@@ -262,62 +284,44 @@ chrome-docker () {
 }
 
 chrome-twitter-search () {
-    local chrome_data_dir="twitter-search"
-    local container_name="chrome-twitter-search"
     local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
-
-    chrome-docker "$chrome_data_dir" "$container_name" "https://twitter.com/search?q=$search_term"
+    chrome-browsing "https://twitter.com/search?q=$search_term"
 }
 
 chrome-google-search () {
-    local chrome_data_dir="google-search"
-    local container_name="chrome-google-search"
     local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
-
-    chrome-docker "$chrome_data_dir" "$container_name" "https://google.com/search?q=$search_term"
+    chrome-browsing "https://google.com/search?q=$search_term"
 }
 
 chrome-twitter-pkrumins () {
-    local chrome_data_dir="twitter-pkrumins"
-    local container_name="chrome-twitter-pkrumins"
-
-    chrome-docker "$chrome_data_dir" "$container_name" \
-        --class=twitter-pkrumins \
+    local chrome_data_dir="$HOME/.dockerdata/chrome/twitter-pkrumins"
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
         "https://twitter.com"
 }
 
 chrome-twitter-browserling () {
-    local chrome_data_dir="twitter-browserling"
-    local container_name="chrome-twitter-browserling"
-
-    chrome-docker "$chrome_data_dir" "$container_name" \
-        --class=twitter-browserling \
+    local chrome_data_dir="$HOME/.dockerdata/chrome/twitter-browserling"
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
         "https://twitter.com"
 }
 
 chrome-fb () {
-    local chrome_data_dir="fb"
-    local container_name="chrome-fb"
-
-    chrome-docker "$chrome_data_dir" "$container_name" \
-        --class=fb \
+    local chrome_data_dir="$HOME/.dockerdata/chrome/fb"
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        --container-name="chrome-fb"
+        --class="fb" \
         "https://fb.com/messages"
 }
 
-chrome-github () {
-    local chrome_data_dir="fb"
-    local container_name="chrome-fb"
-
-    chrome-docker "$chrome_data_dir" "$container_name" \
-        --class=fb \
-        "https://github.com"
-}
-
 chrome-gmail () {
-    local chrome_data_dir="gmail"
-    local container_name="chrome-gmail"
+    local chrome_data_dir="$HOME/.dockerdata/chrome/gmail"
 
-    chrome-docker "$chrome_data_dir" "$container_name" \
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        --container-name="chrome-gmail" \
         --class=gmail \
         "https://mail.google.com/mail/u/0/#inbox" \
         "https://mail.google.com/mail/u/1/#inbox" \
@@ -326,25 +330,54 @@ chrome-gmail () {
 }
 
 chrome-statcounter () {
-    local chrome_data_dir="statcounter"
-    local container_name="chrome-statcounter"
+    local chrome_data_dir="$HOME/.dockerdata/chrome/statcounter"
 
-    chrome-docker "$chrome_data_dir" "$container_name" "https://statcounter.com"
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        "https://statcounter.com"
 }
 
 chrome-browsing () {
-    local chrome_data_dir="browsing"
-    local container_name="chrome-browsing"
-    local urls="$@"
+    local template_dir="$HOME/.dockerdata/chrome/_template"
+    if [[ ! -d "$template_dir" ]]; then
+        echo "Error: Chrome template hasn't been setup, run chrome-setup-template to set it up."
+        return 1
+    fi
 
-    chrome-docker "$chrome_data_dir" "$container_name" \
-        -incognito \
-        "$urls"
+    local rand_id="$(randHex 8)"
+    local chrome_data_dir="/tmp/chrome-browsing-$rand_id"
+    local container_name="chrome-browsing-$rand_id"
+
+    cp -r "$template_dir" "$chrome_data_dir" || {
+        echo "Error: Couldn't copy $template_dir to $chrome_data_dir, error code $?."
+        return 1
+    }
+
+    local urls=("$@")
+
+    if [[ ${#urls[@]} == 0 ]]; then
+        urls=("https://google.com")
+    fi
+
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        --container-name="$container_name" \
+        "${urls[@]}"
 }
 
-prepare-chrome-data-dir () {
-    local -r chrome_data_dir="_template"
-    #chrome-docker --user-data-dir "$chrome_data_dir" "https://google.com"
+chrome-setup-template () {
+    local -r chrome_data_dir="$HOME/.dockerdata/chrome/_template"
+    if [[ "$1" == "fresh" ]]; then
+        rm -rf "$chrome_data_dir";
+    fi
+    if [[ ! -d "$chrome_data_dir" ]]; then
+        mkdir -p "$chrome_data_dir"
+    fi
+
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        --container-name=chrome-setup-template \
+        "https://google.com"
 }
 
 r-docker () {
