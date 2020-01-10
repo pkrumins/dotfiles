@@ -374,7 +374,7 @@ chrome-browsing () {
     local urls=("$@")
 
     if [[ ${#urls[@]} == 0 ]]; then
-        urls=("https://google.com")
+        urls=("")
     fi
 
     chrome-docker \
