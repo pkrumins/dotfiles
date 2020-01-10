@@ -293,6 +293,16 @@ chrome-google-search () {
     chrome-browsing "https://google.com/search?q=$search_term"
 }
 
+chrome-hn-search () {
+    local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
+    chrome-browsing "https://hn.algolia.com/?q=$search_term"
+}
+
+chrome-lobsters-search () {
+    local search_term="$(sed -r -e 's/\s+/+/g' <<< "$@")"
+    chrome-browsing "https://lobste.rs/search?utf8=%E2%9C%93&what=stories&order=relevance&q=$search_term"
+}
+
 chrome-twitter-pkrumins () {
     local chrome_data_dir="$HOME/.dockerdata/chrome/twitter-pkrumins"
     chrome-docker \
