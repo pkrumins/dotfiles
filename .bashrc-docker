@@ -439,7 +439,7 @@ alias reddit='chrome-browsing https://old.reddit.com'
 alias lobsters='chrome-browsing https://lobste.rs'
 alias ts='chrome-twitter-search'
 alias g='chrome-google-search'
-alias research='chome-research'
+alias research='chrome-research'
 
 alias techurls='chrome-browsing https://techurls.com'
 alias devurls='chrome-browsing https://devurls.com'
