@@ -246,7 +246,7 @@ chrome-docker () {
 
     if [[ -z "$container_name" ]]; then
         local rand_id="$(randHex 8)"
-        local container_name="chrome-$rand_num-$rand_id"
+        local container_name="chrome-$rand_id"
     fi
 
     local args_urls="$@"
