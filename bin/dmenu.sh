@@ -112,6 +112,7 @@ main () {
         dmenu_choice \
             "ws" \
             "ts" \
+            "r" \
             "${!workspace[@]}" \
             "${!commands[@]}" \
             "${!apps[@]}" \
@@ -124,6 +125,9 @@ main () {
     elif [[ $choice == "ts "* ]]; then
         local -r query="$(cut -d ' ' -f 2- <<< "$choice")"
         twitter_search "$query"
+    elif [[ $choice == "r "* ]]; then
+        local -r query="$(cut -d ' ' -f 2- <<< "$choice")"
+        research "$query"
     elif [[ -v "commands[$choice]" ]]; then
         eval "${commands[$choice]}"
     elif [[ -v "apps[$choice]" ]]; then
