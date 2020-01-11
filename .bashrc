@@ -318,6 +318,10 @@ alias t8='tail -8'
 alias t9='tail -9'
 alias t10='tail -10'
 
+# Tree -a
+#
+alias ta='tree -a'
+
 # Shorter wc -l
 #
 alias wcl='wc -l'
