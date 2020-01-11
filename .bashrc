@@ -322,6 +322,10 @@ alias t10='tail -10'
 #
 alias ta='tree -a'
 
+# Sort fdupes output by size
+#
+alias fdupes-sort-by-size='msort --block --field-separators=" " --position=1 --comparison-type=n --quiet -I -j'
+
 # Shorter wc -l
 #
 alias wcl='wc -l'
