@@ -278,6 +278,7 @@ alias gsm='git status | grep modified'
 alias gsml='git status | grep modified | less'
 alias gsma2='git status | grep modified | c2 | xargs git add'
 alias grh='git reset HEAD'
+alias gcl='git clone'
 
 # Extract columns
 #
