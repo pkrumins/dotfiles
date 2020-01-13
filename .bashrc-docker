@@ -1,10 +1,28 @@
+totalcmd-docker () {
+    local -r totalcmd_wine_dir="$HOME/.dockerdata/wine-totalcmd"
+    if [[ ! -d "$totalcmd_wine_dir" ]]; then
+        mkdir -p "$totalcmd_wine_dir"
+    fi
+    docker run -d -it --rm \
+        --network none \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $totalcmd_wine_dir:/home/app/.wine \
+        --name totalcmd \
+        wine-totalcmd
+}
+
 sqlyog-docker () {
+    local -r sqlyog_wine_dir="$HOME/.dockerdata/wine-sqlyog"
+    if [[ ! -d "$sqlyog_wine_dir" ]]; then
+        mkdir -p "$sqlyog_wine_dir"
+    fi
     docker run -d -it --rm \
         --cap-add=NET_ADMIN \
         --network lamp \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /home/foobar/.dockerdata/wine-sqlyog:/home/app/.wine \
+        -v $sqlyog_wine_dir:/home/app/.wine \
         --name sqlyog \
         wine-sqlyog
 }
@@ -430,6 +448,7 @@ r-docker () {
     r -q --vanilla
 }
 
+alias totalcmd='totalcmd-docker'
 alias sqlyog='sqlyog-docker'
 alias qutebrowser='qutebrowser-docker'
 alias excel='libreoffice-docker --calc'
