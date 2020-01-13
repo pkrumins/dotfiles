@@ -206,7 +206,7 @@ mode "workspace" {
         bindsym g workspace gimp; mode "default"
         bindsym i workspace inkscape; mode "default"
         bindsym s workspace sqlyog; mode "default"
-        bindsym t workspace totalcmd; mode "default"
+        bindsym t workspace tc; mode "default"
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -282,7 +282,7 @@ workspace 3 output VGA1
 workspace 4 output VGA1
 workspace 5 output VGA1
 workspace 6 output VGA1
-workspace 7 output DP1
+workspace 7 output VGA1
 workspace 8 output DP1
 workspace 9 output DP1
 workspace 10 output DP1
@@ -291,7 +291,7 @@ workspace dc output DP1
 workspace gimp output DP1
 workspace inkscape output DP1
 workspace sqlyog output DP1
-workspace totalcmd output DP1
+workspace tc output DP1
 
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
@@ -316,11 +316,19 @@ for_window [instance="ws2"] floating enable
 assign [class="gmail"] workspace 3
 exec --no-startup-id i3-msg 'workspace 3; exec bash -i -c gmail'
 
-# Autostart doublecmd on workspace 7
+# Autostart doublecmd on workspace dc
 assign [class="Double Commander"] workspace dc
 for_window [class="Double Commander" title="Find files"] floating enable
 for_window [class="Double Commander" title="Copying"] floating enable
 exec --no-startup-id i3-msg 'workspace dc; exec bash -i -c doublecmd'
+
+# Autostart sqlyog on workspace sqlyog
+assign [instance="sqlyog"] workspace sqlyog
+exec --no-startup-id i3-msg 'workspace sqlyog; exec bash -i -c sqlyog'
+
+# Autostart totalcmd on workspace tc
+assign [instance="totalcmd"] workspace tc
+exec --no-startup-id i3-msg 'workspace tc; exec bash -i -c totalcmd'
 
 # Enable workspace 8 and switch to workspace 3
 exec --no-startup-id i3-msg 'workspace 8; workspace 3'
@@ -383,12 +391,6 @@ assign [class="github"] workspace github
 
 # Fb on workspace fb
 assign [class="fb"] workspace fb
-
-# SQLYog on workspace sqlyog
-assign [instance="sqlyog"] workspace sqlyog
-
-# Totalcmd on workspace totalcmd
-assign [instance="totalcmd"] workspace totalcmd
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
