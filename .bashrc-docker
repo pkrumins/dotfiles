@@ -59,13 +59,8 @@ libreoffice-docker () {
 }
 
 youtube-dl-docker () {
-    local -r download_dir="$HOME/YTD"
-    if [[ ! -d "$download_dir" ]]; then
-        mkdir -p "$download_dir"
-    fi
-
     docker run -it --rm \
-        -v $HOME/YTD:/home/app/YTD \
+        -v $HOME/Downloads:/home/app/Downloads \
         youtube-dl "$@"
 }
 
