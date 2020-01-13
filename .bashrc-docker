@@ -9,7 +9,6 @@ totalcmd-docker () {
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
-        -v $HOME/Docs:/Docs \
         -v $HOME/projects:/projects \
         -v /storage/workstation:/workstation \
         -v /storage/archive:/archive \
@@ -94,7 +93,6 @@ doublecmd-qt-docker () {
         -v /run/user/$UID:/run/user/$UID \
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
-        -v $HOME/Docs:/Docs \
         -v $HOME/projects:/projects \
         -v $HOME/.fonts:/home/app/.fonts \
         -v $HOME/.fonts.conf:/home/app/.fonts.conf \
