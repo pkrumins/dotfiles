@@ -1,3 +1,14 @@
+sqlyog-docker () {
+    docker run -d -it --rm \
+        --cap-add=NET_ADMIN \
+        --network lamp \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v /home/foobar/.dockerdata/wine-sqlyog:/home/app/.wine \
+        --name sqlyog \
+        wine-sqlyog
+}
+
 qutebrowser-docker () {
     docker run -d -it --rm \
         --device /dev/snd \
@@ -419,6 +430,7 @@ r-docker () {
     r -q --vanilla
 }
 
+alias sqlyog='sqlyog-docker'
 alias qutebrowser='qutebrowser-docker'
 alias excel='libreoffice-docker --calc'
 alias word='libreoffice-docker --writer'
