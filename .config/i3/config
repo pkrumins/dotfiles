@@ -205,6 +205,7 @@ mode "workspace" {
         bindsym f workspace fb; mode "default"
         bindsym g workspace gimp; mode "default"
         bindsym i workspace inkscape; mode "default"
+        bindsym s workspace sqlyog; mode "default"
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -288,6 +289,7 @@ workspace fb output VGA1
 workspace dc output DP1
 workspace gimp output DP1
 workspace inkscape output DP1
+workspace sqlyog output DP1
 
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
@@ -379,6 +381,9 @@ assign [class="github"] workspace github
 
 # Fb on workspace fb
 assign [class="fb"] workspace fb
+
+# SQLYog on workspace sqlyog
+assign [instance="sqlyog"] workspace sqlyog
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
