@@ -7,6 +7,14 @@ totalcmd-docker () {
         --network none \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME:/home/foobar \
+        -v $HOME/Downloads:/Downloads \
+        -v $HOME/Docs:/Docs \
+        -v $HOME/VLC:/VLC \
+        -v $HOME/YTD:/YTD \
+        -v $HOME/projects:/projects \
+        -v /storage/workstation:/workstation \
+        -v /storage/archive:/archive \
         -v $totalcmd_wine_dir:/home/app/.wine \
         --name totalcmd \
         wine-totalcmd
