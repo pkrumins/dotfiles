@@ -51,6 +51,7 @@ main () {
         ["libreoffice"]="libreoffice"
         ["word"]="word"
         ["excel"]="excel"
+        ["sqlyog"]="sqlyog"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
