@@ -54,7 +54,7 @@ libreoffice-docker () {
         --network none \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $HOME/Docs:/home/app/Docs \
+        -v $HOME/Downloads:/home/app/Downloads \
         libreoffice --nologo "$@"
 }
 
