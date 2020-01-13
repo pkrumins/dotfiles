@@ -10,8 +10,6 @@ totalcmd-docker () {
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
         -v $HOME/Docs:/Docs \
-        -v $HOME/VLC:/VLC \
-        -v $HOME/YTD:/YTD \
         -v $HOME/projects:/projects \
         -v /storage/workstation:/workstation \
         -v /storage/archive:/archive \
@@ -97,8 +95,6 @@ doublecmd-qt-docker () {
         -v $HOME:/home/foobar \
         -v $HOME/Downloads:/Downloads \
         -v $HOME/Docs:/Docs \
-        -v $HOME/VLC:/VLC \
-        -v $HOME/YTD:/YTD \
         -v $HOME/projects:/projects \
         -v $HOME/.fonts:/home/app/.fonts \
         -v $HOME/.fonts.conf:/home/app/.fonts.conf \
@@ -196,28 +192,23 @@ ffmpeg-docker () {
     docker run -it --rm \
         --device /dev/dri \
         -v $HOME/Downloads:/home/app/Downloads \
-        -v $HOME/VLC:/home/app/VLC \
         ffmpeg "$@"
 }
 
 vlc-docker () {
-    local -r vlc_dir="$HOME/VLC"
-    if [[ ! -d "$vlc_dir" ]]; then
-        mkdir -p "$vlc_dir"
-    fi
-
-    local files="$@"
+    local files=("$@")
 
     docker run -d -it --rm \
+        --network none \
         --device /dev/snd \
         --device /dev/dri \
         -e DISPLAY=$DISPLAY \
         -e PULSE_SERVER=unix:/run/user/$UID/pulse/native \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v /run/user/$UID/pulse:/run/user/$UID/pulse \
-        -v $HOME/VLC:/home/app/VLC \
+        -v $HOME/Downloads:/home/app/Downloads \
         --name vlc \
-        vlc --no-qt-privacy-ask "$files"
+        vlc "${files[@]}"
   }
 
 copyq-docker () {
