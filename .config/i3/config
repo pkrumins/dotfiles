@@ -206,6 +206,7 @@ mode "workspace" {
         bindsym g workspace gimp; mode "default"
         bindsym i workspace inkscape; mode "default"
         bindsym s workspace sqlyog; mode "default"
+        bindsym t workspace totalcmd; mode "default"
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -290,6 +291,7 @@ workspace dc output DP1
 workspace gimp output DP1
 workspace inkscape output DP1
 workspace sqlyog output DP1
+workspace totalcmd output DP1
 
 # Chrome shortcut
 bindsym $mod+backslash exec bash -i -c chrome
@@ -384,6 +386,9 @@ assign [class="fb"] workspace fb
 
 # SQLYog on workspace sqlyog
 assign [instance="sqlyog"] workspace sqlyog
+
+# Totalcmd on workspace totalcmd
+assign [instance="totalcmd"] workspace totalcmd
 
 # Start flameshot
 exec --no-startup-id bash -i -c flameshot # todo: setup flameshot gui
