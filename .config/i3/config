@@ -379,6 +379,7 @@ for_window [class="Pinta"] floating enable
 for_window [class="krita"] floating enable
 for_window [class="rdesktop"] floating enable
 for_window [class="xfreerdp"] floating enable
+for_window [class="Qalculate-gtk"] floating enable
 
 # Gimp on workspace gimp
 assign [class="Gimp"] workspace gimp
