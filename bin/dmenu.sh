@@ -52,7 +52,7 @@ main () {
         ["word"]="word"
         ["excel"]="excel"
         ["sqlyog"]="sqlyog"
-        ["calc"]="qalculate"
+        ["qalc"]="qalculate"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
