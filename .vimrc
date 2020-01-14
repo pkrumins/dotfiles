@@ -9,9 +9,9 @@ let mapleader="\\"
 "
 set encoding=utf-8
 
-" enable plugins
+" enable autoindent and plugins
 "
-filetype plugin on
+filetype indent plugin on
 
 " make vim search all subdirectories
 "
