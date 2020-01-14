@@ -340,15 +340,15 @@ for_window [instance="calendar"] move position center
 for_window [instance="calendar"] border pixel 3
 bindsym $mod+c exec --no-startup-id bash -i ~/bin/i3-show-or-hide-calendar.sh
 
-# Autostart R scratchpad
+# Autostart math scratchpad
 bindsym $mod+m [instance="math"] scratchpad show; [instance="math"] move position center
 for_window [instance="math"] floating enable sticky enable
 for_window [instance="math"] resize set 800 400
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 3
-exec --no-startup-id urxvt -name math -fn "xft:DejaVu Sans Mono:size=14" -e bash -i -c "r"
+exec --no-startup-id urxvt -name math -fn "xft:DejaVu Sans Mono:size=14" -e bash -i -c "qalc"
 
-# Autostart vim scratchpad
+# Autostart notepad
 bindsym $mod+n [instance="notepad"] scratchpad show; [instance="notepad"] move position center
 for_window [instance="notepad"] floating enable sticky enable
 for_window [instance="notepad"] resize set 800 600
@@ -356,7 +356,7 @@ for_window [instance="notepad"] move scratchpad
 for_window [instance="notepad"] border pixel 3
 exec --no-startup-id urxvt -name notepad -fn "xft:DejaVu Sans Mono:size=12" -e vim -c 'startinsert'
 
-# Autostart ranger scratchpad
+# Autostart ranger
 bindsym $mod+f [instance="ranger"] scratchpad show; [instance="ranger"] move position center
 for_window [instance="ranger"] floating enable sticky enable
 for_window [instance="ranger"] resize set 1000 800
