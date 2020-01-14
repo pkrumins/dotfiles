@@ -57,7 +57,7 @@ main () {
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
         ["gmail"]="gmail"
-        ["google"]="g"
+        ["google"]="chrome-browsing https://google.com"
         ["fb"]="fb"
         ["hn"]="hn"
         ["reddit"]="reddit"
