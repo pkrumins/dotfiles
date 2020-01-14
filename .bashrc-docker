@@ -432,14 +432,6 @@ chrome-setup-template () {
         "https://google.com"
 }
 
-r-docker () {
-    local container_name="r_"
-
-    docker run -it --rm \
-    -v $HOME/Downloads:/home/app/Downloads \
-    r -q --vanilla
-}
-
 alias totalcmd='totalcmd-docker'
 alias sqlyog='sqlyog-docker'
 alias qutebrowser='qutebrowser-docker'
@@ -481,6 +473,4 @@ alias devurls='chrome-browsing https://devurls.com'
 alias sciurls='chrome-browsing https://sciurls.com'
 alias finurls='chrome-browsing https://finurls.com'
 alias mathurls='chrome-browsing https://mathurls.com'
-
-alias r='r-docker'
 
