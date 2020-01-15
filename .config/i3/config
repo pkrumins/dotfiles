@@ -330,8 +330,8 @@ exec --no-startup-id i3-msg 'workspace sqlyog; exec bash -i -c sqlyog'
 assign [instance="totalcmd"] workspace tc
 exec --no-startup-id i3-msg 'workspace tc; exec bash -i -c totalcmd'
 
-# Enable workspace 8 and switch to workspace 3
-exec --no-startup-id i3-msg 'workspace 8; workspace 3'
+# Enable workspace 8 and switch to workspace 4
+exec --no-startup-id i3-msg 'workspace 8; workspace 4'
 
 # Show calendar on alt+c
 for_window [instance="calendar"] floating enable sticky enable
