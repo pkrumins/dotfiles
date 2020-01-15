@@ -333,6 +333,9 @@ exec --no-startup-id i3-msg 'workspace tc; exec bash -i -c totalcmd'
 # Enable workspace 8 and switch to workspace 4
 exec --no-startup-id i3-msg 'workspace 8; workspace 4'
 
+# Autostart lamp
+exec --no-startup-id bash -i -c "lamp-docker"
+
 # Show calendar on alt+c
 for_window [instance="calendar"] floating enable sticky enable
 for_window [instance="calendar"] resize set 600 600
