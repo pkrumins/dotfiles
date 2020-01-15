@@ -30,6 +30,6 @@ $if mode=vi
 $endif
 
 $if term=linux
-    "\e\C-M": "startx\n"
+    "\e\C-M": "startx\C-M"
 $endif
 
