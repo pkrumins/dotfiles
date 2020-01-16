@@ -1,3 +1,10 @@
+aria2c-docker () {
+    docker run -it --rm \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Downloads:/home/app/Downloads \
+        aria2
+}
 qalculate-docker () {
     local app="qalculate-gtk"
     if (( $# > 0 )); then
@@ -495,6 +502,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias aria2c='aria2c-docker'
 alias foxit='foxit-pdf-editor-docker'
 alias qalculate='qalculate-docker qalculate-gtk'
 alias qalc='qalculate-docker qalc'
