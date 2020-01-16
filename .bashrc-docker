@@ -30,6 +30,22 @@ qalculate-docker () {
         qalculate
 }
 
+photoshop-docker () {
+    local -r photoshop_wine_dir="$HOME/.dockerdata/wine-photoshop2015"
+    if [[ ! -d "$photoshop_wine_dir" ]]; then
+        echo "Error: Photoshop is not installed."
+        return 1
+    fi
+
+    docker run -d -it --rm \
+        --network none \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Downloads:/home/app/Downloads \
+        -v $photoshop_wine_dir:/home/app/.wine \
+        wine-photoshop
+}
+
 foxit-pdf-editor-docker () {
     local -r foxit_wine_dir="$HOME/.dockerdata/wine-foxit-pdf-editor"
     if [[ ! -d "$foxit_wine_dir" ]]; then
@@ -502,6 +518,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias photoshop='photoshop-docker'
 alias aria2c='aria2c-docker'
 alias foxit='foxit-pdf-editor-docker'
 alias qalculate='qalculate-docker qalculate-gtk'
