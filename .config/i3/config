@@ -204,6 +204,7 @@ mode "workspace" {
         bindsym d workspace dc; mode "default"
         bindsym f workspace fb; mode "default"
         bindsym g workspace gimp; mode "default"
+        bindsym p workspace photoshop; mode "default"
         bindsym i workspace inkscape; mode "default"
         bindsym s workspace sqlyog; mode "default"
         bindsym t workspace tc; mode "default"
@@ -289,6 +290,7 @@ workspace 10 output DP1
 workspace fb output VGA1
 workspace dc output DP1
 workspace gimp output DP1
+workspace photoshop output DP1
 workspace inkscape output DP1
 workspace sqlyog output DP1
 workspace tc output DP1
@@ -386,6 +388,9 @@ for_window [class="Qalculate-gtk"] floating enable
 
 # Gimp on workspace gimp
 assign [class="Gimp"] workspace gimp
+
+# Photoshop on workspace photoshop
+assign [instance="photoshop"] workspace photoshop
 
 # Inkscape on workspace inkscape
 assign [class="Inkscape"] workspace inkscape
