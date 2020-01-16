@@ -23,6 +23,22 @@ qalculate-docker () {
         qalculate
 }
 
+foxit-pdf-editor-docker () {
+    local -r foxit_wine_dir="$HOME/.dockerdata/wine-foxit-pdf-editor"
+    if [[ ! -d "$foxit_wine_dir" ]]; then
+        echo "Error: Foxit pdf editor is not installed."
+        return 1
+    fi
+
+    docker run -d -it --rm \
+        --network none \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Downloads:/Downloads \
+        -v $foxit_wine_dir:/home/app/.wine \
+        wine-foxit-pdf-editor
+}
+
 office-docker () {
     local -r office_wine_dir="$HOME/.dockerdata/wine-office2013"
     if [[ ! -d "$office_wine_dir" ]]; then
