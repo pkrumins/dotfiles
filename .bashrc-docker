@@ -1,3 +1,12 @@
+zathura-docker () {
+    docker run -d -it --rm \
+        --network none \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Downloads:/home/app/Downloads \
+        zathura
+}
+
 aria2c-docker () {
     docker run -it --rm \
         -e DISPLAY=$DISPLAY \
@@ -5,6 +14,7 @@ aria2c-docker () {
         -v $HOME/Downloads:/home/app/Downloads \
         aria2
 }
+
 qalculate-docker () {
     local app="qalculate-gtk"
     if (( $# > 0 )); then
@@ -518,6 +528,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias zathura='zathura-docker'
 alias photoshop='photoshop-docker'
 alias aria2c='aria2c-docker'
 alias foxit='foxit-pdf-editor-docker'
