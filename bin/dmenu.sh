@@ -53,6 +53,7 @@ main () {
         ["excel"]="excel"
         ["sqlyog"]="sqlyog"
         ["qalc"]="qalculate"
+        ["foxit"]="foxit"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
