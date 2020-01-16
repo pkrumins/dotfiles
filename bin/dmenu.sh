@@ -54,6 +54,7 @@ main () {
         ["sqlyog"]="sqlyog"
         ["qalc"]="qalculate"
         ["foxit"]="foxit"
+        ["photoshop"]="photoshop"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
