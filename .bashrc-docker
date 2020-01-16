@@ -34,7 +34,7 @@ foxit-pdf-editor-docker () {
         --network none \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $HOME/Downloads:/Downloads \
+        -v $HOME/Downloads:/home/app/Downloads \
         -v $foxit_wine_dir:/home/app/.wine \
         wine-foxit-pdf-editor
 }
@@ -55,7 +55,7 @@ office-docker () {
         --network none \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $HOME/Downloads:/Downloads \
+        -v $HOME/Downloads:/home/app/Downloads \
         -v $office_wine_dir:/home/app/.wine \
         wine-office2013 \
         "$app"
