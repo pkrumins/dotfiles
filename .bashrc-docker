@@ -469,7 +469,8 @@ chrome-research () {
     chrome-browsing \
         "https://hn.algolia.com/?q=$search_term" \
         "https://lobste.rs/search?utf8=%E2%9C%93&what=stories&order=relevance&q=$search_term" \
-        "https://twitter.com/search?vertical=default&q=$search_term"
+        "https://twitter.com/search?vertical=default&q=$search_term" \
+        "https://github.com/search?q=$search_term"
 }
 
 chrome-browsing () {
