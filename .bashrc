@@ -362,6 +362,12 @@ export LESS="-F -X -R"
 #
 alias ncdu='ncdu -r'
 
+# ,  is pushd .
+# ,, is popd
+#
+alias ,='pushd .'
+alias ,,='popd'
+
 # Enable bash completion
 #
 if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -431,16 +437,6 @@ v() {
         fi
     else
         command v "$@"
-    fi
-}
-
-# Make pushd easier to use
-#
-pushd () {
-    if (( $# == 0 )); then
-        builtin pushd .
-    else
-        builtin pushd "$@"
     fi
 }
 
