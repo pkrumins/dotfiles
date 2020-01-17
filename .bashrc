@@ -413,7 +413,7 @@ export FZF_CTRL_R_OPTS="--ansi --preview-window wrap:down:2 --preview 'bat -l ba
 #
 unalias z
 z() {
-    if [[ -z "$@" ]]; then
+    if (( $# == 0 )); then
         cd "$(_z -l 2>&1 | fzf +s --tac --height 15 --reverse -n 2.. | sed -r 's/^[0-9,. ]*//')"
     else
         _z "$@"
@@ -423,7 +423,7 @@ z() {
 # Use v with fzf
 #
 v() {
-    if [[ -z "$@" ]]; then
+    if (( $# == 0 )); then
         local -r choice="$(command v -l 2>&1 | fzf +s --tac --height 15 --reverse | sed -r 's/^[0-9,. \t]*//')"
         if [[ ! -z "$choice" ]]; then
             local -r file="${choice/#~/$HOME}"
@@ -431,6 +431,16 @@ v() {
         fi
     else
         command v "$@"
+    fi
+}
+
+# Make pushd easier to use
+#
+pushd () {
+    if (( $# == 0 )); then
+        builtin pushd .
+    else
+        builtin pushd "$@"
     fi
 }
 
