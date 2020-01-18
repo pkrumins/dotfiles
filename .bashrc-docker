@@ -1,3 +1,10 @@
+mycli-docker () {
+    docker run -it --rm \
+        --network lamp \
+        -v $HOME/Downloads:/home/app/Downloads \
+        mycli "$@"
+}
+
 zathura-docker () {
     docker run -d -it --rm \
         --network none \
@@ -530,6 +537,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias mycli='mycli-docker'
 alias zathura='zathura-docker'
 alias photoshop='photoshop-docker'
 alias aria2c='aria2c-docker'
