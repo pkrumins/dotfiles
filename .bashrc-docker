@@ -164,6 +164,15 @@ youtube-dl-docker () {
         youtube-dl "$@"
 }
 
+mysql-docker () {
+    local docker_tty_arg="-t"
+    if [[ ! -t 0 ]]; then
+        local docker_tty_arg=""
+    fi
+
+    docker exec -i $docker_tty_arg lamp mysql "$@"
+}
+
 lamp-docker () {
     local -r mysql_data_dir="$HOME/.dockerdata/mysql"
     if [[ ! -d "$mysql_data_dir" ]]; then
@@ -537,6 +546,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias mysql='mysql-docker'
 alias mycli='mycli-docker'
 alias zathura='zathura-docker'
 alias photoshop='photoshop-docker'
@@ -550,7 +560,6 @@ alias qutebrowser='qutebrowser-docker'
 alias excel='office-docker excel'
 alias word='office-docker word'
 alias libreoffice='libreoffice-docker'
-alias mysql='docker exec -it lamp mysql'
 alias doublecmd='doublecmd-qt'
 alias doublecmd-qt='doublecmd-qt-docker'
 alias djview4='djview4-docker'
