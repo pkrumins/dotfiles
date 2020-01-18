@@ -170,6 +170,7 @@ lamp-docker () {
         -p 80:80 \
         -v /etc/hosts:/etc/hosts \
         -v $HOME/projects:/home/app/projects \
+        -v $mysql_data_dir:/var/lib/mysql \
         --name lamp \
         lamp
 }
