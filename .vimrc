@@ -187,7 +187,8 @@ nnoremap k gk
 nnoremap gk k
 vnoremap j gj
 vnoremap gj j
-vnoremap gk j
+vnoremap gk k
+vnoremap k gk
 
 " make ctrl+s save the current file
 "
