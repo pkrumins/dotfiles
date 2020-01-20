@@ -47,6 +47,21 @@ qalculate-docker () {
         qalculate
 }
 
+winscp-docker () {
+    local -r winscp_wine_dir="$HOME/.dockerdata/wine-winscp"
+    if [[ ! -d "$winscp_wine_dir" ]]; then
+        mkdir -p "$winscp_wine_dir"
+    fi
+    docker run -d -it --rm \
+        --cap-add=NET_ADMIN \
+        --network lamp \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME/Downloads:/home/app/Downloads \
+        -v $winscp_wine_dir:/home/app/.wine \
+        wine-winscp
+}
+
 photoshop-docker () {
     local -r photoshop_wine_dir="$HOME/.dockerdata/wine-photoshop2015"
     if [[ ! -d "$photoshop_wine_dir" ]]; then
@@ -556,6 +571,7 @@ alias qalculate='qalculate-docker qalculate-gtk'
 alias qalc='qalculate-docker qalc'
 alias totalcmd='totalcmd-docker'
 alias sqlyog='sqlyog-docker'
+alias winscp='winscp-docker'
 alias qutebrowser='qutebrowser-docker'
 alias excel='office-docker excel'
 alias word='office-docker word'
