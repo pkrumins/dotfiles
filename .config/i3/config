@@ -322,6 +322,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec bash -i -c gmail'
 assign [class="Double Commander"] workspace dc
 for_window [class="Double Commander" title="Find files"] floating enable
 for_window [class="Double Commander" title="Copying"] floating enable
+for_window [class="Double Commander" title="MultiRename"] floating enable
 exec --no-startup-id i3-msg 'workspace dc; exec bash -i -c doublecmd'
 
 # Autostart sqlyog on workspace sqlyog
