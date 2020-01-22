@@ -346,9 +346,13 @@ alias grep='egrep --color'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 
-# Use more advanced ls
+# Use colors and filetype indicators in ls
 #
-alias ls='ls --color=auto -F'
+alias ls='ls --color=always -F'
+
+# Sort files by ctime
+alias l='ls -lasc --sort=time'
+alias ll='ls -lasc --sort=time | less'
 
 # Read man through most
 #
