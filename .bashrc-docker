@@ -15,6 +15,10 @@ zathura-docker () {
 }
 
 aria2c-docker () {
+    local -r aria2_dir="$HOME/Downloads/aria2"
+    if [[ ! -d "$aria2_dir" ]]; then
+        mkdir -p "$aria2_dir"
+    fi
     docker run -it --rm \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
