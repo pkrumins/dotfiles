@@ -11,7 +11,7 @@ zathura-docker () {
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v $HOME/Downloads:/home/app/Downloads \
-        zathura
+        zathura "$@"
 }
 
 aria2c-docker () {
@@ -19,7 +19,7 @@ aria2c-docker () {
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v $HOME/Downloads:/home/app/Downloads \
-        aria2
+        aria2 "$@"
 }
 
 qalculate-docker () {
