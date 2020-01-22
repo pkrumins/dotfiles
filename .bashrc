@@ -172,6 +172,7 @@ if [[ $COMPUTER_TYPE == "desktop" || $COMPUTER_TYPE == "laptop" ]]; then
         fi
         local -r formats=(
             "best[ext=mp4][height=$quality]"
+            "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=m4a][abr<=128]"
             "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=m2a][abr<=128]"
             "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=webm][abr<=128]"
             "bestvideo[ext=mp4][height=$quality]+bestaudio[ext=mp3][abr<=128]"
