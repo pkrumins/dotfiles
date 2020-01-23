@@ -258,6 +258,10 @@ set nrformats-=octal
 "
 set display=lastline
 
+" visualize wrapped lines with … characters
+"
+set showbreak=…
+
 " make vertical scrolling more pleasant
 "
 set scrolloff=4
@@ -306,7 +310,7 @@ let g:BufKillCreateMappings = 0
 
 " configure gitgutter plugin
 "
-:set updatetime=100
+:set updatetime=250
 
 " zoom function that opens the current buffer in a new tab
 " github.com/junegunn/dotfiles/blob/master/vimrc
