@@ -179,16 +179,29 @@ nnoremap Q :q<CR>
 "
 nmap ,, :noh<CR>
 
-" gj and gk are better j k
+" gj, gk, g$, g^, g0 are better j, k, $, ^, 0
 "
 nnoremap j gj
 nnoremap gj j
 nnoremap k gk
 nnoremap gk k
+nnoremap $ g$
+nnoremap g$ $
+nnoremap ^ g^
+nnoremap g^ ^
+nnoremap 0 g0
+nnoremap g0 0
+
 vnoremap j gj
 vnoremap gj j
 vnoremap gk k
 vnoremap k gk
+vnoremap $ g$
+vnoremap g$ $
+vnoremap ^ g^
+vnoremap g^ ^
+vnoremap 0 g0
+vnoremap g0 0
 
 " make ctrl+s save the current file
 "
