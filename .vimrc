@@ -179,7 +179,7 @@ nnoremap Q :q<CR>
 "
 nmap ,, :noh<CR>
 
-" gj, gk, g$, g^, g0 are better j, k, $, ^, 0
+" make movements work in wrapped lines
 "
 nnoremap j gj
 nnoremap gj j
@@ -191,6 +191,8 @@ nnoremap ^ g^
 nnoremap g^ ^
 nnoremap 0 g0
 nnoremap g0 0
+nnoremap <Down> gj
+nnoremap <Up> gk
 
 vnoremap j gj
 vnoremap gj j
@@ -202,6 +204,11 @@ vnoremap ^ g^
 vnoremap g^ ^
 vnoremap 0 g0
 vnoremap g0 0
+vnoremap <Down> gj
+vnoremap <Up> gk
+
+inoremap <Down> <Esc>gja
+inoremap <Up> <Esc>gka
 
 " make ctrl+s save the current file
 "
