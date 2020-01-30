@@ -55,6 +55,7 @@ main () {
         ["qalc"]="qalculate"
         ["foxit"]="foxit"
         ["photoshop"]="photoshop"
+        ["zathura"]="zathura"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
