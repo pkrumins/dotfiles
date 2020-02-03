@@ -378,6 +378,14 @@ for_window [class="KeePassXC"] move scratchpad
 for_window [class="KeePassXC"] border pixel 3
 exec --no-startup-id exec bash -i -c "keepass"
 
+# Autostart telegram
+bindsym $mod+o [instance="Telegram"] scratchpad show
+for_window [instance="Telegram"] floating enable sticky enable
+for_window [instance="Telegram"] move position 400 60
+for_window [instance="Telegram"] resize set 850 900
+for_window [instance="Telegram"] move scratchpad
+exec --no-startup-id exec bash -i -c "telegram"
+
 # Floating windows
 for_window [class="vlc"] floating enable
 for_window [class="Inkscape"] floating enable
@@ -387,6 +395,7 @@ for_window [class="krita"] floating enable
 for_window [class="rdesktop"] floating enable
 for_window [class="xfreerdp"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
+for_window [instance="Telegram"] floating enable
 
 # Gimp on workspace gimp
 assign [class="Gimp"] workspace gimp
