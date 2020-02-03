@@ -1,3 +1,20 @@
+telegram-docker () {
+    local -r telegram_data_dir="$HOME/.dockerdata/telegram/TelegramDesktop"
+    if [[ ! -d "$telegram_data_dir" ]]; then
+        mkdir -p "$telegram_data_dir"
+    fi
+
+    docker run -d -it --rm \
+        -e DISPLAY=$DISPLAY \
+        -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v /run/user/$UID:/run/user/$UID \
+        -v $HOME/Downloads:/home/app/Downloads \
+        -v $telegram_data_dir:/home/app/.local/share/TelegramDesktop \
+        --name telegram \
+        telegram
+}
+
 mycli-docker () {
     docker run -it --rm \
         --network lamp \
@@ -566,6 +583,7 @@ chrome-setup-template () {
         "https://google.com"
 }
 
+alias telegram='telegram-docker'
 alias mysql='mysql-docker'
 alias mycli='mycli-docker'
 alias zathura='zathura-docker'
