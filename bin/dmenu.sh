@@ -56,6 +56,7 @@ main () {
         ["foxit"]="foxit"
         ["photoshop"]="photoshop"
         ["zathura"]="zathura"
+        ["telegram"]="telegram"
     );
     local -Ar browsing=(
         ["chrome"]="chrome-browsing"
