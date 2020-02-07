@@ -380,11 +380,11 @@ for_window [class="KeePassXC"] border pixel 3
 exec --no-startup-id exec bash -i -c "keepass"
 
 # Autostart telegram
-bindsym $mod+o [instance="Telegram"] scratchpad show
+bindsym $mod+o [instance="Telegram" title="Telegram"] scratchpad show
 for_window [instance="Telegram"] floating enable sticky enable
 for_window [instance="Telegram"] move position 400 60
 for_window [instance="Telegram"] resize set 850 900
-for_window [instance="Telegram"] move scratchpad
+for_window [instance="Telegram" title="Telegram"] move scratchpad
 exec --no-startup-id exec bash -i -c "telegram"
 
 # Floating windows
