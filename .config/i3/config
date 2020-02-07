@@ -299,6 +299,7 @@ workspace tc output DP1
 bindsym $mod+backslash exec bash -i -c chrome
 
 # Autostart copyq
+for_window [instance="copyq"] floating enable sticky enable
 exec --no-startup-id bash -i -c "copyq-daemon"
 bindsym $mod+grave exec bash -i -c "copyq-menu"
 
