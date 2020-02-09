@@ -373,10 +373,10 @@ for_window [instance="ranger"] border pixel 3
 exec --no-startup-id urxvt -name ranger -fn "xft:DejaVu Sans Mono:size=9" -e bash -i -c "ranger"
 
 # Autostart keepassxc
-bindsym $mod+p [class="KeePassXC"] scratchpad show; [class="KeePassXC"] move position center
+bindsym $mod+p [class="KeePassXC" title="KeePassXC"] scratchpad show, move position center
 for_window [class="KeePassXC"] floating enable sticky enable
-for_window [class="KeePassXC"] move scratchpad
 for_window [class="KeePassXC"] border pixel 3
+for_window [class="KeePassXC" title="KeePassXC"] move scratchpad
 exec --no-startup-id exec bash -i -c "keepass"
 
 # Autostart telegram
