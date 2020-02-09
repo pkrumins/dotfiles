@@ -509,11 +509,21 @@ chrome-gmail () {
         "https://mail.google.com/mail/u/3/#inbox"
 }
 
-chrome-statcounter () {
-    local chrome_data_dir="$HOME/.dockerdata/chrome/statcounter"
+chrome-statcounter-browserling () {
+    local chrome_data_dir="$HOME/.dockerdata/chrome/statcounter-browserling"
 
     chrome-docker \
         --user-data-dir="$chrome_data_dir" \
+        --class=statc \
+        "https://statcounter.com"
+}
+
+chrome-statcounter-pkrumins () {
+    local chrome_data_dir="$HOME/.dockerdata/chrome/statcounter-pkrumins"
+
+    chrome-docker \
+        --user-data-dir="$chrome_data_dir" \
+        --class=statc \
         "https://statcounter.com"
 }
 
@@ -621,7 +631,8 @@ alias chrome='chrome-browsing'
 alias gmail='chrome-gmail'
 alias fb='chrome-fb'
 alias hn='chrome-browsing https://news.ycombinator.com'
-alias statc='chrome-statcounter'
+alias statcb='chrome-statcounter-browserling'
+alias statcp='chrome-statcounter-pkrumins'
 alias reddit='chrome-browsing https://old.reddit.com'
 alias lobsters='chrome-browsing https://lobste.rs'
 alias ts='chrome-twitter-search'
