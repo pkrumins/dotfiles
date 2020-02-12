@@ -284,7 +284,6 @@ freerdp-docker () {
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v $HOME/Downloads:/home/app/Downloads \
-        --name freerdp \
         freerdp "$@"
 }
 
