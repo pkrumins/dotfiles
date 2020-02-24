@@ -1,9 +1,0 @@
-g:qfedit_enable	qfedit.txt	/*g:qfedit_enable*
-qfedit	qfedit.txt	/*qfedit*
-qfedit-changelog	qfedit.txt	/*qfedit-changelog*
-qfedit-contents	qfedit.txt	/*qfedit-contents*
-qfedit-introduction	qfedit.txt	/*qfedit-introduction*
-qfedit-options	qfedit.txt	/*qfedit-options*
-qfedit.txt	qfedit.txt	/*qfedit.txt*
-qfedit.vim	qfedit.txt	/*qfedit.vim*
-vim-qfedit	qfedit.txt	/*vim-qfedit*
