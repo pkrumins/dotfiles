@@ -329,7 +329,7 @@ let g:BufKillCreateMappings = 0
 :set updatetime=250
 
 " zoom function that opens the current buffer in a new tab
-" github.com/junegunn/dotfiles/blob/master/vimrc
+" found at: github.com/junegunn/dotfiles/blob/master/vimrc
 "
 function! s:zoom()
   if winnr('$') > 1
@@ -344,6 +344,10 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 " configure illuminate plugin
 "
 highlight link illuminatedWord Visual
+
+" configure matchup plugin
+"
+let g:matchup_matchparen_offscreen = {}
 
 " automatically run xrdb when .Xresources is edited
 "
