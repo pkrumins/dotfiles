@@ -458,5 +458,5 @@ v() {
 # Setup path
 #
 PATH=$PATH:~/.local/bin
-PATH=$PATH:~/installs/node-v12.15.0/bin
+PATH=$PATH:~/installs/node-v10.10.0/bin
 
