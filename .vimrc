@@ -349,6 +349,10 @@ highlight link illuminatedWord Visual
 "
 let g:matchup_matchparen_offscreen = {}
 
+" configure scratch plugin
+"
+let g:scratch_no_mappings = 1
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
