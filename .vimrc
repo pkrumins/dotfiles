@@ -353,6 +353,10 @@ let g:matchup_matchparen_offscreen = {}
 "
 let g:scratch_no_mappings = 1
 
+" configure undoquit plugin
+"
+nnoremap <c-w>c :call undoquit#SaveWindowQuitHistory()<cr><c-w>c
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
