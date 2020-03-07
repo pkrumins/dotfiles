@@ -1,0 +1,14 @@
+:Thesaurus	thesaurus_query.txt	/*:Thesaurus*
+:ThesaurusQueryLookupCurrentWord	thesaurus_query.txt	/*:ThesaurusQueryLookupCurrentWord*
+:ThesaurusQueryReplace	thesaurus_query.txt	/*:ThesaurusQueryReplace*
+:ThesaurusQueryReplaceCurrentWord	thesaurus_query.txt	/*:ThesaurusQueryReplaceCurrentWord*
+:ThesaurusQueryReset	thesaurus_query.txt	/*:ThesaurusQueryReset*
+thesaurus_query.vim	thesaurus_query.txt	/*thesaurus_query.vim*
+thesaurus_query.vim.txt	thesaurus_query.txt	/*thesaurus_query.vim.txt*
+tq-Customization	thesaurus_query.txt	/*tq-Customization*
+tq-backend-format	thesaurus_query.txt	/*tq-backend-format*
+tq-global-variables	thesaurus_query.txt	/*tq-global-variables*
+tq-intro	thesaurus_query.txt	/*tq-intro*
+tq-licence	thesaurus_query.txt	/*tq-licence*
+tq-requirements	thesaurus_query.txt	/*tq-requirements*
+tq-usage	thesaurus_query.txt	/*tq-usage*

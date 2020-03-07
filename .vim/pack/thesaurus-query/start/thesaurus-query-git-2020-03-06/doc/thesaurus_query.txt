@@ -1,0 +1,319 @@
+*thesaurus_query.vim.txt* Multilanguage thesaurus query plugin for
+                    Vim version 7.3 or above
+
+===============================================================================
+CONTENTS                                                  *thesaurus_query.vim*
+
+    1. Intro ..................................................... |tq-intro|
+    2. Requirements ....................................... |tq-requirements|
+    3. Usage ..................................................... |tq-usage|
+    4. Customization ..................................... |tq-Customization|
+    4.1 Global variables .............................. |tq-global-variables|
+        `g:tq_python_version`
+        `g:tq_display_list_all_time`
+        `g:tq_map_keys`
+        `g:tq_use_vim_autocompletefunc`
+        `g:tq_enabled_backends`
+        `g:tq_online_backends_timeout`
+        `b/g:tq_language`
+        `g:tq_use_local_thesaurus_source_as_primary`
+        `g:tq_openoffice_en_file`
+        `g:tq_mthesaur_file`
+        `g:raise_backend_priority_if_synonym_found`
+        `g:tq_truncation_on_relavance`
+        `g:tq_truncation_on_definition_num`
+        `g:tq_truncation_on_syno_list_size`
+    4.2 Make Your Own Backend ........................... |tq-backend-format|
+    5. Licence.................................................. |tq-licence|
+===============================================================================
+
+
+===============================================================================
+1. Intro                                                             *tq-intro*
+
+This is a plugin for user to lookup synonyms of any word under cursor and
+replace it with an user chosen synonym. It also accept word covered in visual
+mode or manual input. But for the latter two cases, auto-replacement function
+is not activated by default.
+
+Multiple backends are used for this plugin, by default, four are enabled:
+
+    *   "datamuse_com" Online backend querys from
+        [datamuse.com](http://datamuse.com/) for
+        synonym, so internet connection is required for this backend's
+        functionality.
+
+    *   "openoffice_en" querys from OpenOffice's thesaurus source. If
+        you have OpenOffice (Not LibreOffice) installed on your Machine, the
+        files should be `/usr/share/myspell/dicts/th_en_US_v2[.idx,.dat]`, and
+        the backend would function properly. But if OpenOffice isn't provided
+        by the distro-repo or if the thesaurus database is provided elsewhere,
+        you'll need to manually indicate the database location in your system
+        by setting `g:tq_openoffice_en_file`. E.g. If my database files are
+        `~/Downloads/Mythes-1.0/th_en_US_new[.idx,.dat]`, my setting needs to
+        be >
+        let g:tq_openoffice_en_file="~/Downloads/MyThes-1.0/th_en_US_new"
+<
+    *   "mthesaur_txt" querys from `mthesaur.txt`. For this backend to work,
+        be sure to download the file from
+        [gutenberg.org](http://www.gutenberg.org/files/3202/files/) and place
+        it under "~/.vim/thesaurus". If you place the file elsewhere, change
+        global variable |g:tq_mthesaur_file| to point to the file you
+        downloaded, eg. put the following line `let
+        g:tq_mthesaur_file="~/.config/nvim/thesaurus/mthesaur.txt"` into your
+        `.vimrc` file if your `mthesaur.txt` is placed in folder
+        "~/.config/nvim/thesaurus/".
+
+
+===============================================================================
+2. Requirements                                               *tq-requirements*
+
+Since the plugin is written in python, the vim should have +python support.
+Internet is required for online query backend to be functional;
+`mthesaur.txt` is required for local query backend to be functional.
+
+
+===============================================================================
+3. Usage                                                             *tq-usage*
+
+The plugin provides several ways of using.
+
+:ThesaurusQueryReplaceCurrentWord         *:ThesaurusQueryReplaceCurrentWord*
+    This command checkup the word under cursor and attempt to replace it with
+    use chosen candidate.
+
+:ThesaurusQueryLookupCurrentWord           *:ThesaurusQueryLookupCurrentWord*
+    This command checkup the word under cursor and list all found synonyms in
+    a split buffer.
+
+:Thesaurus                                                       *:Thesaurus*
+    This routine take one argument as target word and then query its synonyms.
+    Query result would be displayed in a split buffer.
+
+:ThesaurusQueryReplace                               *:ThesaurusQueryReplace*
+    DO NOT use this command directly!!!
+    The command used by synonym replacing key-mapping for phrase selected in
+    visual mode.
+
+:ThesaurusQueryReset                                   *:ThesaurusQueryReset*
+    Reset ThesaurusQuery, empty cached history in current session, restore
+    backend priority sequence to default/user defined in
+    `g:tq_enabled_backends`.
+
+The functionalities are also mapped to key-bindings, if `g:tq_map_keys=1` as
+default (Note: since this plugin is active for all buffers, the use of
+`<LocalLeader>`is now depreciated):
+    nnoremap <unique> <Leader>cs :ThesaurusQueryReplaceCurrentWord<CR>
+    vnoremap <unique> <Leader>cs "ky:ThesaurusQueryReplace <C-r>k<CR>
+    nnoremap <LocalLeader>cs :ThesaurusQueryReplaceCurrentWord<CR>
+    vnoremap <LocalLeader>cs "ky:ThesaurusQueryReplace <C-r>k<CR>
+If user decided that `<Leader>cs` is better used for other purposes, you may
+set `g:tq_map_keys=0`, and add your own preferred key mappings to these
+functions.
+
+
+===============================================================================
+4. Customization                                             *tq-Customization*
+
+4.1 Global variables                                      *tq-global-variables*
+
+Currently I designed several global variables used to customize the behavior.
+
+
+g:tq_python_version~
+    Force using the version of Python for the plugin. By default, if Python3
+    support is detected, it will be used. If not, Plugin will make attempt to
+    use Python2. At least one of the Python need to be supported. Argument
+    value can be:
+            2: use Python2
+            3: use Python3 >
+        let g:tq_python_version=3
+
+
+g:tq_display_list_all_time~
+    Determine if a minibuffer is still used when user decided to use the
+    replacement routine.
+            0: do not display split buffer if replace routine is used
+            1: display split buffer at all time >
+        let g:tq_display_list_all_time = 0
+<
+
+g:tq_map_keys~
+    Decide if default keymapping is used.
+            0: use default mapped keys
+            1: do not use default mapped keys. >
+        let g:tq_map_keys = 1
+<
+
+g:tq_use_vim_autocompletefunc~
+    Decide if use Vim's built-in `comletefunc` for insert-mode synonym
+    replacement. Note, `ctrl-xctrl-u` in insert mode invoke completefunc. >
+        let g:tq_use_vim_autocompletefunc=1
+<
+
+g:tq_enabled_backends~
+    this variable is offered by core query handler. It's a list of
+    query_backends user want to enable, with the sequence of user prefered
+    priority. Please be careful not to mis-spell when setting this variable.
+    available options: `openthesaurus_de`, `woxikon_de`, `jeck_ru`, `thesaurus_com`,
+    `datamuse_com`, `mthesaur_txt`, `cilin_txt`
+    >
+        let g:tq_enabled_backends = ["cilin_txt", \
+                                     "openthesaurus_de", \
+                                     "yarn_synsets", \
+                                     "jeck_ru", \
+                                     "openoffice_en", \
+                                     "mthesaur_txt", \
+                                     "datamuse_com"]
+<
+
+g:tq_online_backends_timeout~
+    Waiting time for online thesaurus backend before cancelled as timeout. >
+        let g:tq_online_backends_timeout = 1.0
+<
+
+g/b:tq_language~
+    Each query backend are associated with a Language: English (en), Chinese
+    (cn), German (de), Russian(ru), etc.
+    This variable decides of all backends enabled by
+    `g:tq_enabled_backends`, which one to be used in general(g:)
+    session or specific buffer(b:), based on the language they are associatd
+    with. It can be either string or list. This setting can be eigher buffer
+    variable or global variable. With buffer variable prioritized. Following
+    are few examples:
+        Only English Query Backends are to be used in general buffers:
+            `let g:tq_language='en'
+        All backends, regardless of their specific language, are to be used
+            let g:tq_language='All'
+        English and Chinese Query Backends are to be used in current buffer:
+            let b:tq_language=['en', 'cn'] >
+        let g:tq_language=['en']
+<
+
+g:tq_use_local_thesaurus_source_as_primary~
+    DEPRECIATED!!! DO NOT USE THIS VARIABLE ANY MORE~
+    This variable is used when initiating core query handler.  It determine
+    the priority between online thesaurus backend(based on Thesaurus.com) and
+    local thesaurus backend(based on mthesaur.txt). If
+    value is
+            0:      query with online backend first.
+            1:      query with local backend first. >
+        let g:tq_use_local_thesaurus_source_as_primary=0
+<
+
+g:tq_cilin_txt_file~
+    this variable is offered by tq_cilin_txt_lookup. Used to determine locate
+    `cilin.txt` file from your computer. If no `cilin.txt` is found at this
+    location, location specified in &thesaurus will be checked. Default
+    `cilin.txt` location would be "~/.vim/thesaurus/cilin.txt". Note that this
+    plugin recognize only utf-8 decoding, hence only utf-8 encoding `cilin`
+    will be correctly used. >
+        let g:tq_cilin_txt_file="~/.vim/thesaurus/cilin.txt"
+<
+
+g:tq_openoffice_en_file~
+    this variable is offered by openoffice_en_lookup. Used to determine
+    locate OpenOffice thesaurus plugin's index and database file from your
+    computer. If no database file is found from indicated location, this
+    backend will report error. >
+        let g:tq_openoffice_en_file="/usr/share/myspell/dicts/th_en_US_v2"
+<
+
+g:tq_mthesaur_file~
+    this variable is offered by `mthesaur_txt`. Used to determine locate
+    `mthesaur.txt` file from your computer. If no `mthesaur.txt` is found at
+    this location, location specified in &thesaurus will be checked. >
+        let g:tq_mthesaur_file="~/.vim/thesaurus/mthesaur.txt"
+<
+
+g:tq_yarn_synsets_file~
+    this variable is offered by backend `yarn_synsets`. Used to determine locate
+    `yarn-synsets.csv` file from your computer. If not indicated, default value
+    of `~/.vim/thesaurus/yarn-synsets.csv` is used >
+        let g:tq_yarn_synsets_file="~/.vim/thesaurus/yarn-synsets.csv"
+<
+
+g:raise_backend_priority_if_synonym_found~
+    this variable is offered by core query handler, if value is
+          0:    priority of the backend that find the synonyms will be topped
+          1:    backend priority won't be affected by synonym findings >
+        let g:raise_backend_priority_if_synonym_found = 0
+>
+
+g:tq_truncation_on_relavance~
+    This variable is for default query routine, if according to thesaurus.com,
+    the found synonym's relavance is smaller or equal to this value, it is
+    neglected
+     Note that this truncation will truncate the wordlist for BOTH replacing
+      candidate interface and thesaurus split won't be truncated. >
+         let g:tq_truncation_on_relavance = 0
+<
+
+g:tq_truncation_on_definition_num~
+    This variable is for replacing candidate display. If value is
+        -1:     no truncate of output is made upon number of definitions.
+        n:      only synonyms of the first n word definitions were retained.
+    Note that this truncation will only affect the replacing candidate
+    interface, thesaurus split will NOT be truncated. >
+        let g:tq_truncation_on_definition_num = -1
+<
+
+g:tq_truncation_on_syno_list_size~
+    This variable is for replacing candidate display. If value is
+        -1:     no truncate of output is made upon number of synonyms from a
+                single definition.
+        n:      only first n synonyms of that definition will be retained.
+    Note that this truncation will only affect the replacing candidate
+    interface, thesaurus split will NOT be truncated. >
+         let g:tq_truncation_on_syno_list_size = -1
+<
+-------------------------------------------------------------------------------
+
+4.2 Make Your Own Backend                                   *tq-backend-format*
+
+Since v0.5.0, we have made backend importing dynamic. If none of the exising
+backends suite your need, you can always make your own backend and put it in
+folder `${Plugin_Root}/autoload/thesaurus_query/backends`. The backend is
+written in Python. File name should always have `_lookup` in it. For example,
+the backend I wrote for synonym query in thesaurus.com is
+`thesaurus_com_lookup.py`. I shall call these files backend files
+
+The backend file should follow the following format:
+  - Each `_lookup.py` file must have variable `identifier`, `language` and
+    function `query(target_word)` defined in it.
+  - `identifier` defines the name of the backend, how it will be recognized by
+    the plugin. Eg. `identifier=thesaurus_com_lookup`.
+  - `language` defines the language of which the backend is supposed to query.
+    Eg. if the plugin is supposed to query from English synonym sources, the
+    file should have `language=en` in it.
+    `query(target_word)` is supposed to query synonym for `target_word` and
+    return synonym list in format as follows: >
+    return [status, nested_list]
+    # status:
+    #     0:  normal,  result found, list will be returned as a nested list
+    #     1:  normal, result not found, return empty list
+    #     -1: unexpected result from query, return empty list
+    # nested_list = [Classifier, list wordlist] # grouped synonym list with
+    #                                           # description
+    #     Classifier('str'): Description the current wordlist. Can be empty
+    #                        string.
+    #     wordlist = [word_0, word_1, ...]: list of words belonging to the
+    #                                       group
+<
+After putting the backend file into
+``${Plugin_Root}/autoload/thesaurus_query/backends`, it will be recognized the
+next time the plugin is initiated. To use your plugin, add your backend's
+`identifier` to Vim variable `g/b:tq_enabled_backends`, and activate the
+language by adding its corresponding `language` to `g/b:tq_language`. Eg. to
+enable `thesaurus_com_lookup.py` , we have >
+    g:tq_enabled_backends = [ ..., 'thesaurus_com', ... ]
+    g:tq_language = [..., 'en', ...]
+set as default.
+
+
+===============================================================================
+5. Licence                                                         *tq-licence*
+
+See LICENCE in root folder of this plugin.
+
+vim:tw=80:ts=4:ft=help:norl:
