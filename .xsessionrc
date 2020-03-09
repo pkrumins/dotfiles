@@ -20,4 +20,5 @@ xmodmap -e "keysym Caps_Lock ="
 
 # Add terminus font
 xset +fp ~/projects/dotfiles/fonts/terminus-4.48-2019-07-28
+xset +fp ~/projects/dotfiles/fonts/gohu-git-2020-03-09
 
