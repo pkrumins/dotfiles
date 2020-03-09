@@ -357,11 +357,17 @@ let g:scratch_no_mappings = 1
 "
 nnoremap <c-w>c :call undoquit#SaveWindowQuitHistory()<cr><c-w>c
 
-" configure thesaurus-query
+" configure thesaurus-query plugin
 "
 let g:tq_map_keys = 0
 let g:tq_use_vim_autocomplete = 0
 let g:tq_openoffice_en_file = "~/.vim/thesaurus/th_en_US_v2"
+
+" configure ultisnips plugin
+"
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " automatically run xrdb when .Xresources is edited
 "
