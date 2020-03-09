@@ -1,0 +1,17 @@
+:Shdo	dirvish.txt	/*:Shdo*
+Z!	dirvish.txt	/*Z!*
+dirvish	dirvish.txt	/*dirvish*
+dirvish#add_icon_fn()	dirvish.txt	/*dirvish#add_icon_fn()*
+dirvish#open()	dirvish.txt	/*dirvish#open()*
+dirvish#remove_icon_fn()	dirvish.txt	/*dirvish#remove_icon_fn()*
+dirvish-:Dirvish	dirvish.txt	/*dirvish-:Dirvish*
+dirvish-:Shdo	dirvish.txt	/*dirvish-:Shdo*
+dirvish-Z!	dirvish.txt	/*dirvish-Z!*
+dirvish-commands	dirvish.txt	/*dirvish-commands*
+dirvish-faq	dirvish.txt	/*dirvish-faq*
+dirvish-functions	dirvish.txt	/*dirvish-functions*
+dirvish-mappings	dirvish.txt	/*dirvish-mappings*
+dirvish-options	dirvish.txt	/*dirvish-options*
+dirvish.txt	dirvish.txt	/*dirvish.txt*
+g:dirvish_mode	dirvish.txt	/*g:dirvish_mode*
+g:dirvish_relative_paths	dirvish.txt	/*g:dirvish_relative_paths*
