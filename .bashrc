@@ -377,6 +377,10 @@ export LESS="-F -X -R"
 #
 alias ncdu='ncdu -r'
 
+# m is 'mkdir $dir && cd $dir'
+#
+m() { mkdir "$1" && cd "$1"; }
+
 # ,  is pushd .
 # ,, is popd
 #
