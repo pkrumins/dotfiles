@@ -360,12 +360,11 @@ for_window [instance="math"] border pixel 3
 exec --no-startup-id urxvt -name math -fn "xft:DejaVu Sans Mono:size=14" -e bash -i -c "qalc"
 
 # Autostart notepad
-bindsym $mod+n [instance="notepad"] scratchpad show; [instance="notepad"] move position center
 for_window [instance="notepad"] floating enable sticky enable
 for_window [instance="notepad"] resize set 800 600
-for_window [instance="notepad"] move scratchpad
+for_window [instance="notepad"] move position center
 for_window [instance="notepad"] border pixel 3
-exec --no-startup-id urxvt -name notepad -fn "xft:DejaVu Sans Mono:size=12" -e vim -c 'startinsert'
+bindsym $mod+n exec --no-startup-id bash -i ~/bin/i3-show-or-hide-notepad.sh
 
 # Autostart ranger
 bindsym $mod+f [instance="ranger"] scratchpad show; [instance="ranger"] move position center
