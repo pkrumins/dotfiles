@@ -23,6 +23,7 @@ else
     # Notepad is not running. Start it in ~/Downloads.
     #
     cd ~/Downloads
-    urxvt -name notepad -fn "xft:DejaVu Sans Mono:size=12" -e vim -c 'startinsert'
+    urxvt -name notepad -fn "xft:DejaVu Sans Mono:size=12" \
+        -e vim -c 'startinsert | set directory=/tmp'
 fi
 
