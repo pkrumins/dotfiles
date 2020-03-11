@@ -387,6 +387,11 @@ xmap <C-l> <Plug>(textmanip-move-right)
 let g:vimade = {}
 let g:vimade.fadelevel = 0.5
 
+" configure ranger plugin
+"
+let g:ranger_map_keys = 0
+map <leader>r :Ranger<CR>
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
