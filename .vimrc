@@ -369,9 +369,18 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" configure dirvish
+" configure dirvish plugin
 "
 nmap <leader>d <Plug>(dirvish_up)
+
+" configure textmanip plugin
+"
+let g:textmanip_enable_mappings = 0
+let g:textmanip_move_ignore_shiftwidth = 1
+xmap <C-j> <Plug>(textmanip-move-down)
+xmap <C-k> <Plug>(textmanip-move-up)
+xmap <C-h> <Plug>(textmanip-move-left)
+xmap <C-l> <Plug>(textmanip-move-right)
 
 " automatically run xrdb when .Xresources is edited
 "
