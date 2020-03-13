@@ -365,9 +365,9 @@ alias ls='ls --color=always -F'
 alias l='ls -lasc --sort=time'
 alias ll='ls -lasc --sort=time | less'
 
-# Read man through most
+# Read man through vim
 #
-alias man='PAGER=most man'
+man() { vim -c "SuperMan $@"; }
 
 # Make less quit if there's less than one screen of text and enable colors
 #
