@@ -367,7 +367,19 @@ alias ll='ls -lasc --sort=time | less'
 
 # Read man through vim
 #
-man() { vim -c "SuperMan $@"; }
+man () {
+    if (( $# == 0 )); then
+        echo "Usage: man <what>"
+        return 1
+    fi
+
+    if ! `which man` -w "$@" &> /dev/null; then
+        echo "No man page for $@"
+        return 1
+    fi
+
+    vim -c "SuperMan $@";
+}
 
 # Make less quit if there's less than one screen of text and enable colors
 #
@@ -379,7 +391,7 @@ alias ncdu='ncdu -r'
 
 # m is mkdir -p and cd
 #
-m() { mkdir -p "$1" && cd "$1"; }
+m () { mkdir -p "$1" && cd "$1"; }
 
 # .. is cd ..
 #
