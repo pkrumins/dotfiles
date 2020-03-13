@@ -396,7 +396,3 @@ map <leader>r :Ranger<CR>
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
 
-" load man.vim that ships with vim
-"
-runtime ftplugin/man.vim
-
