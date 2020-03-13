@@ -381,6 +381,10 @@ alias ncdu='ncdu -r'
 #
 m() { mkdir -p "$1" && cd "$1"; }
 
+# .. is cd ..
+#
+alias ..='cd ..'
+
 # ,  is pushd .
 # ,, is popd
 #
