@@ -440,7 +440,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -a -I .git -rtC {}'"
 
 # Show multi line history with ctrl+r
 #
-export FZF_CTRL_R_OPTS="--ansi --preview-window wrap:down:2 --preview 'bat -l bash --color=always --style=plain <(echo {} | sed s/^[0-9\ ]//)'"
+export FZF_CTRL_R_OPTS="--ansi --preview-window wrap:down:3 --preview 'bat -l bash --color=always --style=plain <(echo {} | sed s/^[0-9\ ]//)'"
 
 # Enable z
 #
