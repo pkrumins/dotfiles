@@ -11,6 +11,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
+set $mod4 Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -166,14 +167,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Split
-mode "split" {
-        bindsym h split h; mode "default"
-        bindsym v split v; mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-bindsym $mod+x mode "split"
+bindsym $mod4+j split v
+bindsym $mod4+l split h
 
 # Workspace
 mode "workspace" {
