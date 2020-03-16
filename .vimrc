@@ -21,10 +21,9 @@ set path+=**
 "
 set wildmenu
 
-" disable mouse
+" enable mouse
 "
-set mouse=
-set ttymouse=
+set mouse=a
 
 " make backspace delete everywhere
 "
