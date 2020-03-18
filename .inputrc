@@ -5,7 +5,6 @@ set show-mode-in-prompt on
 set show-all-if-ambiguous on
 set colored-completion-prefix on
 set menu-complete-display-prefix on
-set enable-bracketed-paste on
 
 $if mode=vi
     "\C-a": beginning-of-line
