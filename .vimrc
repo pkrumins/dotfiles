@@ -399,7 +399,7 @@ map <leader>r :Ranger<CR>
 
 " configure speeddating plugin
 "
-let g:speeddating_no_mappings = 0
+let g:speeddating_no_mappings = 1
 nmap <C-a> <Plug>SpeedDatingUp
 nmap <C-x> <Plug>SpeedDatingDown
 
