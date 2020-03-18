@@ -24,6 +24,7 @@ set wildmenu
 " enable mouse
 "
 set mouse=a
+set ttymouse=sgr
 
 " disable toolbar and menu bar
 "
