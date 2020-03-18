@@ -401,3 +401,25 @@ map <leader>r :Ranger<CR>
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
 
+" make vim more windows-like
+"
+set selectmode=mouse,key
+set selection=inclusive
+set mousemodel=popup
+set keymodel=startsel,stopsel
+
+" backspace in visual/select mode deletes the selection
+vnoremap <BS> d
+
+" ctrl-x in visual/select mode cuts the selection to clipboard
+vnoremap <C-x> "+x
+
+" ctrl-c in visual/select mode copies the selection to clipboard
+vnoremap <C-c> "+y
+
+" ctrl-v and shift+insert pastes the clipboard
+map  <C-v>      "+gP
+map  <S-Insert> "+gP
+cmap <C-v>      <C-R>+
+cmap <S-Insert> <C-R>+v
+
