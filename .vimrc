@@ -397,6 +397,12 @@ let g:vimade.fadelevel = 0.5
 let g:ranger_map_keys = 0
 map <leader>r :Ranger<CR>
 
+" configure speeddating plugin
+"
+let g:speeddating_no_mappings = 0
+nmap <C-a> <Plug>SpeedDatingUp
+nmap <C-x> <Plug>SpeedDatingDown
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
