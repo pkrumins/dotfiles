@@ -403,6 +403,10 @@ let g:speeddating_no_mappings = 0
 nmap <C-a> <Plug>SpeedDatingUp
 nmap <C-x> <Plug>SpeedDatingDown
 
+" make an alias command :B for :Bufferize
+"
+cabbrev B Bufferize
+
 " automatically run xrdb when .Xresources is edited
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
