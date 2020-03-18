@@ -25,6 +25,11 @@ set wildmenu
 "
 set mouse=a
 
+" disable toolbar and menu bar
+"
+set guioptions-=T
+set guioptions-=m
+
 " make backspace delete everywhere
 "
 set backspace=indent,eol,start
