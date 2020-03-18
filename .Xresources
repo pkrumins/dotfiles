@@ -86,6 +86,9 @@ URxvt.clipboard.autocopy: true
 URxvt.keysym.Shift-Control-C: clipboard:copy
 URxvt.keysym.Control-v: clipboard:paste
 
+! Make shift+insert paste from clipboard and not primary selection
+URxvt.keysym.Shift-Insert: clipboard:paste
+
 ! Configure inactive window fading
 URxvt.fading: 20
 
