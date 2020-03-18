@@ -12,7 +12,6 @@ let g:TerminusLoaded=1
 let s:cpoptions=&cpoptions
 set cpoptions&vim
 
-set autoread " if not changed in Vim, automatically pick up changes after "git checkout" etc
 if &ttimeoutlen == -1 && &timeoutlen > 10 || &ttimeoutlen > 10
   set ttimeoutlen=10 " speed up O etc in the Terminal
 endif
