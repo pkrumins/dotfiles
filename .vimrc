@@ -411,6 +411,10 @@ cabbrev B Bufferize
 "
 autocmd BufWritePost ~/.Xresources silent !xrdb %
 
+" when vim exits, preserve clipboard data
+"
+autocmd VimLeave * call system("xsel -ib", getreg('+'))
+
 " make vim more windows-like
 "
 set selectmode=mouse,key
