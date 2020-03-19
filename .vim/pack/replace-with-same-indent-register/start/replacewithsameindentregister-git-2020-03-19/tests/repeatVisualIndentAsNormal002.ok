@@ -1,0 +1,15 @@
+[default text]
+Tuple is (foo, bar, baz, hehe, hihi, hoho) for now. 
+<foo> <bar> notyetimplemented </bar> </foo>
+multiple
+      lines of
+  text
+comment" (hehe). 
+
+    space-indented
+	multiple
+	      lines of
+	  text
+porttitor nisi ac elit. Nullam tincidunt ligula vitae nulla.
+
+EOF

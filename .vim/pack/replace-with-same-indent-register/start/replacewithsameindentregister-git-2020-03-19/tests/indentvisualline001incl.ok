@@ -1,0 +1,16 @@
+    [default text]
+    Tuple is (foo, bar, baz, hehe, hihi, hoho) for now. 
+    *ndented text
+    This 'one line' is "a (multi line span)ning comment" (hehe). 
+    [default text]
+    comment" (hehe). 
+
+	space-indented
+	    tab-indented
+		softtabstop-indented
+
+    multiple
+	  lines of
+      text
+
+    EOF
