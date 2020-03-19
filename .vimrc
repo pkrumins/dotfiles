@@ -403,6 +403,12 @@ let g:speeddating_no_mappings = 1
 nmap <C-a> <Plug>SpeedDatingUp
 nmap <C-x> <Plug>SpeedDatingDown
 
+" configure replace-with-register and
+" register-with-indent-register plugins
+"
+nmap <leader>gr "+gr
+nmap <leader>gR "+gR
+
 " make an alias command :B for :Bufferize
 "
 cabbrev B Bufferize
