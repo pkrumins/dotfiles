@@ -437,3 +437,7 @@ map  <S-Insert> "+gP
 cmap <C-v>      <C-R>+
 cmap <S-Insert> <C-R>+v
 
+" as urxvt captures the shift key, use ctrl key for
+" selecting text with mouse
+map <C-LeftMouse> <S-LeftMouse>
+
