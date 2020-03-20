@@ -447,3 +447,6 @@ cmap <S-Insert> <C-R>+v
 " selecting text with mouse
 map <C-LeftMouse> <S-LeftMouse>
 
+" use 8 point lucida console font in gui
+set guifont=Lucida_Console:h8
+
