@@ -21,11 +21,6 @@ set path+=**
 "
 set wildmenu
 
-" disable toolbar and menu bar
-"
-set guioptions-=T
-set guioptions-=m
-
 " make backspace delete everywhere
 "
 set backspace=indent,eol,start
@@ -448,6 +443,13 @@ if has("gui_running")
     " as urxvt captures the shift key, use ctrl key for
     " selecting text with mouse
     map <C-LeftMouse> <S-LeftMouse>
+
+    " disable toolbar and menu bar
+    "
+    set guioptions-=T
+    if !has('win32')
+        set guioptions-=m
+    endif
 
     " use 8 point lucida console font in gui
     set guifont=Lucida_Console:h8
