@@ -414,10 +414,6 @@ if has("gui_running")
     set mouse=a
     set ttymouse=sgr
 
-    " show line numbers
-    "
-    set number
-
     " make vim more windows-like
     "
     set selectmode=mouse,key
