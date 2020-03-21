@@ -55,18 +55,9 @@ set cul
 "
 syntax enable
 
-let g:jellybeans_overrides = {
-\    'Normal' : { 'guifg': 'c0c0c0' },
-\    'background' : { 'guibg': '000000' },
-\}
-
-" set colorscheme to jellybeans
+" set light background
 "
-colorscheme jellybeans
-
-" set dark background
-"
-set background=dark
+set background=light
 
 " always show status line
 "
