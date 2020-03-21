@@ -443,8 +443,16 @@ if has("gui_running")
 
     " enable gitgutter marks
     let g:gitgutter_signs = 1
+
+    " make win32 gui size easy to use
+    if has('win32')
+        set columns=100
+        set lines=70
+    endif
 endif
 
+" on windows, put the backup files in c:\temp
 if has('win32')
     set backupdir=C:\\Temp
 endif
+
