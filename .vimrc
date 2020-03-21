@@ -445,3 +445,6 @@ if has("gui_running")
     let g:gitgutter_signs = 1
 endif
 
+if has('win32')
+    set backupdir=C:\\Temp
+endif
