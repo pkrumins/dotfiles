@@ -21,11 +21,6 @@ set path+=**
 "
 set wildmenu
 
-" enable mouse
-"
-set mouse=a
-set ttymouse=sgr
-
 " disable toolbar and menu bar
 "
 set guioptions-=T
@@ -42,10 +37,6 @@ set ruler
 " show partial commands
 "
 set showcmd
-
-" show line numbers
-"
-set number
 
 " keep the cursor in the same column when moving
 "
@@ -330,8 +321,9 @@ nmap <leader>ea <Plug>(EasyAlign)
 let g:BufKillCreateMappings = 0
 
 " configure gitgutter plugin
+" disable signs here but enable them in gui_running below
 "
-:set updatetime=250
+let g:gitgutter_signs = 0
 
 " zoom function that opens the current buffer in a new tab
 " found at: github.com/junegunn/dotfiles/blob/master/vimrc
@@ -421,32 +413,46 @@ autocmd BufWritePost ~/.Xresources silent !xrdb %
 "
 autocmd VimLeave * call system("xsel -ib", getreg('+'))
 
-" make vim more windows-like
-"
-set selectmode=mouse,key
-set selection=inclusive
-set mousemodel=popup
-set keymodel=startsel,stopsel
+if has("gui_running")
+    " enable mouse
+    "
+    set mouse=a
+    set ttymouse=sgr
 
-" backspace in visual/select mode deletes the selection
-vnoremap <BS> d
+    " show line numbers
+    "
+    set number
 
-" ctrl-x in visual/select mode cuts the selection to clipboard
-vnoremap <C-x> "+x
+    " make vim more windows-like
+    "
+    set selectmode=mouse,key
+    set selection=inclusive
+    set mousemodel=popup
+    set keymodel=startsel,stopsel
 
-" ctrl-c in visual/select mode copies the selection to clipboard
-vnoremap <C-c> "+y
+    " backspace in visual/select mode deletes the selection
+    vnoremap <BS> d
 
-" ctrl-v and shift+insert pastes the clipboard
-map  <C-v>      "+gP
-map  <S-Insert> "+gP
-cmap <C-v>      <C-R>+
-cmap <S-Insert> <C-R>+v
+    " ctrl-x in visual/select mode cuts the selection to clipboard
+    vnoremap <C-x> "+x
 
-" as urxvt captures the shift key, use ctrl key for
-" selecting text with mouse
-map <C-LeftMouse> <S-LeftMouse>
+    " ctrl-c in visual/select mode copies the selection to clipboard
+    vnoremap <C-c> "+y
 
-" use 8 point lucida console font in gui
-set guifont=Lucida_Console:h8
+    " ctrl-v and shift+insert pastes the clipboard
+    map  <C-v>      "+gP
+    map  <S-Insert> "+gP
+    cmap <C-v>      <C-R>+
+    cmap <S-Insert> <C-R>+v
+
+    " as urxvt captures the shift key, use ctrl key for
+    " selecting text with mouse
+    map <C-LeftMouse> <S-LeftMouse>
+
+    " use 8 point lucida console font in gui
+    set guifont=Lucida_Console:h8
+
+    " enable gitgutter marks
+    let g:gitgutter_signs = 1
+endif
 
