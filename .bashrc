@@ -480,3 +480,8 @@ v() {
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/installs/node-v10.10.0/bin
 
+# Use putty terminal for debian computer
+if [[ "$HOSTNAME" == "debian" ]]; then
+    export TERM=putty-256color
+fi
+
