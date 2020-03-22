@@ -425,7 +425,7 @@ if has("gui_running")
     map  <C-v>      "+gP
     map  <S-Insert> "+gP
     cmap <C-v>      <C-R>+
-    cmap <S-Insert> <C-R>+v
+    cmap <S-Insert> <C-R>+
 
     " as urxvt captures the shift key, use ctrl key for
     " selecting text with mouse
