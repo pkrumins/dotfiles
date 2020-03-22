@@ -387,6 +387,12 @@ nmap <C-x> <Plug>SpeedDatingDown
 nmap <leader>gr "+gr
 nmap <leader>gR "+gR
 
+" configure asterisk plugin
+"
+map * <Plug>(asterisk-*)
+map # <Plug>(asterisk-#)
+let g:asterisk#keeppos = 1
+
 " make an alias command :B for :Bufferize
 "
 cabbrev B Bufferize
