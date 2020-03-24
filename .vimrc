@@ -51,13 +51,13 @@ set ttimeoutlen=120
 "
 set cul
 
-" enable syntax highlighting
-"
-syntax enable
-
 " set light background
 "
 set background=light
+
+" enable syntax highlighting
+"
+syntax enable
 
 " always show status line
 "
