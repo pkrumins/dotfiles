@@ -385,6 +385,7 @@ nmap <C-x> <Plug>SpeedDatingDown
 " register-with-indent-register plugins
 "
 nmap <leader>gr "+gr
+vmap <leader>gr "+gr
 nmap <leader>gR "+gR
 
 " configure asterisk plugin
