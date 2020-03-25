@@ -387,6 +387,7 @@ nmap <C-x> <Plug>SpeedDatingDown
 nmap <leader>gr "+gr
 vmap <leader>gr "+gr
 nmap <leader>gR "+gR
+vmap <leader>gR "+gR
 
 " configure asterisk plugin
 "
