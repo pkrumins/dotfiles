@@ -306,7 +306,7 @@ bindsym $mod+Control+l exec --no-startup-id exec ~/.config/i3/xss-lock.sh
 exec --no-startup-id i3-msg 'workspace 1; exec urxvt'
 
 # Autostart urxvt on workspace 2
-exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120 -e tmux -f ~/.tmux-ws2.conf a'
+exec --no-startup-id i3-msg 'workspace 2; exec urxvt -name ws2 -geometry 142x36-70-120 -e bash -i ~/bin/ws2.sh'
 assign [instance="ws2"] workspace 2
 for_window [instance="ws2"] floating enable
 
