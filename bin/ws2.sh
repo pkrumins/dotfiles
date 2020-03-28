@@ -13,7 +13,7 @@ else
     tmux new-window -n 'br-new'   -c ~/projects/browserling-new
     tmux new-window -n 'br-comic' -c ~/projects/browserling-comic
     tmux new-window -n 'urls'     -c ~/projects/techurls
-    tmux new-window -n '.'        -c ~/projects/dotfiles
+    tmux new-window -n 'dotf'     -c ~/projects/dotfiles
 
     tmux select-window -t "0"
 
