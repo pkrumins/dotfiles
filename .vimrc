@@ -9,6 +9,10 @@ let mapleader="\\"
 "
 set encoding=utf-8
 
+" use correct new line symbols on unix and windows
+"
+set fileformats=unix,dos
+
 " enable autoindent and plugins
 "
 filetype indent plugin on
