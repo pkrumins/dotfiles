@@ -481,6 +481,11 @@ PATH=$PATH:~/bin
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/installs/node-v10.10.0/bin
 
+# Setup perlbrew
+if [[ -x "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+    source "$HOME/perl5/perlbrew/etc/bashrc"
+fi
+
 # Use putty terminal for debian computer
 if [[ "$HOSTNAME" == "debian" ]]; then
     export TERM=putty-256color
