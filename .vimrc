@@ -152,6 +152,10 @@ nnoremap <silent> <Leader>b :Buffers<CR>
 "
 nnoremap <silent> <Leader>s :set spell!<CR>
 
+" Leader-d closes current buffer (the smart way via Bufkill plugin)
+"
+nnoremap <silent> <Leader>d :BD<CR>
+
 " create command ":sudow" that sudo writes the file
 "
 cnoremap sudow w !sudo tee % >/dev/null
@@ -357,7 +361,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " configure dirvish plugin
 "
-nmap <leader>d <Plug>(dirvish_up)
+nmap <leader>v <Plug>(dirvish_up)
 
 " configure textmanip plugin
 "
